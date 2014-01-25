@@ -5,12 +5,12 @@
  </tileset>
  <layer name="floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztWMuOwzAIdH0tl577//+5Wm2jUoSBsZ2GZI2EFJuHmQA1aS2l1Ivw3eGbWGs2pOxZvr1zI3Fx3V9+OvwQa82GlD3Lt3duJC6uW18xIBy1sfQ8H0hcC8c1cMzgmef+93wsHAvHXjgkkbJnyaUPVC51e3G07nNNVpm8dV+jcu0+18jDj9RDdG+0rjSMHv6MOHrqauH4Yzl3nxWHV6dnwTFyRlYcs/LhEYn13dDdZKTsWTbIGZKi37WyniOM2vScMfpdm40Xjlys9TmVNlmyUYr61vS0Pqfy2T/ITNrz/1MVvj07GUOkz0dmoN5vrd77bEYso7X9DRy9OI/IR4tasyi350Ts+QgcVl/J+UDGav1GZKkrHhcaazYcSAwLx5t5HaM4LCJDZvWONr+3fGh1jLzjSJ+TI/d0I/bIOyblOfOcWF+5st7L9pwdRytXSH94dY2S5a8VG9rnSF+gc2zEH49pI9n/ERxovvfU4/jPjqOnl/bq8+w4rpKP2fnLjuMq+Vg4+nEczTNi+gH/tmxa
+   eJztWMuOwzAIdH0tl577//+5Wm2jUoSBsZ2GZI2EFJuHmQA1aS2l1Ivw3eGbWGs2pOxZvr1zI3Fx3V9+OvwQa82GlD3Lt3duJC6uW18xIBy1sfQ8H0hcC8c1cMzgmef+93wsHAvHXjgkkbJnyaUPVC51e3G07nNNVpm8dV+jcu0+18jDj9RDdG+0rjSMHv6MOHrqauH4Yzl3nxWHV6dnwTFyRlYcs/LhEYn13dDdZKTsWTbIGZKi37WyniOM2vScMfpdm40Xjlys9TmVNlmyUYr61vS0Pqfy2T/ITNrz/1MVvj07GUOkz0dmoN5vrd77bEYso7X9DRy9OI/IR4tasyi350Ts+QgcVl/J+UDGav1GZKkrHhcaazYcSAwLx5t5HaM4LCJDZvWONr+3fGh1jLzjSJ+TI/d0I/bIOyblOfOcWF+5st7L9pwdRytXSH94dY2S5a8VG9rnSF+gc2zEH49pI9n/ERxovvfU4/jPjqOnl/bq8+w4rpKP2fmb4W/lY+HYE8fRPCOmHyE1bGQ=
   </data>
  </layer>
  <layer name="collisionmap" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztWEuuwyAMdNmy6rr3v2eVxZMQMvaMIa8uZSSkBI+NJw6fpIhI2aRVpz26e81HlD4rtjcuklfLvdrLac/uXvMRpc+K7Y2L5NVyi/BAfSyeF4PJ6+iY52XQsQIrx/31ehwdeIyjg/NDbFXpQ2Ig9p4b1THazzVbaeyj/Zq1372fo8/+jnpoGmXQ3z5fdPzM7xVj21lHdezfosN7T79Fx8wYGjeDjk/Vo5K2Ouj3fFCg37UCcGZ9ImPM7oPZcHTkwm46RvONPZNG/j+VLrbn1+eAzPOZM1D0Wyu6n63IZQb/pSOqM1M9qmPPpsOaV9b5wFsj0BysezSG52etF9nqEcXRMeYx59w2xowO9iyO8Nj5JYLNc3HsHhfxt3JjdGTElddVK+u5/F1n1zGqlcbNrIPhsv8T2XMsEk9D5PucQXQ9RXmtfhRZdbC4c35k17FLPVbXL7uOXepxdPAoSdqKnN6LkyAA
+   eJztWE0PwyAIZV497bz//z+XHpYYg/Ae2pV1kphUeSCvFD9aRKTcpFWnPbq+ZiPKmOXbmxeJq8Ue7eW0Z9fXbEQZs3x78yJxtdgivKA2Fs7zwcS1eczjMvBYISvn/fd8bB64j82Ds0N0VRlDfCD6HhvlMdrPNV1p9KP9mtWfvZ+j7/6MfGgcZTDevl90/szfFaO7M4/q6H+Fh/ed/gqPmTk0bAYeV+Wjkro6GPdsUEHvtQJgZm0ic8zug9lk88gld+Mxqjf2TBr5/1Q6355dHwNS5zNnoOhdK7qfrYhlRr7FI8ozUz6qo8/Gw6or63zgrRFoDFYf9eHZWetFtnxEZfMY45hzbutjhgd7FkdwbH2JYHUujt7DIvZWbAyPjHLEdeTKei+f5+w8RrnSsJl5MFj2fyJ7jkX8aRK5nzMSXU9RXMsflaw8WDmzPrLzuEs+Vudvhb+dj/Nwm8f1bUVMb4TjH/4=
   </data>
  </layer>
  <layer name="interieur" width="50" height="50">
@@ -151,5 +151,13 @@
   <object name="switch5" type="switch" gid="26" x="1216" y="2625"/>
   <object name="player" type="player" gid="14" x="1171" y="1877"/>
   <object name="goal" type="goal" gid="14" x="1149" y="187"/>
+  <object name="axe" type="axe" gid="15" x="2444" y="2932"/>
+  <object name="axe" type="axe" gid="15" x="350" y="2876"/>
+  <object name="axe" type="axe" gid="15" x="1398" y="1120"/>
+  <object name="axe" type="axe" gid="15" x="2762" y="2040"/>
+  <object name="axe" type="axe" gid="15" x="2734" y="1022"/>
+  <object name="axe" type="axe" gid="15" x="1174" y="572"/>
+  <object name="axe" type="axe" gid="15" x="578" y="1196"/>
+  <object name="door_v" type="door_v" gid="3" x="2302" y="2943"/>
  </objectgroup>
 </map>
