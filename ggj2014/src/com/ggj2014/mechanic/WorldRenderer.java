@@ -34,7 +34,7 @@ public class WorldRenderer {
 		loadAssets();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth() / World.TILE_SIZE, Gdx.graphics.getHeight() / World.TILE_SIZE);		
+		camera.setToOrtho(false, Gdx.graphics.getWidth() / (float)World.TILE_SIZE, Gdx.graphics.getHeight() / (float)World.TILE_SIZE);		
 		ShaderProgram.pedantic = false;
 		vignetteShader = new ShaderProgram(Gdx.files.internal("graphics/vignette.vsh"), Gdx.files.internal("graphics/vignette.fsh"));
 		if(!vignetteShader.isCompiled())
