@@ -3,6 +3,7 @@ package com.ggj2014.mechanic;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -71,17 +72,27 @@ public class World {
 			}
 		}
 		
-		// generate a few random enemies
-		for(int i = 0; i < 10; i++) {
-			Enemy enemy = new Enemy(MathUtils.random(0, 15), MathUtils.random(0, 15));
-			entities.add(enemy);
-			enemies.add(enemy);
-		}
-		
-		for(int i = 0; i < 10; i++) {
-			Enemy2 enemy = new Enemy2(MathUtils.random(0, 15), MathUtils.random(0, 15));
-			entities.add(enemy);
-			enemies.add(enemy);
+		// create objects
+		for(int i = 0; i < objects.getCount(); i++) {
+			MapProperties object = objects.get(i).getProperties();
+			String type = object.get("type", String.class);
+			if(type.equals("enemy1")) {
+				Enemy enemy = new Enemy(object.get("x", Float.class), object.get("y", Float.class));
+				enemy.position.scl(1f / TILE_SIZE);
+				entities.add(enemy);
+				enemies.add(enemy);
+			}
+			if(type.equals("enemy2")) {
+				Enemy enemy = new Enemy2(object.get("x", Float.class), object.get("y", Float.class));
+				enemy.position.scl(1f / TILE_SIZE);
+				entities.add(enemy);
+				enemies.add(enemy);
+			}
+			if(type.equals("pille")) {
+				Pill pill = new Pill(object.get("x", Float.class), object.get("y", Float.class));
+				pill.position.scl(1f / TILE_SIZE);
+				entities.add(pill);
+			}
 		}
 	}
 
