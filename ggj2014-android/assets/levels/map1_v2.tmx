@@ -119,27 +119,5 @@
   <object name="switch5" type="switch" gid="26" x="1216" y="2625"/>
   <object name="player" type="player" gid="14" x="2203" y="3151"/>
   <object name="goal" type="goal" gid="14" x="1149" y="187"/>
-  <object name="door" type="door_upper" gid="6" x="1150" y="121"/>
-  <object name="door" type="door_upper" gid="6" x="1664" y="768"/>
-  <object name="door" type="door_upper" gid="6" x="2176" y="766"/>
-  <object name="door" type="door_upper" gid="6" x="2688" y="768"/>
-  <object name="door" type="door_upper" gid="6" x="1154" y="766"/>
-  <object name="door" type="door_upper" gid="6" x="382" y="892"/>
-  <object name="door" type="door_upper" gid="6" x="1408" y="1340"/>
-  <object name="door" type="door_upper" gid="6" x="576" y="1344"/>
-  <object name="door" type="door_upper" gid="6" x="2176" y="1340"/>
-  <object name="door" type="door_upper" gid="6" x="2176" y="1662"/>
-  <object name="door" type="door_upper" gid="6" x="2814" y="1662"/>
-  <object name="door" type="door_upper" gid="6" x="2814" y="2364"/>
-  <object name="door" type="door_upper" gid="6" x="3008" y="2366"/>
-  <object name="door" type="door_upper" gid="6" x="704" y="1662"/>
-  <object name="door" type="door_upper" gid="6" x="256" y="1662"/>
-  <object name="door" type="door_upper" gid="6" x="768" y="2046"/>
-  <object name="door" type="door_upper" gid="6" x="1216" y="1982"/>
-  <object name="door" type="door_upper" gid="6" x="1534" y="2300"/>
-  <object name="door" type="door_upper" gid="6" x="1664" y="2560"/>
-  <object name="door" type="door_upper" gid="6" x="1216" y="2304"/>
-  <object name="door" type="door_upper" gid="6" x="514" y="2304"/>
-  <object name="door" type="door_upper" gid="6" x="382" y="2560"/>
  </objectgroup>
 </map>

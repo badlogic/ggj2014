@@ -35,6 +35,7 @@ public class WorldRenderer {
 	public Texture[] patient2 = new Texture[2];
 	public Texture doorClosed;
 	public Texture doorOpen;
+	public Texture pill;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -61,13 +62,14 @@ public class WorldRenderer {
 		System.out.println(LAYER_FLOOR + ", " + LAYER_FLOOR_UPPER + ", " + LAYER_INTERIEUR);
 	}
 	
-	private void loadAssets () {				
+	private void loadAssets () {
 		// images & animations
 		loadImage(patient1, "patient1");
 		loadImage(patient2, "patient2");
 		
 		doorOpen = new Texture(Gdx.files.internal("graphics/door-open.png"));
 		doorClosed = new Texture(Gdx.files.internal("graphics/door-closed.png"));
+		pill = new Texture(Gdx.files.internal("graphics/tablette.png"));
 	}
 	
 	private void loadImage(Texture[] images, String path) {
@@ -137,14 +139,14 @@ public class WorldRenderer {
 			if(entity instanceof Player) {
 				batch.draw(patient1[World.REAL], entity.position.x, entity.position.y, 1, 2);
 			}
-			else if(entity instanceof Enemy) {
+			else if(entity instanceof Enemy && !(entity instanceof Enemy2)) {
 				batch.draw(patient1[world.getMode()], entity.position.x, entity.position.y, 1, 2);
 			}
 			else if(entity instanceof Enemy2) {
 				batch.draw(patient2[world.getMode()], entity.position.x, entity.position.y, 1, 1);
 			}
 			else if(entity instanceof Pill) {
-				
+				batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
 			}
 		}
 		batch.end();
