@@ -17,4 +17,7 @@ public class World {
 			entity.update(this, deltaTime);
 		}
 	}
+	
+	// TODO add methods for entities to use for collision detection etc.
+	
 }

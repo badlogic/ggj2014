@@ -41,6 +41,6 @@ public class DodgeBallHospital implements ApplicationListener {
 
 	@Override
 	public void dispose () {
-		manager.pause();
+		manager.dispose();
 	}
 }
