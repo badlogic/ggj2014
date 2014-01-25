@@ -17,5 +17,13 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
+	public Vector2 getCenter() {
+		return new Vector2(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+	}
+	
+	public boolean collidesWith(Entity entity) {
+		return bounds.overlaps(entity.bounds);
+	}
+	
 	public abstract void update(World world, float deltaTime);
 }
