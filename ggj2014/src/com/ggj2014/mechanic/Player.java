@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends Entity {
 	
 	public float sightRange = 50;
-	public float speed = 2;
+	public float speed = 3;
 	public State status = State.IDLE;
 	
 	public Player(Vector2 position) {
@@ -18,26 +18,30 @@ public class Player extends Entity {
 	public void update(World world, float deltaTime) {
 		this.status = State.IDLE;
 		
+		Vector2 movement = new Vector2();
 		if (Gdx.input.isKeyPressed(Keys.LEFT))
 		{
-			this.position = this.position.sub(new Vector2(speed*delta,0));
+			movement.x -= 1;
 			this.status = State.MOVING;
 		}
 		if (Gdx.input.isKeyPressed(Keys.RIGHT))
 		{
-			this.position = this.position.add(new Vector2(speed*delta,0));
+			movement.x += 1;
 			this.status = State.MOVING;
 		}
 		if (Gdx.input.isKeyPressed(Keys.DOWN))
 		{
-			this.position = this.position.sub(new Vector2(0, speed*delta));
+			movement.y -= 1;
 			this.status = State.MOVING;
 		}
 		if (Gdx.input.isKeyPressed(Keys.UP))
 		{
-			this.position = this.position.add(new Vector2(0, speed*delta));
+			movement.y += 1;
 			this.status = State.MOVING;
 		}
+		movement.nor().mul(speed * deltaTime);
+		position.add(movement);
+		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
 	}
 	
 	enum State{

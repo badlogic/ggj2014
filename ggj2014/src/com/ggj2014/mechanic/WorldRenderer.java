@@ -3,28 +3,51 @@ package com.ggj2014.mechanic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
-public class WorldRenderer {
+public class WorldRenderer {	
+	World world;
 	SpriteBatch batch;
 	public OrthographicCamera camera;
+	OrthogonalTiledMapRenderer tileMapRenderer;
 	
 	ShapeRenderer sr = new ShapeRenderer();
+	public Texture[] patient1 = new Texture[2];
+	public Texture[] patient2 = new Texture[2];
 	
 	public WorldRenderer(World world) {
+		this.world = world;
+		loadAssets();				
+		tileMapRenderer = new OrthogonalTiledMapRenderer(world.map, 1f / World.TILE_SIZE);
 		batch = new SpriteBatch();
-		camera = new OrthographicCamera(Gdx.graphics.getWidth() / world.level.getTileSize(), Gdx.graphics.getHeight() / world.level.getTileSize());
-		camera.position.x = 8;
-		camera.position.y = 8;
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Gdx.graphics.getWidth() / World.TILE_SIZE, Gdx.graphics.getHeight() / World.TILE_SIZE);
 	}
 	
-	public void render(World world, float deltaTime) {
-		world.level.render(camera);
+	private void loadAssets () {
+		loadImage(patient1, "patient1");
+		loadImage(patient2, "patient2");
+	}
+	
+	private void loadImage(Texture[] images, String path) {
+		images[World.REAL] = new Texture(Gdx.files.internal("graphics/" + path + "-real.png"));
+		images[World.GHOST] = new Texture(Gdx.files.internal("graphics/" + path + "-geist.png"));
+	}
+
+	public void render(float deltaTime) {
+		camera.update();
 		
-		if(false) {
+		// render tiles
+		tileMapRenderer.setView(camera);
+		tileMapRenderer.render();
+
+		// render collision layer
+		if(true) {
 			Color c = new Color(1, 0, 0, 1);
 			
 			sr.setProjectionMatrix(camera.combined);
@@ -39,5 +62,25 @@ public class WorldRenderer {
 			}
 			sr.end();
 		}
+		
+		// render objects
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		for(Entity entity: world.entities) {
+			if(entity instanceof Player) {
+				batch.draw(patient1[world.mode], entity.position.x, entity.position.y, 1, 2);
+			}
+		}
+		batch.end();
+		
+		// draw entity bounds
+		sr.begin(ShapeType.Line);
+		sr.setColor(0, 1, 0, 1);
+		for(Entity entity: world.entities) {
+			if(entity instanceof Player) {
+				sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);
+			}
+		}
+		sr.end();
 	}
 }
