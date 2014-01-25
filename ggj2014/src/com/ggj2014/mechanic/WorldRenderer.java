@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class WorldRenderer {	
@@ -35,17 +34,19 @@ public class WorldRenderer {
 		loadAssets();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth() / World.TILE_SIZE, Gdx.graphics.getHeight() / World.TILE_SIZE);		
+		camera.setToOrtho(false, Gdx.graphics.getWidth() / (float)World.TILE_SIZE, Gdx.graphics.getHeight() / (float)World.TILE_SIZE);				
+		tileMapRenderer = new OrthogonalTiledMapRenderer(world.map, 1f / World.TILE_SIZE, batch);
+		
+		// vignette shader
 		ShaderProgram.pedantic = false;
 		vignetteShader = new ShaderProgram(Gdx.files.internal("graphics/vignette.vsh"), Gdx.files.internal("graphics/vignette.fsh"));
 		if(!vignetteShader.isCompiled())
 			System.out.println(vignetteShader.getLog());
 		batch.setShader(vignetteShader);
-		
-		tileMapRenderer = new OrthogonalTiledMapRenderer(world.map, 1f / World.TILE_SIZE, batch);		
 	}
 	
-	private void loadAssets () {
+	private void loadAssets () {				
+		// images & animations
 		loadImage(patient1, "patient1");
 		loadImage(patient2, "patient2");
 	}
@@ -62,7 +63,7 @@ public class WorldRenderer {
 		// set vignette based on
 		vignetteShader.begin();
 		vignetteShader.setUniformf("u_resolution", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		if(world.mode == World.REAL) {
+		if(world.getMode() == World.REAL) {
 			vignetteShader.setUniformf("tint", 1, 1, 1, 1);
 			vignetteShader.setUniformf("innerRadius", 0.02f);
 			vignetteShader.setUniformf("outerRadius", 0.9f);
@@ -115,10 +116,10 @@ public class WorldRenderer {
 				batch.draw(patient1[World.REAL], entity.position.x, entity.position.y, 1, 2);
 			}
 			else if(entity instanceof Enemy) {
-				batch.draw(patient1[world.mode], entity.position.x, entity.position.y, 1, 2);
+				batch.draw(patient1[world.getMode()], entity.position.x, entity.position.y, 1, 2);
 			}
 			else if(entity instanceof Enemy2) {
-				batch.draw(patient2[world.mode], entity.position.x, entity.position.y, 1, 1);
+				batch.draw(patient2[world.getMode()], entity.position.x, entity.position.y, 1, 1);
 			}
 			else if(entity instanceof Pill) {
 				

@@ -23,7 +23,7 @@ public class Player extends Entity {
 			public boolean keyDown (int keycode) {
 				if(keycode == Keys.SPACE) {	
 					if(world != null) {
-						world.mode = world.mode == World.GHOST? World.REAL: World.GHOST;
+						world.toggleMode();
 					}
 				}
 				return false;
