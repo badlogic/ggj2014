@@ -85,14 +85,17 @@ public class Player extends Entity {
 		if(state == State.IDLE || state == State.MOVING) processMove(world, deltaTime);
 		stateTime += deltaTime;		
 		
-		for(int i = 0; i <world.entities.size; i++)
+		if(world.mode == world.GHOST)
 		{
-			Entity entity = world.entities.get(i);
-		
-			if(entity instanceof Pill) {
-				if(entity.bounds.overlaps(this.bounds)) {
-					((Pill) entity).pickUp();
-					world.mode = world.REAL;
+			for(int i = 0; i <world.entities.size; i++)
+			{
+				Entity entity = world.entities.get(i);
+			
+				if(entity instanceof Pill) {
+					if(entity.bounds.overlaps(this.bounds)) {
+						((Pill) entity).pickUp(world);
+						world.mode = world.REAL;
+					}
 				}
 			}
 		}
