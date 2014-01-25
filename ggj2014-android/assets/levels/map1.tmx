@@ -8,9 +8,19 @@
    eJztmMsSgyAMRSnbsum6//+fnU7rFJm8bkCNlkVmVAjkmFwBc0opX8Tuit2ae8qnEM+ksbV5LXHVfd/2VOzR3FM+hXgmja3Na4mr7pu/MSBm9ZH6aWMgcU2Oa3CMsJHz/ns+Jsfk2IqDW8+ptly1c+s12k6t5x4Obj2n2nLVzq3XaDu1nlOMGj9SD9ZnvXVFMWr8ETk8dTU5PqbV6Vk4tDo9C0fPHFE5RuVDOzcWQ59eH88c6Lm2rWeLoT6eOXrPtdFscsQySuclrfWD7Ek9/59yM7bm18bA6byktX6QPann/1Nuxtb82hgsOu/ZA3nPWt71bEQsvbW9B4eX84h8aDqU/KVvxN4ckq6k74X2jYhSV3VcaKzROJAYJsfPUH3VHKP201Rfiz9Vx8g7tui8KO1aX4s/8o4LcR15n7gwSO9luY7OweUK0QdX1+g+1jIeFxuqc0QX6D7WMh5VT63+LRxovrfsV/OfncOjpa10Hp3jKvkYnb/oHFfJx+TwcxxtI2J6AY8XdNM=
   </data>
  </layer>
- <layer name="floor2" width="50" height="50">
+ <layer name="wall" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmMEOgyAMhjVZvHFwW3z/R50eSEjXllI6wNEvMRIpBYXyY5flf1kVbTZBe86vps8cO1P3APfIQbR/EM9r+4T9X4Tzep7Xi/EVeYO71L4GrE8LvzXA7yX9flr/Do/Px1j4fMyFZj5SDd5IK75+ray3INXgVM8x3aXqd6Qe6wNrj2k6pOb9o9aG5Vt3A6iHSNZFqu/QB3dewig5y2jR+O99XunFqPMxKz4f/dDswaVtrHSO05bcHoxR2oayp7SOel76v9oKajyjjdPh4eKtJhZz+Smpb6kdF5+aeI9g+ak0VqW+Jec+DKkWBXCP5bR9LEcbLlap8Wix9ue0A8Zgbl21AtNMOFZNrLYGi0M41lysjjAfHCONZSZKNByz/WXeCcLlgUpiF7O1jv2NKF/c6Qx8EOWRkeQLc1iva42/0nVi9S/Lgfmz+N4pXL6Vg7LP+cmdd63frxd32necOSjNpXru1ZmBD6UQClg=
+   eJztmE0PwyAIhplXTzvv///PpYclxiC8gG7USWKyyoc8ZVTbQkRlk1GV8eiuOR9i5qTY2rpIXq3tNV7KeHbXnA8xc1JsbV0kr9a2kF1QH8lOi2HJ63DE7TJwzJCZ6/57PQ4HHuNw2PwQXWXmkBiIvrf1coz2c05XGv1ov7bqV+/n6L1fUQ+OkQbz7f1F18/8v7Loduaoiv4uHNr/9C4ckTU42wwcv6pHNerqYF7zQQV9ryXAJurjWSO6D2aTw5FLNI7Inus923ufn9K50nom9Xx/Kl1sza/PAenzu9UjmktEvsXh5cxUj6ros3FIfSWdD7RnBJqDdI3G0Pyk50W2enjlcIztpG9FUowIh/Usjth5zrBIn5Oi12wRfyk3C0dGufK6aiXdl8/v7ByjWnG2Vg5v/1rtPH1u6QvrORaJ1+ekvc+POCyyuh4tPypZOayyss+zc+xSj9n1y86xSz0Oh11KkjEjpzcJHSAh
+  </data>
+ </layer>
+ <layer name="interieur" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmEkOwyAMRamULYsO9z9r0wVS5OKB2S3/SRFRANuJQd8hhP/lNmi+ZLfVZ4670HeQVpt/MM9bfeb8x/N6nNdTsJV4kdY6voWczx52W6Dfy/r9au0DGeTDF8jHXtTko4cGazZG6DyF02BNd60az/VbaooeJK2N4Vt3I+mnWNbFVd+pjdJ3K6llaqmxv7peWYXXfOwK8gEszNKWUrh4uOel/6uz4OLxFidYw4y6dQZS3dqTXO35wapFkbTp/jo/3acx0l7l4qmltz2wDm1dzcKyD73pfw6LZmp71UM+JDzFAnzyC3vVAmrgsey6Tla9d2+/0nmrBDdes6PVu7uuJwBGU3qWirNXsANvnQ4H8A==
+  </data>
+ </layer>
+ <layer name="doors" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt17sNwCAMRVEqRmD/UdOmAIORjXFyT4XER0jwTFIK3mr0Boy06A0AABBo9p5791uZvefe/SN8LwFAnJ0arJ1zos7v1GDtHOo8MpDy5pnF1bVXx0l588zi6trUA2SV6d9L2mumDGbaK+6lyW5v7C3Z1+ShN9Y6T3XQzqYN2l9nfWZRd8D6zP50BwAAOO0BLxICaQ==
   </data>
  </layer>
  <objectgroup name="objects" width="50" height="50">
@@ -85,8 +95,16 @@
   <object name="door_h" type="door_h" gid="21" x="2814" y="1730"/>
   <object name="door_h" type="door_h" gid="21" x="2814" y="2432"/>
   <object name="door_h" type="door_h" gid="21" x="3008" y="2434"/>
-  <object name="door_h" type="door_h" gid="21" x="2176" y="1406"/>
-  <object name="door_h" type="door_h" gid="21" x="1408" y="1408"/>
+  <object name="door_h" type="door_h" gid="21" x="2176" y="1406">
+   <properties>
+    <property name="switch" value="switch1"/>
+   </properties>
+  </object>
+  <object name="door_h" type="door_h" gid="21" x="1408" y="1408">
+   <properties>
+    <property name="switch" value="switch1"/>
+   </properties>
+  </object>
   <object name="door_h" type="door_h" gid="21" x="576" y="1410"/>
   <object name="door_h" type="door_h" gid="21" x="383" y="960"/>
   <object name="door_h" type="door_h" gid="21" x="1153" y="833"/>
@@ -94,11 +112,11 @@
   <object name="door_h" type="door_h" gid="21" x="2176" y="832"/>
   <object name="door_h" type="door_h" gid="21" x="2688" y="836"/>
   <object name="door_h" type="door_h" gid="21" x="1152" y="192"/>
-  <object name="switch" type="switch" gid="26" x="1857" y="1409"/>
-  <object name="switch" type="switch" gid="26" x="2561" y="1729"/>
-  <object name="switch" type="switch" gid="26" x="575" y="961"/>
-  <object name="switch" type="switch" gid="26" x="191" y="2050"/>
-  <object name="switch" type="switch" gid="26" x="1216" y="2625"/>
+  <object name="switch1" type="switch" gid="26" x="1857" y="1409"/>
+  <object name="switch2" type="switch" gid="26" x="2561" y="1729"/>
+  <object name="switch3" type="switch" gid="26" x="575" y="961"/>
+  <object name="switch4" type="switch" gid="26" x="191" y="2050"/>
+  <object name="switch5" type="switch" gid="26" x="1216" y="2625"/>
   <object name="player" type="player" gid="14" x="2203" y="3151"/>
   <object name="goal" type="goal" gid="14" x="1149" y="187"/>
  </objectgroup>
