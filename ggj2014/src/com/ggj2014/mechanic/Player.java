@@ -9,6 +9,7 @@ public class Player extends Entity {
 	public float sightRange = 50;
 	public float speed = 3;
 	public State status = State.IDLE;
+	public double health = 100;
 	
 	public Player(Vector2 position) {
 		super(position);
@@ -44,8 +45,19 @@ public class Player extends Entity {
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
 	}
 	
-	enum State{
-		IDLE, MOVING, MOVING_UP, MOVING_DOWN, MOVING_LEFT, MOVING_RIGHT, TAKINGPILL 
+	public void attackedByEnemy(double damage) {
+		this.health = this.health - damage;
+		if(this.health <= 0)
+		{
+			this.status = State.DEAD;
+		}
+		//TODO: Player Feedback wäre nice
 	}
+	
+	enum State{
+		IDLE, MOVING, MOVING_UP, MOVING_DOWN, MOVING_LEFT, MOVING_RIGHT, TAKINGPILL, DEAD
+	}
+
+
 
 }
