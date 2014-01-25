@@ -13,10 +13,19 @@ public class Enemy extends Entity {
 	public Vector2 velocity = new Vector2();
 	public float combatRange = 1;
 	public float sightRange = 5;
+	public float flockRange = 4;
 	public float speed = 2;
 	public float damage = 10;
 	public State state = State.IDLE;
 	public float stateDuration;
+	
+	public float alignment_angle = (float)Math.PI * 0.5f;
+	public float cohesion_angle = (float)Math.PI * 0.5f;
+	public float separation_angle = (float)Math.PI * 0.4f;
+	public float alignment_factor = 0.1f;
+	public float cohesion_factor = 0.1f;
+	public float separation_factor = 0.6f;
+	public float player_factor = 1.0f;
 	
 	public Enemy(float x, float y) {
 		super(x, y);
@@ -24,17 +33,18 @@ public class Enemy extends Entity {
 
 	@Override
 	public void update(World world, float deltaTime) {
-		Vector2 movement = world.player.position.cpy();
-		float length2 = movement.sub(position).len2();
-		if(length2 < 25) {
-			Vector2 p1 = getCenter();
-			Vector2 p2 = world.player.getCenter();
-			
-			Array<GridPoint2> points = bresenham.line((int)p1.x, (int)p1.y, (int)p2.x, (int)p2.y);
+		Vector2 playerpos = world.player.getCenter();
+		Vector2 pos = getCenter();
+		
+		Vector2 new_velocity = new Vector2(0, 0);
+		
+		float length2 = playerpos.sub(pos).len2();
+		if(length2 < sightRange * sightRange) {
+			Array<GridPoint2> points = bresenham.line((int)pos.x, (int)pos.y, (int)(playerpos.x + pos.x), (int)(playerpos.y + pos.y));
 			
 			boolean in_sight = true;
-			
-			boolean displayDebug = false;
+
+			boolean displayDebug = true;
 			
 			if(displayDebug) {
 				world.renderer.sr.setProjectionMatrix(world.renderer.camera.combined);
@@ -57,9 +67,7 @@ public class Enemy extends Entity {
 			}
 			
 			if(in_sight) {
-				movement.scl(deltaTime * speed / (float)Math.sqrt(length2));
-				world.clipCollision(bounds, movement);
-				position.add(movement);
+				new_velocity = playerpos.scl(player_factor / (float)Math.sqrt(length2));
 				state = State.ATTACKING;
 			}
 			else
@@ -68,28 +76,57 @@ public class Enemy extends Entity {
 			state = State.IDLE;
 		}
 		
-		Vector2 enemypos;
-		int count = 0;
-		Vector2 velocity = new Vector2(0, 0);
-		Vector2 pos = getCenter();
-		Vector2 mypos = pos.cpy();
+		Vector2 enemypos, relpos, t1;
+		Vector2 normvel = velocity.cpy().nor();
+		int count = 1;
+		Vector2 avelocity = new Vector2(0, 0);
+		Vector2 cpos = pos.cpy();
+		Vector2 spos = new Vector2(0, 0);
 		
 		for(Enemy enemy : world.enemies) {
 			if(enemy != this) {
-				enemypos = enemy.getCenter().sub(mypos);
-				float distance2 = enemypos.dst2(enemy.getCenter());
-				if(distance2 < 16) {
-					count++;
-					velocity.add(enemy.velocity);
-					pos.add(enemy.getCenter());
+				enemypos = enemy.getCenter();
+				
+				float distance2 = enemypos.dst2(pos);
+				if(distance2 < flockRange * flockRange) {
+					relpos = enemypos.cpy().sub(pos);
+					t1 = relpos.cpy().nor();
+					float angle = (float)Math.acos(normvel.dot(t1));
+					
+					if(angle < alignment_angle) {
+						avelocity.add(enemy.velocity);
+					}
+					
+					if(angle < cohesion_angle) {
+						cpos.add(enemypos);
+						count++;
+					}
+					
+					if(angle < separation_angle) {
+						spos.add(relpos);
+					}
 				}
 			}
 		}
 		
-		pos.div(count);
-		pos.sub(mypos);
-		pos.nor();
-		velocity.nor();
+		avelocity.nor();
+		avelocity.scl(alignment_factor);
+		
+		cpos.div(count);
+		cpos.sub(pos);
+		cpos.nor();
+		cpos.scl(cohesion_factor);
+		
+		spos.nor();
+		spos.scl(separation_factor);
+		
+		new_velocity.add(avelocity).add(cpos).sub(spos).nor();
+		
+		// update position
+		new_velocity.scl(deltaTime * speed);
+		world.clipCollision(bounds, new_velocity);
+		position.add(new_velocity);
+		velocity = new_velocity;
 		
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
 	}
