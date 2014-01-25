@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class WorldRenderer {	
@@ -62,7 +61,7 @@ public class WorldRenderer {
 		// set vignette based on
 		vignetteShader.begin();
 		vignetteShader.setUniformf("u_resolution", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		if(world.mode == World.REAL) {
+		if(world.getMode() == World.REAL) {
 			vignetteShader.setUniformf("tint", 1, 1, 1, 1);
 			vignetteShader.setUniformf("innerRadius", 0.02f);
 			vignetteShader.setUniformf("outerRadius", 0.9f);
@@ -115,10 +114,10 @@ public class WorldRenderer {
 				batch.draw(patient1[World.REAL], entity.position.x, entity.position.y, 1, 2);
 			}
 			else if(entity instanceof Enemy) {
-				batch.draw(patient1[world.mode], entity.position.x, entity.position.y, 1, 2);
+				batch.draw(patient1[world.getMode()], entity.position.x, entity.position.y, 1, 2);
 			}
 			else if(entity instanceof Enemy2) {
-				batch.draw(patient2[world.mode], entity.position.x, entity.position.y, 1, 1);
+				batch.draw(patient2[world.getMode()], entity.position.x, entity.position.y, 1, 1);
 			}
 			else if(entity instanceof Pill) {
 				

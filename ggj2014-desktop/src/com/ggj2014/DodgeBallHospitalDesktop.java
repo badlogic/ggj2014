@@ -8,8 +8,8 @@ public class DodgeBallHospitalDesktop {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "ggj2014";
 		cfg.useGL20 = true;
-		cfg.width = 800;
-		cfg.height = 600;
+		cfg.width = 1024;
+		cfg.height = 768;
 		
 		new LwjglApplication(new DodgeBallHospital(), cfg);
 	}
