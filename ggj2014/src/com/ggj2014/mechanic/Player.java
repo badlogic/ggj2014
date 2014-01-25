@@ -3,20 +3,21 @@ package com.ggj2014.mechanic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.ggj2014.DodgeBallHospital;
 import com.ggj2014.ScreenManager;
 	
 public class Player extends Entity {
 	public float sightRange = 50;
-	public float attackRange = 2;
-	public float attackAngle = (float)Math.PI / 3;
+	public float attackRange = 1.2f;
+	public float attackAngle = (float)Math.PI / 4;
 	public float speed = 3;
 	public State state = State.IDLE;
 	public double health = 100;
 	public boolean actionPressed = false;
 	public World world;
-	public Vector2 heading = new Vector2(1, 0);
+	public Heading heading = Heading.Right;
 	
 	public Player(World world_, Vector2 position) {
 		super(position);
@@ -61,12 +62,9 @@ public class Player extends Entity {
 			
 			if(enemypos.len2() < attackRange * attackRange) {
 				enemypos.nor();
-				float angle = (float)Math.acos(heading.dot(enemypos));
+				float angle = (float)Math.acos(heading == Heading.Left ? -enemypos.x : enemypos.x);
 				
-				System.out.println("In Range");
-				
-				if(angle < attackAngle) {
-					System.out.println("Killed!");
+				if((enemypos.y >= 0 && angle <= Math.PI / 2) || (enemypos.y < 0 && angle < attackAngle)) {
 					enemy.state = Enemy.State.DEAD;
 				}
 			}
@@ -98,6 +96,15 @@ public class Player extends Entity {
 			}
 		}
 
+		boolean displayDebug = false;
+
+		if(displayDebug) {
+			world.renderer.sr.setProjectionMatrix(world.renderer.camera.combined);
+			world.renderer.sr.begin(ShapeType.Line);
+			Vector2 pos = getCenter();
+			world.renderer.sr.arc(pos.x, pos.y, attackRange, heading == Heading.Left ? 90 : -attackAngle * MathUtils.radiansToDegrees, attackAngle * MathUtils.radiansToDegrees + 90, 30);
+			world.renderer.sr.end();
+		}
 	}
 	
 	private void processMove (World world, float deltaTime) {
@@ -127,8 +134,8 @@ public class Player extends Entity {
 		position.add(movement);
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
 		
-		if(movement.x != 0 && movement.y != 0)
-			heading = movement.nor();
+		if(movement.x != 0)
+			heading = movement.x < 0 ? Heading.Left : Heading.Right;
 	}
 	
 	public void attackedByEnemy(double damage) {
@@ -138,5 +145,9 @@ public class Player extends Entity {
 	
 	enum State{
 		IDLE, MOVING_UP, MOVING_DOWN, MOVING_LEFT, MOVING_RIGHT, TAKINGPILL, DEAD
+	}
+	
+	enum Heading {
+		Left, Right
 	}
 }

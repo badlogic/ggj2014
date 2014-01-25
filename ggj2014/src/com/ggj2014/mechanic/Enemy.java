@@ -48,7 +48,7 @@ public class Enemy extends Entity {
 
 			boolean in_sight = true;
 
-			boolean displayDebug = true;
+			boolean displayDebug = false;
 
 			if(displayDebug) {
 				world.renderer.sr.setProjectionMatrix(world.renderer.camera.combined);
