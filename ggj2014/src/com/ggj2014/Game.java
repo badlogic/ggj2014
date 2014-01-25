@@ -68,15 +68,6 @@ public class Game implements ApplicationListener {
 		batch.begin();
 		batch.draw(img, bucket.x, bucket.y);
 		batch.end();*/
-		
-		if (Gdx.input.isKeyPressed(Keys.LEFT))
-			camera.position.x -= 20 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.RIGHT))
-			camera.position.x += 20 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.DOWN))
-			camera.position.y -= 20 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.UP))
-			camera.position.y += 20 * Gdx.graphics.getDeltaTime();
 	}
 
 	@Override
