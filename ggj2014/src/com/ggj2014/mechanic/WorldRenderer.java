@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -18,9 +19,9 @@ import com.badlogic.gdx.utils.Array;
 
 public class WorldRenderer {	
 	private static final float CAM_DAMP = 4;
-	private static final int LAYER_FLOOR = 0;
-	private static final int LAYER_INTERIEUR = 2;
-	private static final int LAYER_UPPER = 5;
+	private int LAYER_FLOOR = 0;
+	private int LAYER_FLOOR_UPPER = 1;
+	private int LAYER_INTERIEUR = 3;
 	
 	World world;
 	SpriteBatch batch;
@@ -32,6 +33,8 @@ public class WorldRenderer {
 	ShapeRenderer sr = new ShapeRenderer();
 	public Texture[] patient1 = new Texture[2];
 	public Texture[] patient2 = new Texture[2];
+	public Texture doorClosed;
+	public Texture doorOpen;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -47,12 +50,24 @@ public class WorldRenderer {
 		if(!vignetteShader.isCompiled())
 			System.out.println(vignetteShader.getLog());
 		batch.setShader(vignetteShader);
+		
+		for(int i = 0; i < world.map.getLayers().getCount(); i++) {
+			MapLayer layer = world.map.getLayers().get(i);
+			if(layer.getName().equals("floor")) LAYER_FLOOR = i;
+			if(layer.getName().equals("floor_upper")) LAYER_FLOOR_UPPER = i;
+			if(layer.getName().equals("interieur")) LAYER_INTERIEUR = i;
+		}
+		
+		System.out.println(LAYER_FLOOR + ", " + LAYER_FLOOR_UPPER + ", " + LAYER_INTERIEUR);
 	}
 	
 	private void loadAssets () {				
 		// images & animations
 		loadImage(patient1, "patient1");
 		loadImage(patient2, "patient2");
+		
+		doorOpen = new Texture(Gdx.files.internal("graphics/door-open.png"));
+		doorClosed = new Texture(Gdx.files.internal("graphics/door-closed.png"));
 	}
 	
 	private void loadImage(Texture[] images, String path) {
@@ -133,6 +148,8 @@ public class WorldRenderer {
 			}
 		}
 		batch.end();
+		
+		tileMapRenderer.render(new int[] { LAYER_FLOOR_UPPER });
 		
 		// draw entity bounds
 		sr.begin(ShapeType.Line);
