@@ -1,5 +1,6 @@
 package com.ggj2014.mechanic;
 
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -26,6 +27,9 @@ public class World {
 	}
 	
 	private void loadLevel () {
+		TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
+		params.textureMinFilter = TextureFilter.Linear;
+		params.textureMagFilter = TextureFilter.Linear;
 		map = new TmxMapLoader().load("levels/testmap.tmx");		
 
 		// load objects

@@ -4,13 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class WorldRenderer {	
+	private static final float CAM_DAMP = 4;
 	World world;
 	SpriteBatch batch;
 	public OrthographicCamera camera;
@@ -22,8 +25,8 @@ public class WorldRenderer {
 	
 	public WorldRenderer(World world) {
 		this.world = world;
-		loadAssets();				
-		tileMapRenderer = new OrthogonalTiledMapRenderer(world.map, 1f / World.TILE_SIZE);
+		loadAssets();
+		tileMapRenderer = new OrthogonalTiledMapRenderer(world.map, 1f / World.TILE_SIZE);		
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth() / World.TILE_SIZE, Gdx.graphics.getHeight() / World.TILE_SIZE);
@@ -37,9 +40,13 @@ public class WorldRenderer {
 	private void loadImage(Texture[] images, String path) {
 		images[World.REAL] = new Texture(Gdx.files.internal("graphics/" + path + "-real.png"));
 		images[World.GHOST] = new Texture(Gdx.files.internal("graphics/" + path + "-geist.png"));
+		for(int i = 0; i < images.length; i++) {
+			images[i].setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		}
 	}
 
 	public void render(float deltaTime) {
+		cameraFollow(deltaTime);
 		camera.update();
 		
 		// render tiles
@@ -82,5 +89,10 @@ public class WorldRenderer {
 			}
 		}
 		sr.end();
+	}
+	
+	private void cameraFollow (float deltaTime) {
+		Vector2 dist = new Vector2(world.player.position).sub(camera.position.x, camera.position.y);
+		camera.position.add(dist.x * deltaTime * CAM_DAMP, dist.y * deltaTime * CAM_DAMP, 0);
 	}
 }
