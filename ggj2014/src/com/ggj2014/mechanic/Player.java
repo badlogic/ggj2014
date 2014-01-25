@@ -9,30 +9,67 @@ import com.ggj2014.ScreenManager;
 	
 public class Player extends Entity {
 	public float sightRange = 50;
+	public float attackRange = 2;
+	public float attackAngle = (float)Math.PI / 3;
 	public float speed = 3;
 	public State state = State.IDLE;
 	public double health = 100;
 	public boolean actionPressed = false;
 	public World world;
+	public Vector2 heading = new Vector2(1, 0);
 	
-	public Player(Vector2 position) {
+	public Player(World world_, Vector2 position) {
 		super(position);
+		world = world_;
 		ScreenManager.multiplexer.addProcessor(new InputAdapter() {
 			@Override
 			public boolean keyDown (int keycode) {
-				if(keycode == Keys.SPACE) {	
-					if(world != null) {
-						world.toggleMode();
+				switch (keycode) {
+				case Keys.TAB:
+					world.toggleMode();
+					return true;
+					
+				case Keys.SPACE:
+				case Keys.E:
+					if(world.mode == world.GHOST) {
+						attack();
 					}
+					return true;
+
+				default:
+					break;
 				}
 				return false;
 			}
 		});
 	}
 	
+	public void attack() {
+		Vector2 pos = getCenter();
+		Vector2 enemypos;
+		
+		for(Enemy enemy : world.enemies) {
+			if(enemy.state == Enemy.State.DEAD)
+				continue;
+			
+			enemypos = enemy.getCenter().sub(pos);
+			
+			if(enemypos.len2() < attackRange * attackRange) {
+				enemypos.nor();
+				float angle = (float)Math.acos(heading.dot(enemypos));
+				
+				System.out.println("In Range");
+				
+				if(angle < attackAngle) {
+					System.out.println("Killed!");
+					enemy.state = Enemy.State.DEAD;
+				}
+			}
+		}
+	}
+
 	@Override
 	public void update(World world, float deltaTime) {
-		this.world = world;
 		State oldState = state;
 		// as long as we aren't dead the player can 
 		// perform actions
@@ -48,9 +85,8 @@ public class Player extends Entity {
 		{
 			Entity entity = world.entities.get(i);
 		
-			if(entity instanceof Pill)
-			{
-				if(entity.bounds.overlaps(this.bounds)){
+			if(entity instanceof Pill) {
+				if(entity.bounds.overlaps(this.bounds)) {
 					((Pill) entity).pickUp();
 					world.mode = world.REAL;
 				}
@@ -85,10 +121,9 @@ public class Player extends Entity {
 		world.clipCollision(bounds, movement);
 		position.add(movement);
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
-	}
-
-	private void processAttack(World world, float deltaTime) {
-		// TODO
+		
+		if(movement.x != 0 && movement.y != 0)
+			heading = movement.nor();
 	}
 	
 	public void attackedByEnemy(double damage) {
