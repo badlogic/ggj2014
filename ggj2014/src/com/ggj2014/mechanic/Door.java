@@ -20,6 +20,10 @@ public class Door extends Entity {
 	public void checkDoor(World world){
 		if(isOpened)
 		{
+			if(((int)position.x == (int)world.player.position.x)&&((int)position.y == (int)world.player.position.y))
+			{
+				System.out.println("Bäm!");
+			}
 			if(world.player.position.dst(position) < 2.0f && !(((int)position.x == (int)world.player.position.x))&&((int)position.y == (int)world.player.position.y)) {
 				isOpened = false;
 				world.walls[(int)position.x][(int)position.y] = new Rectangle(position.x, position.y, 1, 1);
