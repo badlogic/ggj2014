@@ -157,7 +157,7 @@ public class WorldRenderer {
 		sr.begin(ShapeType.Line);
 		sr.setColor(0, 1, 0, 1);
 		for(Entity entity: world.entities) {			
-			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);		
+			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);	
 		}
 		sr.end();
 	}

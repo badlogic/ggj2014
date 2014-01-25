@@ -93,6 +93,8 @@ public class World {
 			if(type.equals("pille")) {
 				Pill pill = new Pill(object.get("x", Float.class), object.get("y", Float.class));
 				pill.position.scl(1f / TILE_SIZE);
+				pill.bounds.x /= TILE_SIZE;
+				pill.bounds.y /= TILE_SIZE;
 				entities.add(pill);
 			}
 		}
