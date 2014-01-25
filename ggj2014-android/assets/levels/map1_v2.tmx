@@ -77,7 +77,11 @@
   <object name="door_v" type="door_v" gid="3" x="2430" y="448"/>
   <object name="door_v" type="door_v" gid="3" x="1473" y="448"/>
   <object name="door_v" type="door_v" gid="3" x="832" y="449"/>
-  <object name="door_v" type="door_v" gid="3" x="768" y="2816"/>
+  <object name="door_v" type="door_v" gid="3" x="768" y="2816">
+   <properties>
+    <property name="switch" value="switch5"/>
+   </properties>
+  </object>
   <object name="door_v" type="door_v" gid="3" x="1410" y="2946"/>
   <object name="door_v" type="door_v" gid="3" x="962" y="1856"/>
   <object name="door_v" type="door_v" gid="3" x="1408" y="1856"/>
@@ -86,13 +90,33 @@
   <object name="door_h" type="door_h" gid="21" x="1533" y="2367"/>
   <object name="door_h" type="door_h" gid="21" x="1215" y="2370"/>
   <object name="door_h" type="door_h" gid="21" x="512" y="2367"/>
-  <object name="door_h" type="door_h" gid="21" x="382" y="2627"/>
-  <object name="door_h" type="door_h" gid="21" x="768" y="2112"/>
+  <object name="door_h" type="door_h" gid="21" x="382" y="2627">
+   <properties>
+    <property name="switch" value="switch5"/>
+   </properties>
+  </object>
+  <object name="door_h" type="door_h" gid="21" x="768" y="2112">
+   <properties>
+    <property name="switch" value="switch4"/>
+   </properties>
+  </object>
   <object name="door_h" type="door_h" gid="21" x="1215" y="2048"/>
-  <object name="door_h" type="door_h" gid="21" x="704" y="1728"/>
+  <object name="door_h" type="door_h" gid="21" x="704" y="1728">
+   <properties>
+    <property name="switch" value="switch4"/>
+   </properties>
+  </object>
   <object name="door_h" type="door_h" gid="21" x="256" y="1728"/>
-  <object name="door_h" type="door_h" gid="21" x="2176" y="1728"/>
-  <object name="door_h" type="door_h" gid="21" x="2814" y="1730"/>
+  <object name="door_h" type="door_h" gid="21" x="2176" y="1728">
+   <properties>
+    <property name="switch" value="switch2"/>
+   </properties>
+  </object>
+  <object name="door_h" type="door_h" gid="21" x="2814" y="1730">
+   <properties>
+    <property name="switch" value="switch2"/>
+   </properties>
+  </object>
   <object name="door_h" type="door_h" gid="21" x="2814" y="2432"/>
   <object name="door_h" type="door_h" gid="21" x="3008" y="2434"/>
   <object name="door_h" type="door_h" gid="21" x="2176" y="1406">
@@ -106,8 +130,16 @@
    </properties>
   </object>
   <object name="door_h" type="door_h" gid="21" x="576" y="1410"/>
-  <object name="door_h" type="door_h" gid="21" x="383" y="960"/>
-  <object name="door_h" type="door_h" gid="21" x="1153" y="833"/>
+  <object name="door_h" type="door_h" gid="21" x="383" y="960">
+   <properties>
+    <property name="switch" value="switch3"/>
+   </properties>
+  </object>
+  <object name="door_h" type="door_h" gid="21" x="1153" y="833">
+   <properties>
+    <property name="switch" value="switch3"/>
+   </properties>
+  </object>
   <object name="door_h" type="door_h" gid="21" x="1663" y="833"/>
   <object name="door_h" type="door_h" gid="21" x="2176" y="832"/>
   <object name="door_h" type="door_h" gid="21" x="2688" y="836"/>
