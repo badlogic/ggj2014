@@ -17,7 +17,9 @@ public class Game implements ApplicationListener {
 	private Sprite sprite;
 	
 	@Override
-	public void create() {		
+	public void create() {	
+		
+		//Some Code here 
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
