@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Entity {
 	public Vector2 position;
+	public boolean isVisible = true;
 	
 	public Entity(float x, float y) {
 		this.position = new Vector2(x, y);
