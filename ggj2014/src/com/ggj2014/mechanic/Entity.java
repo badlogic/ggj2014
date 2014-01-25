@@ -9,5 +9,5 @@ public abstract class Entity {
 		this.position.set(x, y);
 	}
 	
-	public abstract update(float deltaTime);
+	public abstract void update(World world, float deltaTime);
 }
