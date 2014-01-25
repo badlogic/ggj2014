@@ -31,6 +31,11 @@ public class Player extends Entity {
 					
 				case Keys.SPACE:
 				case Keys.E:
+					for(Entity e : world.entities) {
+						if(e instanceof Door)
+							((Door)e).checkDoor(world);
+					}
+					
 					if(world.mode == world.GHOST) {
 						attack();
 					}
