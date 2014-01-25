@@ -4,8 +4,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.ggj2014.mechanic.Goal;
 import com.ggj2014.mechanic.Player;
@@ -36,6 +39,7 @@ public class Level {
 	}
 	
 	public void render(OrthographicCamera camera) {
+		camera.update();
 		renderer.setView(camera);
 		renderer.render();
 	}
@@ -48,5 +52,16 @@ public class Level {
 		// TODO Auto-generated method stub
 		world.entities.add(new Player(playerStartPosition));
 		world.entities.add(new Goal(goalPosition));
+		
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("wall");
+		world.walls = new Rectangle[layer.getWidth()][layer.getHeight()];
+		
+		for(int x = 0; x < layer.getWidth(); x++) {
+			for(int y = 0; y < layer.getHeight(); y++) {
+				if(layer.getCell(x, y) != null) {
+					world.walls[x][y] = new Rectangle(x, y, 1, 1);
+				}
+			}
+		}
 	}
 }
