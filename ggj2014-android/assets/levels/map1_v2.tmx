@@ -149,7 +149,7 @@
   <object name="switch3" type="switch" gid="26" x="575" y="961"/>
   <object name="switch4" type="switch" gid="26" x="191" y="2050"/>
   <object name="switch5" type="switch" gid="26" x="1216" y="2625"/>
-  <object name="player" type="player" gid="14" x="2203" y="3151"/>
+  <object name="player" type="player" gid="14" x="1171" y="1877"/>
   <object name="goal" type="goal" gid="14" x="1149" y="187"/>
  </objectgroup>
 </map>
