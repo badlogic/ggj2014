@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 public class World {
 	public static final int REAL = 0;
 	public static final int GHOST = 1;
+	public static final float TIME = 20;
 	public static int TILE_SIZE = 64;
 	
 	public TiledMap map;
@@ -24,7 +25,8 @@ public class World {
 	public Array<Enemy> enemies = new Array<Enemy>();
 	public Player player;
 	public Goal goal;
-	private int mode = REAL;
+	public int mode = REAL;
+	private float modeTimer = TIME;
 	public WorldRenderer renderer;
 	
 	public World(String level) {
@@ -88,6 +90,14 @@ public class World {
 	public void update(float deltaTime) {
 		for(Entity entity: entities) {
 			entity.update(this, deltaTime);
+		}
+		if(mode == REAL){
+			modeTimer-=deltaTime;
+			if(modeTimer<=0)
+			{
+				modeTimer = TIME;
+				mode = GHOST;
+			}
 		}
 	}
 	
@@ -201,4 +211,5 @@ public class World {
 	public int getMode() {
 		return mode;
 	}
+
 }
