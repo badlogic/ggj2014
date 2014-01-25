@@ -18,7 +18,6 @@ public class Player extends Entity {
 	public Player(Vector2 position) {
 		super(position);
 		ScreenManager.multiplexer.addProcessor(new InputAdapter() {
-
 			@Override
 			public boolean keyDown (int keycode) {
 				if(keycode == Keys.SPACE) {	

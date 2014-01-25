@@ -18,6 +18,10 @@ import com.badlogic.gdx.utils.Array;
 
 public class WorldRenderer {	
 	private static final float CAM_DAMP = 4;
+	private static final int LAYER_FLOOR = 0;
+	private static final int LAYER_INTERIEUR = 2;
+	private static final int LAYER_UPPER = 5;
+	
 	World world;
 	SpriteBatch batch;
 	public OrthographicCamera camera;
@@ -81,7 +85,7 @@ public class WorldRenderer {
 		
 		// render tiles
 		tileMapRenderer.setView(camera);
-		tileMapRenderer.render();
+		tileMapRenderer.render(new int[] { LAYER_FLOOR });
 
 		// render collision layer
 		sr.setProjectionMatrix(camera.combined);
@@ -98,6 +102,9 @@ public class WorldRenderer {
 			}
 			sr.end();
 		}
+		
+		// render interieur
+		tileMapRenderer.render(new int[] { LAYER_INTERIEUR });
 		
 		// render objects
 		batch.setProjectionMatrix(camera.combined);

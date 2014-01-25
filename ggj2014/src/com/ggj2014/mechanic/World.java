@@ -52,8 +52,16 @@ public class World {
 		goal.position.scl(1f / TILE_SIZE);
 		
 		// load collision map
-		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("floor");
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("wall");
 		walls = new Rectangle[layer.getWidth()][layer.getHeight()];
+		for(int x = 0; x < layer.getWidth(); x++) {
+			for(int y = 0; y < layer.getHeight(); y++) {
+				if(layer.getCell(x, y) != null) {
+					walls[x][y] = new Rectangle(x, y, 1, 1);
+				}
+			}
+		}
+		layer = (TiledMapTileLayer) map.getLayers().get("interieur");
 		for(int x = 0; x < layer.getWidth(); x++) {
 			for(int y = 0; y < layer.getHeight(); y++) {
 				if(layer.getCell(x, y) != null) {
