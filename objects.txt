@@ -1,0 +1,8 @@
+enemy1; großer gegner
+enemy2; kleiner gegner
+pill; pille
+door_h; horizontale tür
+door_v; vertikale tür
+switch; switch
+player; spieler
+goal; ziel (nicht sinnvoll dargestellt)
