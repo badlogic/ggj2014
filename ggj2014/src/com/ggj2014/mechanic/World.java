@@ -27,19 +27,19 @@ public class World {
 	public WorldRenderer renderer;
 	
 	public World(String level) {
-		loadLevel();
+		loadLevel(level);
 	}
 	
 	public void setRenderer(WorldRenderer renderer) {
 		this.renderer = renderer;
 	}
 	
-	private void loadLevel () {
+	private void loadLevel (String level) {
 		// load tile map
 		TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
 		params.textureMinFilter = TextureFilter.Linear;
 		params.textureMagFilter = TextureFilter.Linear;
-		map = new TmxMapLoader().load("levels/testmap.tmx");		
+		map = new TmxMapLoader().load(level);
 
 		// load objects from map
 		MapObjects objects = map.getLayers().get("objects").getObjects();

@@ -13,7 +13,7 @@ public class GameplayScreen extends Screen {
 	public GameplayScreen (ScreenManager manager) {
 		super(manager);
 		
-		world = new World("levels/testmap.tmx");
+		world = new World("levels/map1.tmx");
 		renderer = new WorldRenderer(world);
 		world.setRenderer(renderer);
 	}

@@ -3,17 +3,17 @@
  <tileset firstgid="1" name="dodgeball-hospital" tilewidth="64" tileheight="64">
   <image source="dodgeball-hospital.png" trans="ff00ff" width="1024" height="128"/>
  </tileset>
- <layer name="Kachelebene 1" width="50" height="50">
+ <layer name="floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztmMsSgyAMRSnbsum6//+fnU7rFJm8bkCNlkVmVAjkmFwBc0opX8Tuit2ae8qnEM+ksbV5LXHVfd/2VOzR3FM+hXgmja3Na4mr7pu/MSBm9ZH6aWMgcU2Oa3CMsJHz/ns+Jsfk2IqDW8+ptly1c+s12k6t5x4Obj2n2nLVzq3XaDu1nlOMGj9SD9ZnvXVFMWr8ETk8dTU5PqbV6Vk4tDo9C0fPHFE5RuVDOzcWQ59eH88c6Lm2rWeLoT6eOXrPtdFscsQySuclrfWD7Ek9/59yM7bm18bA6byktX6QPann/1Nuxtb82hgsOu/ZA3nPWt71bEQsvbW9B4eX84h8aDqU/KVvxN4ckq6k74X2jYhSV3VcaKzROJAYJsfPUH3VHKP201Rfiz9Vx8g7tui8KO1aX4s/8o4LcR15n7gwSO9luY7OweUK0QdX1+g+1jIeFxuqc0QX6D7WMh5VT63+LRxovrfsV/OfncOjpa10Hp3jKvkYnb/oHFfJx+TwcxxtI2J6AY8XdNM=
   </data>
  </layer>
- <layer name="Kachelebene 2" width="50" height="50">
+ <layer name="floor2" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztmMEOgyAMhjVZvHFwW3z/R50eSEjXllI6wNEvMRIpBYXyY5flf1kVbTZBe86vps8cO1P3APfIQbR/EM9r+4T9X4Tzep7Xi/EVeYO71L4GrE8LvzXA7yX9flr/Do/Px1j4fMyFZj5SDd5IK75+ray3INXgVM8x3aXqd6Qe6wNrj2k6pOb9o9aG5Vt3A6iHSNZFqu/QB3dewig5y2jR+O99XunFqPMxKz4f/dDswaVtrHSO05bcHoxR2oayp7SOel76v9oKajyjjdPh4eKtJhZz+Smpb6kdF5+aeI9g+ak0VqW+Jec+DKkWBXCP5bR9LEcbLlap8Wix9ue0A8Zgbl21AtNMOFZNrLYGi0M41lysjjAfHCONZSZKNByz/WXeCcLlgUpiF7O1jv2NKF/c6Qx8EOWRkeQLc1iva42/0nVi9S/Lgfmz+N4pXL6Vg7LP+cmdd63frxd32necOSjNpXru1ZmBD6UQClg=
   </data>
  </layer>
- <objectgroup name="Objektebene 1" width="50" height="50">
+ <objectgroup name="objects" width="50" height="50">
   <object name="enemy1" type="enemy1" gid="30" x="988" y="230"/>
   <object name="enemy1" type="enemy1" gid="30" x="1512" y="1022"/>
   <object name="enemy1" type="enemy1" gid="30" x="410" y="1156"/>
