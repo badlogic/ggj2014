@@ -37,15 +37,6 @@ public class Game implements ApplicationListener {
 
 	@Override
 	public void render() {		
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f ,1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		camera.update();
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		batch.draw(img, touch.x, touch.y);
-		batch.end();
-		
 		if(Gdx.input.justTouched()) {
 			long id = sound.play();
 			sound.setPan(id, MathUtils.random(-1, 1), 1);
@@ -54,6 +45,16 @@ public class Game implements ApplicationListener {
 		if(Gdx.input.isTouched()) {		
 			camera.unproject(touch.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 		}
+		
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f ,1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(img, touch.x, touch.y);
+		batch.end();
 	}
 
 	@Override
