@@ -1,10 +1,12 @@
 package com.ggj2014.mechanic;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.ggj2014.Level;
 
 public class World {
 	public Level level;
+	public Rectangle[][] walls;
 	public Array<Entity> entities = new Array<Entity>();
 	public Player player; 
 	
