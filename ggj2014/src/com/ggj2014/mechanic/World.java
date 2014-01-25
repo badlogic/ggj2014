@@ -49,7 +49,7 @@ public class World {
 		MapObjects objects = map.getLayers().get("objects").getObjects();
 		MapProperties playerProps = objects.get("player").getProperties();
 		MapProperties goalProps = objects.get("goal").getProperties();
-		player = new Player(new Vector2(playerProps.get("x", Float.class), playerProps.get("y", Float.class)));
+		player = new Player(this, new Vector2(playerProps.get("x", Float.class), playerProps.get("y", Float.class)));
 		player.position.scl(1f / TILE_SIZE);		
 		entities.add(player);
 		goal = new Goal(new Vector2(goalProps.get("x", Float.class), goalProps.get("y", Float.class)));
@@ -214,7 +214,10 @@ public class World {
 	}
 	
 	public void toggleMode() {
-		
+		if(mode == GHOST)
+			mode = REAL;
+		else
+			mode = GHOST;
 	}
 	
 	public int getMode() {

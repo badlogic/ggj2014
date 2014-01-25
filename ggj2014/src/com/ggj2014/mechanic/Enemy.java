@@ -33,24 +33,28 @@ public class Enemy extends Entity {
 
 	@Override
 	public void update(World world, float deltaTime) {
+		if(state == State.DEAD)
+			return;
+		
 		Vector2 playerpos = world.player.getCenter();
 		Vector2 pos = getCenter();
 		
 		Vector2 new_velocity = new Vector2(0, 0);
 		
 		float length2 = playerpos.sub(pos).len2();
-		if(length2 < sightRange * sightRange) {
+		
+		if(world.mode == world.GHOST && length2 < sightRange * sightRange) {
 			Array<GridPoint2> points = bresenham.line((int)pos.x, (int)pos.y, (int)(playerpos.x + pos.x), (int)(playerpos.y + pos.y));
-			
+
 			boolean in_sight = true;
 
 			boolean displayDebug = true;
-			
+
 			if(displayDebug) {
 				world.renderer.sr.setProjectionMatrix(world.renderer.camera.combined);
 				world.renderer.sr.begin(ShapeType.Line);
 			}
-			
+
 			for(GridPoint2 point : points) {
 				if(displayDebug) {
 					Color c = new Color(0, 0, world.walls[point.x][point.y] == null ? 1 : 0, 1);
@@ -61,7 +65,7 @@ public class Enemy extends Entity {
 					break;
 				}
 			}
-			
+
 			if(displayDebug) {
 				world.renderer.sr.end();
 			}
@@ -84,27 +88,27 @@ public class Enemy extends Entity {
 		Vector2 spos = new Vector2(0, 0);
 		
 		for(Enemy enemy : world.enemies) {
-			if(enemy != this) {
-				enemypos = enemy.getCenter();
+			if(enemy == this || enemy.state == State.DEAD)
+				continue;
+			enemypos = enemy.getCenter();
+			
+			float distance2 = enemypos.dst2(pos);
+			if(distance2 < flockRange * flockRange) {
+				relpos = enemypos.cpy().sub(pos);
+				t1 = relpos.cpy().nor();
+				float angle = (float)Math.acos(normvel.dot(t1));
 				
-				float distance2 = enemypos.dst2(pos);
-				if(distance2 < flockRange * flockRange) {
-					relpos = enemypos.cpy().sub(pos);
-					t1 = relpos.cpy().nor();
-					float angle = (float)Math.acos(normvel.dot(t1));
-					
-					if(angle < alignment_angle) {
-						avelocity.add(enemy.velocity);
-					}
-					
-					if(angle < cohesion_angle) {
-						cpos.add(enemypos);
-						count++;
-					}
-					
-					if(angle < separation_angle) {
-						spos.add(relpos);
-					}
+				if(angle < alignment_angle) {
+					avelocity.add(enemy.velocity);
+				}
+				
+				if(angle < cohesion_angle) {
+					cpos.add(enemypos);
+					count++;
+				}
+				
+				if(angle < separation_angle) {
+					spos.add(relpos);
 				}
 			}
 		}
@@ -132,6 +136,6 @@ public class Enemy extends Entity {
 	}
 	
 	enum State {
-		IDLE, MOVING_LEFT, MOVING_RIGHT, ATTACKING, WANDERING 
+		IDLE, MOVING_LEFT, MOVING_RIGHT, ATTACKING, WANDERING, DEAD
 	}
 }
