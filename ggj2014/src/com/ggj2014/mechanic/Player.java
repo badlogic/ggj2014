@@ -47,22 +47,22 @@ public class Player extends Entity {
 	
 	private void processMove (World world, float deltaTime) {
 		Vector2 movement = new Vector2();
-		if (Gdx.input.isKeyPressed(Keys.LEFT))
+		if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))
 		{
 			movement.x -= 1;
 			this.state = State.MOVING_LEFT;
 		}
-		if (Gdx.input.isKeyPressed(Keys.RIGHT))
+		if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D))
 		{
 			movement.x += 1;
 			this.state = State.MOVING_RIGHT;
 		}
-		if (Gdx.input.isKeyPressed(Keys.DOWN))
+		if (Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))
 		{
 			movement.y -= 1;
 			this.state = State.MOVING_DOWN;
 		}
-		if (Gdx.input.isKeyPressed(Keys.UP))
+		if (Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W))
 		{
 			movement.y += 1;
 			this.state = State.MOVING_UP;
