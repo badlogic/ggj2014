@@ -1,4 +1,6 @@
 ggj2014
 =======
 
-Our groups Global Game Jam 2014 prototype
+Our group's Global Game Jam 2014 prototype
+
+No time to explain!
