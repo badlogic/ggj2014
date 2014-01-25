@@ -1,6 +1,6 @@
 package com.ggj2014.mechanic;
  
-public class Enemy extends Entity {
+public class Enemy2 extends Entity {
 	public float combatRange = 1;
 	public float sightRange = 5;
 	public float speed = 2;
@@ -9,7 +9,7 @@ public class Enemy extends Entity {
 	public float stateDuration;
 	
 	
-	public Enemy(float x, float y) {
+	public Enemy2(float x, float y) {
 		super(x, y);
 	}
 
