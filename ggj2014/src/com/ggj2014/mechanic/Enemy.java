@@ -13,7 +13,6 @@ public class Enemy extends Entity {
 	
 	public Enemy(float x, float y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -22,18 +21,23 @@ public class Enemy extends Entity {
 		if(status == State.IDLE){
 			if(this.position.dst(player.position)<combatRange) //If Player is in combat range beat the shit out of the player
 					{
-				
+						//TODO: A* Zielfindung. Derweil nur zufällige Beweung in eine Richtung maximal mit geschwindigkeit zwischen 0 - speed
+					this.position = this.position.add(new Vector2(-1 + (int)(Math.random() * speed * ((2) + 1)),-1 + (int)(Math.random() * speed * ((2) + 1))));
+					this.status = State.MOVING;
 					}
 			else if(this.position.dst(player.position)<combatRange) //Else if Player in Line of Sight & Range of Site -> move towards player.
 					{
-				
+					player.attackedByEnemy(Math.random()*damage);
+					this.status = State.ATTACKING;
 					}
 			else{ // Else if wander arround randomly
 				
 				this.position = this.position.add(new Vector2(-1 + (int)(Math.random() * ((2) + 1)),-1 + (int)(Math.random() * ((2) + 1))));
+				this.status = State.MOVING;
 			}
 	
 		}
+		
 
 		
 	}
