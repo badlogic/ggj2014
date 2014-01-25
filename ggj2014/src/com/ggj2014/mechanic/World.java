@@ -84,18 +84,24 @@ public class World {
 				entities.add(enemy);
 				enemies.add(enemy);
 			}
-			if(type.equals("enemy2")) {
+			else if(type.equals("enemy2")) {
 				Enemy enemy = new Enemy2(object.get("x", Float.class), object.get("y", Float.class));
 				enemy.position.scl(1f / TILE_SIZE);
 				entities.add(enemy);
 				enemies.add(enemy);
 			}
-			if(type.equals("pille")) {
+			else if(type.equals("pille")) {
 				Pill pill = new Pill(object.get("x", Float.class), object.get("y", Float.class));
 				pill.position.scl(1f / TILE_SIZE);
 				pill.bounds.x /= TILE_SIZE;
 				pill.bounds.y /= TILE_SIZE;
 				entities.add(pill);
+			}
+			else if(type.equals("switch")) {
+				Switch doorswitch =  new Switch(object.get("x", Float.class), object.get("y", Float.class));
+				doorswitch.position.scl(1f / TILE_SIZE);
+				doorswitch.name = object.get("name", String.class);
+				entities.add(doorswitch);
 			}
 		}
 	}
