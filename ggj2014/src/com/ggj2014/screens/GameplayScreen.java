@@ -1,6 +1,7 @@
 package com.ggj2014.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.ggj2014.Level;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
 import com.ggj2014.mechanic.World;
@@ -12,6 +13,9 @@ public class GameplayScreen extends Screen {
 	
 	public GameplayScreen (ScreenManager manager) {
 		super(manager);
+		
+		world = new World(new Level());
+		renderer = new WorldRenderer(world);
 	}
 
 	@Override

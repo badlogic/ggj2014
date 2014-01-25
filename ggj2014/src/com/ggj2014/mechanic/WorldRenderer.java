@@ -8,12 +8,12 @@ public class WorldRenderer {
 	SpriteBatch batch;
 	public OrthographicCamera camera;
 	
-	public WorldRenderer() {
+	public WorldRenderer(World world) {
 		batch = new SpriteBatch();
-		camera = new OrthographicCamera(Gdx.graphics.getWidth() / 32, Gdx.graphics.getHeight() / 32);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth() / world.level.getTileSize(), Gdx.graphics.getHeight() / world.level.getTileSize());
 	}
 	
 	public void render(World world, float deltaTime) {
-		
+		world.level.render(camera);
 	}
 }

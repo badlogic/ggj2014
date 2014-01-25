@@ -3,9 +3,18 @@
  <tileset firstgid="1" name="main" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="1024" height="2016"/>
  </tileset>
- <layer name="background" width="16" height="16">
+ <layer name="floor" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJyTZmBgcANiaQqwGxEYm7qRpF8Gj35cYYrMl8FiBjH2I8ujm0GqfnQ+tfTj8jM+OVLDH5fbiHEDITFy0g019ZObZ0E0ALRVNDg=
+   eJxzY2BgcBvFo3gUj0gMAJg0RgE=
   </data>
  </layer>
+ <layer name="wall" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJyTZoAAaQowMQCbulH9+MOUUFgTY780Ghsfnxh300I/IT9jkyPWfkJuI8YNhMQI2YFLjFr6yc2zIBoAsgQLLw==
+  </data>
+ </layer>
+ <objectgroup name="objects" width="16" height="16">
+  <object name="player" type="player" gid="1663" x="31" y="35"/>
+  <object name="goal" type="goal" gid="1" x="449" y="510"/>
+ </objectgroup>
 </map>
