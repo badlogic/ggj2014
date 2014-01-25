@@ -103,6 +103,30 @@ public class World {
 				doorswitch.name = object.get("name", String.class);
 				entities.add(doorswitch);
 			}
+			else if(type.equals("door_h")) {
+				Door door = new Door(object.get("x", Float.class), object.get("y", Float.class));
+				door.position.scl(1f / TILE_SIZE);
+				door.position.x = (float)Math.floor(door.position.x + 0.5f);
+				door.position.y = (float)Math.floor(door.position.y + 0.5f);
+				door.bounds.x = door.position.x;
+				door.bounds.y = door.position.y;
+				door.bounds.width = 1;
+				door.bounds.height = 2;
+				entities.add(door);
+				walls[(int)door.position.x][(int)door.position.y] = new Rectangle(door.position.x, door.position.y, 1, 1);
+			}
+			if(type.equals("door_v")) {
+				DoorVertical door = new DoorVertical(object.get("x", Float.class), object.get("y", Float.class));
+				door.position.scl(1f / TILE_SIZE);
+				door.position.x = (float)Math.floor(door.position.x + 0.5f);
+				door.position.y = (float)Math.floor(door.position.y + 0.5f);
+				door.bounds.x = door.position.x;
+				door.bounds.y = door.position.y;
+				door.bounds.width = 1;
+				door.bounds.height = 1;
+				entities.add(door);
+				walls[(int)door.position.x][(int)door.position.y] = new Rectangle(door.position.x, door.position.y, 1, 1);
+			}
 		}
 	}
 
