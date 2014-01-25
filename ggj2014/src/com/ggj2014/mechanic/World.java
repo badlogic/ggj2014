@@ -9,6 +9,7 @@ public class World {
 	
 	public World(Level level) {
 		this.level = level;
+		level.load(this);
 		// TODO parse map, create objects and collision layer
 	}
 	

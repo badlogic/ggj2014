@@ -11,6 +11,8 @@ public class WorldRenderer {
 	public WorldRenderer(World world) {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth() / world.level.getTileSize(), Gdx.graphics.getHeight() / world.level.getTileSize());
+		camera.position.x = 8;
+		camera.position.y = -8;
 	}
 	
 	public void render(World world, float deltaTime) {
