@@ -22,7 +22,6 @@ public class Door extends Entity {
 		{
 			if(((int)position.x == (int)world.player.position.x)&&((int)position.y == (int)world.player.position.y))
 			{
-				System.out.println("Bäm!");
 			}
 			if(world.player.position.dst(position) < 2.0f && !(((int)position.x == (int)world.player.position.x))&&((int)position.y == (int)world.player.position.y)) {
 				isOpened = false;
