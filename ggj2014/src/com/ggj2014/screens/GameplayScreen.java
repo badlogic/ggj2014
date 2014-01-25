@@ -15,13 +15,14 @@ public class GameplayScreen extends Screen {
 		
 		world = new World("levels/testmap.tmx");
 		renderer = new WorldRenderer(world);
+		world.setRenderer(renderer);
 	}
 
 	@Override
 	public void render () {
 		float delta = Gdx.graphics.getDeltaTime();
-		world.update(delta);
 		renderer.render(delta);
+		world.update(delta);
 	}
 
 	@Override

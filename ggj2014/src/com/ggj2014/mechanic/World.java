@@ -1,6 +1,8 @@
 package com.ggj2014.mechanic;
 
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -21,10 +23,15 @@ public class World {
 	public Array<Entity> entities = new Array<Entity>();
 	public Player player;
 	public Goal goal;
-	public int mode = REAL; 
+	public int mode = REAL;
+	public WorldRenderer renderer;
 	
 	public World(String level) {
 		loadLevel();
+	}
+	
+	public void setRenderer(WorldRenderer renderer) {
+		this.renderer = renderer;
 	}
 	
 	private void loadLevel () {
@@ -70,6 +77,100 @@ public class World {
 	public void update(float deltaTime) {
 		for(Entity entity: entities) {
 			entity.update(this, deltaTime);
+		}
+	}
+	
+	public void clipCollision(Rectangle bounds, Vector2 movement) {
+		Rectangle newbounds = new Rectangle(bounds.x + movement.x, bounds.y + movement.y, bounds.width, bounds.height);
+	
+		int sx, sy, ex, ey, ux, uy;
+		if(movement.x > 0) {
+			sx = Math.max((int)Math.floor(bounds.x), 0);
+			ex = Math.min((int)Math.ceil(newbounds.x + bounds.width) + 1, walls.length) ;
+			ux = 1;
+		}
+		else {
+			sx = Math.min((int)Math.ceil(bounds.x + bounds.width), walls.length - 1);
+			ex = Math.max((int)Math.floor(newbounds.x) - 1, -1);
+			ux = -1;
+		}
+		
+		if(movement.y > 0) {
+			sy = Math.max((int)Math.floor(bounds.y), 0);
+			ey = Math.min((int)Math.ceil(newbounds.y + bounds.height) + 1, walls[0].length);
+			uy = 1;
+		}
+		else {
+			sy = Math.min((int)Math.ceil(bounds.y + bounds.height), walls[0].length - 1);
+			ey = Math.max((int)Math.floor(newbounds.y) - 1, -1);
+			uy = -1;
+		}
+		
+		Color c = new Color(0, 0, 1, 1);
+		boolean displayDebug = false;
+		
+		if(displayDebug) {
+			renderer.sr.setProjectionMatrix(renderer.camera.combined);
+			renderer.sr.begin(ShapeType.Line);
+		}
+		
+		for(int x = sx; x != ex; x += ux) {
+			for(int y = sy; y != ey; y += uy) {
+				Rectangle r = walls[x][y];
+				if(r != null) {
+					if(displayDebug) {
+						renderer.sr.rect(r.x, r.y, r.width, r.height, c, c, c, c);
+					}
+					
+					if(r.overlaps(newbounds)) {
+						float x1, x2, y1, y2;
+						
+						if(movement.x > 0) {
+							x1 = bounds.x + bounds.width;
+							x2 = r.x;
+						}
+						else {
+							x1 = bounds.x;
+							x2 = r.x + r.width;
+						}
+						
+						if(movement.y > 0) {
+							y1 = bounds.y + bounds.height;
+							y2 = r.y;
+						}
+						else {
+							y1 = bounds.y;
+							y2 = r.y + r.height;
+						}
+						
+						float d1 = (x2 - x1) / movement.x;
+						float d2 = (y2 - y1) / movement.y;
+						
+						if(d1 >= 0 && d1 <= 1) {
+							// collision in x direction
+							movement.x = 0;
+						}
+						
+						if(d2 >= 0 && d2 <= 1) {
+							// collision in y direction
+							movement.y = 0;
+						}
+						
+						newbounds.x = bounds.x + movement.x;
+						newbounds.y = bounds.y + movement.y;
+					}
+				}
+			}
+		}
+		
+		if(displayDebug) {
+			c = new Color(1, 0, 1, 1);
+			float rx = Math.min(sx, ex - 1);
+			float ry = Math.min(sy, ey - 1);
+			float rwidth = Math.max(sx, ex - 1) - rx + 1;
+			float rheight = Math.max(sy, ey - 1) - ry + 1;
+			renderer.sr.rect(rx, ry, rwidth, rheight, c, c, c, c);
+			renderer.sr.end();
 		}
 	}
 }
