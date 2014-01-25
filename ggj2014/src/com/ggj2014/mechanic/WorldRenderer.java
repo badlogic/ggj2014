@@ -230,11 +230,11 @@ public class WorldRenderer {
 				if(entity.heading == Heading.Left) {					
 					frame = mainAttack.getKeyFrame(entity.stateTime, false);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 2, 2);
 					frame.flip(true, false);
 				} else {
 					frame = mainAttack.getKeyFrame(entity.stateTime, false);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 2, 2);
 				}
 				break;
 			default:
