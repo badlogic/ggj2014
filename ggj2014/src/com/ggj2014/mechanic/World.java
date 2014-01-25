@@ -21,6 +21,7 @@ public class World {
 	public TiledMap map;
 	public Rectangle[][] walls;
 	public Array<Entity> entities = new Array<Entity>();
+	public Array<Enemy> enemies = new Array<Enemy>();
 	public Player player;
 	public Goal goal;
 	private int mode = REAL;
@@ -74,11 +75,13 @@ public class World {
 		for(int i = 0; i < 10; i++) {
 			Enemy enemy = new Enemy(MathUtils.random(0, 15), MathUtils.random(0, 15));
 			entities.add(enemy);
+			enemies.add(enemy);
 		}
 		
 		for(int i = 0; i < 10; i++) {
 			Enemy2 enemy = new Enemy2(MathUtils.random(0, 15), MathUtils.random(0, 15));
 			entities.add(enemy);
+			enemies.add(enemy);
 		}
 	}
 

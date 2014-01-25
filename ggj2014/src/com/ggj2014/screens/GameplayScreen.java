@@ -1,6 +1,7 @@
 package com.ggj2014.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
 import com.ggj2014.mechanic.World;
@@ -23,6 +24,10 @@ public class GameplayScreen extends Screen {
 		float delta = Gdx.graphics.getDeltaTime();
 		renderer.render(delta);
 		world.update(delta);
+		
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
 	}
 
 	@Override
