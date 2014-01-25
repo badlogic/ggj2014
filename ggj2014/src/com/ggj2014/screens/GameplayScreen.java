@@ -1,7 +1,6 @@
 package com.ggj2014.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.ggj2014.Level;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
 import com.ggj2014.mechanic.World;
@@ -14,7 +13,7 @@ public class GameplayScreen extends Screen {
 	public GameplayScreen (ScreenManager manager) {
 		super(manager);
 		
-		world = new World(new Level());
+		world = new World("levels/testmap.tmx");
 		renderer = new WorldRenderer(world);
 	}
 
@@ -22,7 +21,7 @@ public class GameplayScreen extends Screen {
 	public void render () {
 		float delta = Gdx.graphics.getDeltaTime();
 		world.update(delta);
-		renderer.render(world, delta);
+		renderer.render(delta);
 	}
 
 	@Override

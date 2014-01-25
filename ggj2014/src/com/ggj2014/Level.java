@@ -28,7 +28,6 @@ public class Level {
 		renderer = new OrthogonalTiledMapRenderer(map, 1f / tileSize);
 
 		MapObjects objects = map.getLayers().get("objects").getObjects();
-		
 		MapProperties player = objects.get("player").getProperties();
 		MapProperties goal = objects.get("goal").getProperties();
 		
@@ -49,7 +48,6 @@ public class Level {
 	}
 
 	public void load(World world) {
-		// TODO Auto-generated method stub
 		world.entities.add(new Player(playerStartPosition));
 		world.entities.add(new Goal(goalPosition));
 		
