@@ -6,6 +6,7 @@ import com.ggj2014.Level;
 public class World {
 	public Level level;
 	public Array<Entity> entities = new Array<Entity>();
+	public Entity player; 
 	
 	public World(Level level) {
 		this.level = level;
