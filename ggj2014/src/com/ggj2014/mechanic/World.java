@@ -22,6 +22,7 @@ public class World {
 	public Rectangle[][] walls;
 	public Array<Entity> entities = new Array<Entity>();
 	public Array<Enemy> enemies = new Array<Enemy>();
+	public Array<Entity> delete = new Array<Entity>();
 	public Player player;
 	public Goal goal;
 	public int mode = GHOST;
@@ -132,6 +133,13 @@ public class World {
 		for(Entity entity: entities) {
 			entity.update(this, deltaTime);
 		}
+		
+		for(Entity entity : delete) {
+			entities.removeValue(entity, true);
+		}
+		
+		delete.clear();
+		
 		if(mode == REAL){
 			modeTimer-=deltaTime;
 			if(modeTimer<=0)
@@ -149,23 +157,19 @@ public class World {
 		if(movement.x > 0) {
 			sx = (int)Math.floor(bounds.x);
 			ex = (int)Math.ceil(newbounds.x + bounds.width) + 1;
-			ux = 1;
 		}
 		else {
 			sx = (int)Math.ceil(bounds.x + bounds.width);
 			ex = (int)Math.floor(newbounds.x) - 1;
-			ux = -1;
 		}
 		
 		if(movement.y > 0) {
 			sy = (int)Math.floor(bounds.y);
 			ey = (int)Math.ceil(newbounds.y + bounds.height) + 1;
-			uy = 1;
 		}
 		else {
 			sy = (int)Math.ceil(bounds.y + bounds.height);
 			ey = (int)Math.floor(newbounds.y) - 1;
-			uy = -1;
 		}
 		
 		Color c = new Color(0, 0, 1, 1);
@@ -180,6 +184,8 @@ public class World {
 		sy = Math.max(Math.min(sy, walls[0].length - 1), 0);
 		ex = Math.max(Math.min(ex, walls.length), -1);
 		ey = Math.max(Math.min(ey, walls[0].length), -1);
+		ux = ex - sx > 0 ? 1 : -1;
+		uy = ey - sy > 0 ? 1 : -1;
 		
 		for(int x = sx; x != ex; x += ux) {
 			for(int y = sy; y != ey; y += uy) {
