@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="dodgeball-hospital" tilewidth="64" tileheight="64">
+  <image source="E:/Dropbox/Dropbox/Sabiiii/Dodgeball Hospital/output/dodgeball-hospital.png" trans="ff00ff" width="1024" height="128"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmMsSgyAMRSnbsum6//+fnU7rFJm8bkCNlkVmVAjkmFwBc0opX8Tuit2ae8qnEM+ksbV5LXHVfd/2VOzR3FM+hXgmja3Na4mr7pu/MSBm9ZH6aWMgcU2Oa3CMsJHz/ns+Jsfk2IqDW8+ptly1c+s12k6t5x4Obj2n2nLVzq3XaDu1nlOMGj9SD9ZnvXVFMWr8ETk8dTU5PqbV6Vk4tDo9C0fPHFE5RuVDOzcWQ59eH88c6Lm2rWeLoT6eOXrPtdFscsQySuclrfWD7Ek9/59yM7bm18bA6byktX6QPann/1Nuxtb82hgsOu/ZA3nPWt71bEQsvbW9B4eX84h8aDqU/KVvxN4ckq6k74X2jYhSV3VcaKzROJAYJsfPUH3VHKP201Rfiz9Vx8g7tui8KO1aX4s/8o4LcR15n7gwSO9luY7OweUK0QdX1+g+1jIeFxuqc0QX6D7WMh5VT63+LRxovrfsV/OfncOjpa10Hp3jKvkYnb/oHFfJx+TwcxxtI2J6AY8XdNM=
+  </data>
+ </layer>
+ <layer name="Kachelebene 2" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmMEOgyAMhjVZvHFwW3z/R50eSEjXllI6wNEvMRIpBYXyY5flf1kVbTZBe86vps8cO1P3APfIQbR/EM9r+4T9X4Tzep7Xi/EVeYO71L4GrE8LvzXA7yX9flr/Do/Px1j4fMyFZj5SDd5IK75+ray3INXgVM8x3aXqd6Qe6wNrj2k6pOb9o9aG5Vt3A6iHSNZFqu/QB3dewig5y2jR+O99XunFqPMxKz4f/dDswaVtrHSO05bcHoxR2oayp7SOel76v9oKajyjjdPh4eKtJhZz+Smpb6kdF5+aeI9g+ak0VqW+Jec+DKkWBXCP5bR9LEcbLlap8Wix9ue0A8Zgbl21AtNMOFZNrLYGi0M41lysjjAfHCONZSZKNByz/WXeCcLlgUpiF7O1jv2NKF/c6Qx8EOWRkeQLc1iva42/0nVi9S/Lgfmz+N4pXL6Vg7LP+cmdd63frxd32necOSjNpXru1ZmBD6UQClg=
+  </data>
+ </layer>
+ <objectgroup name="Objektebene 1" width="50" height="50">
+  <object name="enemy1" type="enemy1" gid="30" x="988" y="230"/>
+  <object name="enemy1" type="enemy1" gid="30" x="1512" y="1022"/>
+  <object name="enemy1" type="enemy1" gid="30" x="410" y="1156"/>
+  <object name="enemy1" type="enemy1" gid="30" x="766" y="1456"/>
+  <object name="enemy1" type="enemy1" gid="30" x="1306" y="2092"/>
+  <object name="enemy1" type="enemy1" gid="30" x="506" y="2658"/>
+  <object name="enemy1" type="enemy1" gid="30" x="632" y="2980"/>
+  <object name="enemy1" type="enemy1" gid="30" x="486" y="3032"/>
+  <object name="enemy1" type="enemy1" gid="30" x="114" y="2828"/>
+  <object name="enemy1" type="enemy1" gid="30" x="2444" y="3068"/>
+  <object name="enemy1" type="enemy1" gid="30" x="1760" y="3104"/>
+  <object name="enemy1" type="enemy1" gid="30" x="1512" y="2712"/>
+  <object name="enemy1" type="enemy1" gid="30" x="244" y="2154"/>
+  <object name="enemy1" type="enemy1" gid="30" x="1890" y="1878"/>
+  <object name="enemy1" type="enemy1" gid="30" x="2616" y="2102"/>
+  <object name="enemy1" type="enemy1" gid="30" x="2506" y="1984"/>
+  <object name="enemy1" type="enemy1" gid="30" x="2274" y="384"/>
+  <object name="enemy2" type="enemy2" gid="23" x="944" y="668"/>
+  <object name="enemy2" type="enemy2" gid="23" x="1158" y="464"/>
+  <object name="enemy2" type="enemy2" gid="23" x="1760" y="1218"/>
+  <object name="enemy2" type="enemy2" gid="23" x="2100" y="960"/>
+  <object name="enemy2" type="enemy2" gid="23" x="2558" y="662"/>
+  <object name="enemy2" type="enemy2" gid="23" x="2400" y="1886"/>
+  <object name="enemy2" type="enemy2" gid="23" x="1658" y="1892"/>
+  <object name="enemy2" type="enemy2" gid="23" x="844" y="1820"/>
+  <object name="enemy2" type="enemy2" gid="23" x="342" y="1828"/>
+  <object name="enemy2" type="enemy2" gid="23" x="1104" y="2752"/>
+  <object name="enemy2" type="enemy2" gid="23" x="1570" y="2958"/>
+  <object name="enemy2" type="enemy2" gid="23" x="302" y="2458"/>
+  <object name="enemy2" type="enemy2" gid="23" x="610" y="2796"/>
+  <object name="enemy2" type="enemy2" gid="23" x="2630" y="2564"/>
+  <object name="enemy2" type="enemy2" gid="23" x="3022" y="3036"/>
+  <object name="enemy2" type="enemy2" gid="23" x="2748" y="1474"/>
+  <object name="enemy2" type="enemy2" gid="23" x="2818" y="1110"/>
+  <object name="enemy2" type="enemy2" gid="23" x="666" y="600"/>
+  <object name="enemy2" type="enemy2" gid="23" x="392" y="522"/>
+  <object name="pille" type="pille" gid="31" x="2262" y="2438"/>
+  <object name="pille" type="pille" gid="31" x="1940" y="2188"/>
+  <object name="pille" type="pille" gid="31" x="3020" y="1826"/>
+  <object name="pille" type="pille" gid="31" x="2324" y="1218"/>
+  <object name="pille" type="pille" gid="31" x="1334" y="664"/>
+  <object name="pille" type="pille" gid="31" x="150" y="1190"/>
+  <object name="pille" type="pille" gid="31" x="720" y="796"/>
+  <object name="pille" type="pille" gid="31" x="3012" y="640"/>
+  <object name="pille" type="pille" gid="31" x="3026" y="1208"/>
+  <object name="pille" type="pille" gid="31" x="700" y="1922"/>
+  <object name="pille" type="pille" gid="31" x="1120" y="2176"/>
+  <object name="pille" type="pille" gid="31" x="1240" y="2910"/>
+  <object name="pille" type="pille" gid="31" x="436" y="2886"/>
+  <object name="pille" type="pille" gid="31" x="1418" y="1194"/>
+  <object name="door_v" type="door_v" gid="3" x="2430" y="448"/>
+  <object name="door_v" type="door_v" gid="3" x="1473" y="448"/>
+  <object name="door_v" type="door_v" gid="3" x="832" y="449"/>
+  <object name="door_v" type="door_v" gid="3" x="768" y="2816"/>
+  <object name="door_v" type="door_v" gid="3" x="1410" y="2946"/>
+  <object name="door_v" type="door_v" gid="3" x="962" y="1856"/>
+  <object name="door_v" type="door_v" gid="3" x="1408" y="1856"/>
+  <object name="door_v" type="door_v" gid="3" x="2114" y="1218"/>
+  <object name="door_h" type="door_h" gid="21" x="1665" y="2624"/>
+  <object name="door_h" type="door_h" gid="21" x="1533" y="2367"/>
+  <object name="door_h" type="door_h" gid="21" x="1215" y="2370"/>
+  <object name="door_h" type="door_h" gid="21" x="512" y="2367"/>
+  <object name="door_h" type="door_h" gid="21" x="382" y="2627"/>
+  <object name="door_h" type="door_h" gid="21" x="768" y="2112"/>
+  <object name="door_h" type="door_h" gid="21" x="1215" y="2048"/>
+  <object name="door_h" type="door_h" gid="21" x="704" y="1728"/>
+  <object name="door_h" type="door_h" gid="21" x="256" y="1728"/>
+  <object name="door_h" type="door_h" gid="21" x="2176" y="1728"/>
+  <object name="door_h" type="door_h" gid="21" x="2814" y="1730"/>
+  <object name="door_h" type="door_h" gid="21" x="2814" y="2432"/>
+  <object name="door_h" type="door_h" gid="21" x="3008" y="2434"/>
+  <object name="door_h" type="door_h" gid="21" x="2176" y="1406"/>
+  <object name="door_h" type="door_h" gid="21" x="1408" y="1408"/>
+  <object name="door_h" type="door_h" gid="21" x="576" y="1410"/>
+  <object name="door_h" type="door_h" gid="21" x="383" y="960"/>
+  <object name="door_h" type="door_h" gid="21" x="1153" y="833"/>
+  <object name="door_h" type="door_h" gid="21" x="1663" y="833"/>
+  <object name="door_h" type="door_h" gid="21" x="2176" y="832"/>
+  <object name="door_h" type="door_h" gid="21" x="2688" y="836"/>
+  <object name="door_h" type="door_h" gid="21" x="1152" y="192"/>
+  <object name="switch" type="switch" gid="26" x="1857" y="1409"/>
+  <object name="switch" type="switch" gid="26" x="2561" y="1729"/>
+  <object name="switch" type="switch" gid="26" x="575" y="961"/>
+  <object name="switch" type="switch" gid="26" x="191" y="2050"/>
+  <object name="switch" type="switch" gid="26" x="1216" y="2625"/>
+  <object name="player" type="player" gid="14" x="2203" y="3151"/>
+  <object name="goal" type="goal" gid="14" x="1149" y="187"/>
+ </objectgroup>
+</map>
