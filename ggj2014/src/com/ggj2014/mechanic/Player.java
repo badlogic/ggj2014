@@ -69,6 +69,7 @@ public class Player extends Entity {
 			this.state = State.MOVING_UP;
 		}
 		movement.nor().scl(speed * deltaTime);
+		world.clipCollision(bounds, movement);
 		position.add(movement);
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
 	}
