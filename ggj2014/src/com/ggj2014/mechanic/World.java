@@ -1,14 +1,14 @@
 package com.ggj2014.mechanic;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
+import com.ggj2014.Level;
 
 public class World {
-	public TiledMap map;
+	public Level level;
 	public Array<Entity> entities = new Array<Entity>();
 	
-	public World(TiledMap map) {
-		this.map = map;
+	public World(Level level) {
+		this.level = level;
 		// TODO parse map, create objects and collision layer
 	}
 	
