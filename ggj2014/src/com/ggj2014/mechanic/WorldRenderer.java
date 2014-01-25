@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ggj2014.mechanic.Player.Heading;
 
 public class WorldRenderer {	
 	private static final float CAM_DAMP = 4;
@@ -31,6 +34,11 @@ public class WorldRenderer {
 	ShaderProgram vignetteShader;
 	
 	ShapeRenderer sr = new ShapeRenderer();
+	
+	public Animation mainIdle;
+	public Animation mainAxeIdle;
+	public Animation mainAttack;
+	
 	public Texture[] patient1 = new Texture[2];
 	public Texture[] patient2 = new Texture[2];
 	
@@ -54,6 +62,7 @@ public class WorldRenderer {
 			System.out.println(vignetteShader.getLog());
 		batch.setShader(vignetteShader);
 		
+		// figure out which layer has which id, idiotic
 		for(int i = 0; i < world.map.getLayers().getCount(); i++) {
 			MapLayer layer = world.map.getLayers().get(i);
 			if(layer.getName().equals("floor")) LAYER_FLOOR = i;
@@ -63,6 +72,11 @@ public class WorldRenderer {
 	}
 	
 	private void loadAssets () {
+		// main
+		mainIdle = loadAnimation("graphics/animations/main-normal-idle", 2, 0.5f);
+		mainAxeIdle = loadAnimation("graphics/animations/main-axe-idle", 2, 0.5f);
+		mainAttack = loadAnimation("graphics/animations/main-char-axe", 2, Player.ATTACK_TIME / 2);
+		
 		// images & animations
 		loadImage(patient1, "patient1");
 		loadImage(patient2, "patient2");
@@ -71,6 +85,15 @@ public class WorldRenderer {
 		doorClosed = new Texture(Gdx.files.internal("graphics/door-closed.png"));
 		doorVertical = new Texture(Gdx.files.internal("graphics/door-vertical.png"));
 		pill = new Texture(Gdx.files.internal("graphics/tablette.png"));
+	}
+	
+	private Animation loadAnimation(String path, int frames, float frameDuration) {
+		TextureRegion[] regions = new TextureRegion[frames];
+		for(int i = 1; i <= frames; i++) {
+			Texture tex = new Texture(Gdx.files.internal(path + i + ".png"));
+			regions[i-1] = new TextureRegion(tex);
+		}
+		return new Animation(frameDuration, regions);
 	}
 	
 	private void loadImage(Texture[] images, String path) {
@@ -138,7 +161,7 @@ public class WorldRenderer {
 		
 		for(Entity entity: sortedEntities) {
 			if(entity instanceof Player) {
-				batch.draw(patient1[World.REAL], entity.position.x, entity.position.y, 1, 2);
+				renderPlayer((Player)entity);
 			}
 			else if(entity instanceof Enemy && !(entity instanceof Enemy2)) {
 				batch.draw(patient1[world.getMode()], entity.position.x, entity.position.y, 1, 2);
@@ -169,14 +192,55 @@ public class WorldRenderer {
 		tileMapRenderer.render(new int[] { LAYER_FLOOR_UPPER });
 		
 		// draw entity bounds
-		sr.begin(ShapeType.Line);
-		sr.setColor(0, 1, 0, 1);
-		for(Entity entity: world.entities) {			
-			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);	
-		}
-		sr.end();
+//		sr.begin(ShapeType.Line);
+//		sr.setColor(0, 1, 0, 1);
+//		for(Entity entity: world.entities) {			
+//			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);	
+//		}
+//		sr.end();
 	}
 	
+	private void renderPlayer (Player entity) {
+//		System.out.println(entity.state + ", " + entity.stateTime);
+		TextureRegion frame;
+		switch(entity.state) {
+			case IDLE:
+				if(entity.heading == Heading.Left) {					
+					frame = mainIdle.getKeyFrame(entity.stateTime, true);
+					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					frame.flip(true, false);
+				} else {
+					frame = mainIdle.getKeyFrame(entity.stateTime, true);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+				}
+				break;
+			case MOVING:
+				if(entity.heading == Heading.Left) {					
+					frame = mainIdle.getKeyFrame(entity.stateTime, true);
+					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					frame.flip(true, false);
+				} else {
+					frame = mainIdle.getKeyFrame(entity.stateTime, true);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+				}
+				break;
+			case ATTACK:
+				if(entity.heading == Heading.Left) {					
+					frame = mainAttack.getKeyFrame(entity.stateTime, false);
+					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					frame.flip(true, false);
+				} else {
+					frame = mainAttack.getKeyFrame(entity.stateTime, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+				}
+				break;
+			default:
+		}
+	}
+
 	private void cameraFollow (float deltaTime) {
 		Vector2 dist = new Vector2(world.player.position).sub(camera.position.x, camera.position.y);
 		camera.position.add(dist.x * deltaTime * CAM_DAMP, dist.y * deltaTime * CAM_DAMP, 0);

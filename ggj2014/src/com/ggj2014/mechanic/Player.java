@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ggj2014.ScreenManager;
 	
 public class Player extends Entity {
+	public static final float ATTACK_TIME = 0.2f;
 	public float sightRange = 50;
 	public float attackRange = 1.2f;
 	public float attackAngle = (float)Math.PI / 4;
@@ -69,19 +70,19 @@ public class Player extends Entity {
 				}
 			}
 		}
+		setState(State.ATTACK);
+	}
+	
+	public void setState(State state) {
+		if(this.state == state) return;
+		this.state = state;
+		this.stateTime = 0;
 	}
 
 	@Override
 	public void update(World world, float deltaTime) {
-		State oldState = state;
-		// as long as we aren't dead the player can 
-		// perform actions
-		if(state != State.DEAD) {
-			processMove(world, deltaTime);
-		}
-		if(oldState != state) {
-			stateTime = 0;
-		}
+		if(state == State.ATTACK && stateTime > ATTACK_TIME) setState(State.IDLE);
+		if(state == State.IDLE || state == State.MOVING) processMove(world, deltaTime);
 		stateTime += deltaTime;		
 		
 		for(int i = 0; i <world.entities.size; i++)
@@ -112,22 +113,22 @@ public class Player extends Entity {
 		if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))
 		{
 			movement.x -= 1;
-			this.state = State.MOVING_LEFT;
+			setState(State.MOVING);
 		}
 		if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D))
 		{
 			movement.x += 1;
-			this.state = State.MOVING_RIGHT;
+			setState(State.MOVING);
 		}
 		if (Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))
 		{
 			movement.y -= 1;
-			this.state = State.MOVING_DOWN;
+			setState(State.MOVING);
 		}
 		if (Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W))
 		{
 			movement.y += 1;
-			this.state = State.MOVING_UP;
+			setState(State.MOVING);
 		}
 		movement.nor().scl(speed * deltaTime);
 		world.clipCollision(bounds, movement);
@@ -144,7 +145,7 @@ public class Player extends Entity {
 	}
 	
 	enum State{
-		IDLE, MOVING_UP, MOVING_DOWN, MOVING_LEFT, MOVING_RIGHT, TAKINGPILL, DEAD
+		IDLE, MOVING, ATTACK, DEAD
 	}
 	
 	enum Heading {
