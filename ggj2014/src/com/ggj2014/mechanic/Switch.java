@@ -3,6 +3,7 @@ package com.ggj2014.mechanic;
 public class Switch extends Entity {
 
 	public boolean isUsed = false;
+	public String name;
 	
 	public Switch(float x, float y) {
 		super(x, y);

@@ -33,8 +33,10 @@ public class WorldRenderer {
 	ShapeRenderer sr = new ShapeRenderer();
 	public Texture[] patient1 = new Texture[2];
 	public Texture[] patient2 = new Texture[2];
+	
 	public Texture doorClosed;
 	public Texture doorOpen;
+	public Texture doorVertical;
 	public Texture pill;
 	
 	public WorldRenderer(World world) {
@@ -58,8 +60,6 @@ public class WorldRenderer {
 			if(layer.getName().equals("floor_upper")) LAYER_FLOOR_UPPER = i;
 			if(layer.getName().equals("interieur")) LAYER_INTERIEUR = i;
 		}
-		
-		System.out.println(LAYER_FLOOR + ", " + LAYER_FLOOR_UPPER + ", " + LAYER_INTERIEUR);
 	}
 	
 	private void loadAssets () {
@@ -69,6 +69,7 @@ public class WorldRenderer {
 		
 		doorOpen = new Texture(Gdx.files.internal("graphics/door-open.png"));
 		doorClosed = new Texture(Gdx.files.internal("graphics/door-closed.png"));
+		doorVertical = new Texture(Gdx.files.internal("graphics/door-vertical.png"));
 		pill = new Texture(Gdx.files.internal("graphics/tablette.png"));
 	}
 	
@@ -147,6 +148,20 @@ public class WorldRenderer {
 			}
 			else if(entity instanceof Pill) {
 				batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
+			}
+			else if(entity instanceof DoorVertical) {
+				Door door = (Door)entity;
+				if(!door.isOpened) {
+					batch.draw(doorVertical, entity.position.x, entity.position.y, 1, 1);
+				}
+			}
+			else if(entity instanceof Door) {				
+				Door door = (Door)entity;
+				if(door.isOpened) {
+					batch.draw(doorOpen, entity.position.x, entity.position.y, 1, 2);
+				} else {
+					batch.draw(doorClosed, entity.position.x, entity.position.y, 1, 2);
+				}
 			}
 		}
 		batch.end();
