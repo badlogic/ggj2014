@@ -16,14 +16,14 @@ import com.badlogic.gdx.utils.Array;
 public class World {
 	public static final int REAL = 0;
 	public static final int GHOST = 1;
-	public static int TILE_SIZE = 32;
+	public static int TILE_SIZE = 64;
 	
 	public TiledMap map;
 	public Rectangle[][] walls;
 	public Array<Entity> entities = new Array<Entity>();
 	public Player player;
 	public Goal goal;
-	public int mode = REAL;
+	private int mode = REAL;
 	public WorldRenderer renderer;
 	
 	public World(String level) {
@@ -52,7 +52,7 @@ public class World {
 		goal.position.scl(1f / TILE_SIZE);
 		
 		// load collision map
-		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("wall");
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("floor");
 		walls = new Rectangle[layer.getWidth()][layer.getHeight()];
 		for(int x = 0; x < layer.getWidth(); x++) {
 			for(int y = 0; y < layer.getHeight(); y++) {
@@ -114,6 +114,15 @@ public class World {
 			renderer.sr.begin(ShapeType.Line);
 		}
 		
+		if(sx < 0) sx = 0;
+		if(sx >= walls.length) sx = walls.length - 1;
+		if(sy < 0) sy = 0;
+		if(sy >= walls[0].length) sy = walls[0].length - 1;
+		if(ex < 0) ex = 0;
+		if(ex >= walls.length) ex = walls.length - 1;
+		if(ey < 0) ey = 0;
+		if(ey >= walls[0].length) ey = walls[0].length - 1;
+		
 		for(int x = sx; x != ex; x += ux) {
 			for(int y = sy; y != ey; y += uy) {
 				Rectangle r = walls[x][y];
@@ -172,5 +181,13 @@ public class World {
 			renderer.sr.rect(rx, ry, rwidth, rheight, c, c, c, c);
 			renderer.sr.end();
 		}
+	}
+	
+	public void toggleMode() {
+		
+	}
+	
+	public int getMode() {
+		return mode;
 	}
 }
