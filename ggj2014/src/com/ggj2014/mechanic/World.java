@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Array;
 public class World {
 	public static final int REAL = 0;
 	public static final int GHOST = 1;
-	public static final float TIME = 20;
+	public static final float TIME = 10;
 	public static int TILE_SIZE = 64;
 	
 	public TiledMap map;

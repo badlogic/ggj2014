@@ -50,9 +50,10 @@ public class Player extends Entity {
 		
 			if(entity instanceof Pill)
 			{
-				if(entity.bounds.overlaps(this.bounds))
+				if(entity.bounds.overlaps(this.bounds)){
 					((Pill) entity).pickUp();
 					world.mode = world.REAL;
+				}
 			}
 		}
 
