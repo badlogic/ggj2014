@@ -18,5 +18,4 @@ public class Switch extends Entity {
 	public void useSwitch(){
 		this.isUsed = true;
 	}
-	
 }

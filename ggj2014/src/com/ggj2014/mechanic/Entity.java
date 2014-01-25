@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Entity {
 	public Vector2 position;
 	public boolean isVisible = true;
-	public float delta;
+	public float stateTime;
 	public Rectangle bounds = new Rectangle();
 	
 	public Entity(float x, float y) {

@@ -1,7 +1,16 @@
 package com.ggj2014;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+
 public class ScreenManager {
+	public static InputMultiplexer multiplexer;
 	Screen current;
+	
+	public ScreenManager() {
+		multiplexer = new InputMultiplexer();
+		Gdx.input.setInputProcessor(multiplexer);
+	}
 	
 	public void render() {
 		if(current != null) {
@@ -32,7 +41,7 @@ public class ScreenManager {
 		if(current != null) {
 			current.pause();
 			current.dispose();
-		}
+		}		
 		current = screen;
 	}
 }

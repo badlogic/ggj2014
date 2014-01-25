@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -27,12 +28,13 @@ public class World {
 	}
 	
 	private void loadLevel () {
+		// load tile map
 		TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
 		params.textureMinFilter = TextureFilter.Linear;
 		params.textureMagFilter = TextureFilter.Linear;
 		map = new TmxMapLoader().load("levels/testmap.tmx");		
 
-		// load objects
+		// load objects from map
 		MapObjects objects = map.getLayers().get("objects").getObjects();
 		MapProperties playerProps = objects.get("player").getProperties();
 		MapProperties goalProps = objects.get("goal").getProperties();
@@ -41,7 +43,6 @@ public class World {
 		entities.add(player);
 		goal = new Goal(new Vector2(goalProps.get("x", Float.class), goalProps.get("y", Float.class)));
 		goal.position.scl(1f / TILE_SIZE);
-		
 		
 		// load collision map
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("wall");
@@ -52,6 +53,17 @@ public class World {
 					walls[x][y] = new Rectangle(x, y, 1, 1);
 				}
 			}
+		}
+		
+		// generate a few random enemies
+		for(int i = 0; i < 10; i++) {
+			Enemy enemy = new Enemy(MathUtils.random(0, 15), MathUtils.random(0, 15));
+			entities.add(enemy);
+		}
+		
+		for(int i = 0; i < 10; i++) {
+			Enemy2 enemy = new Enemy2(MathUtils.random(0, 15), MathUtils.random(0, 15));
+			entities.add(enemy);
 		}
 	}
 
