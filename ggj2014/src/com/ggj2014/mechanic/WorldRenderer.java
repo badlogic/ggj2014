@@ -34,17 +34,19 @@ public class WorldRenderer {
 		loadAssets();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth() / (float)World.TILE_SIZE, Gdx.graphics.getHeight() / (float)World.TILE_SIZE);		
+		camera.setToOrtho(false, Gdx.graphics.getWidth() / (float)World.TILE_SIZE, Gdx.graphics.getHeight() / (float)World.TILE_SIZE);				
+		tileMapRenderer = new OrthogonalTiledMapRenderer(world.map, 1f / World.TILE_SIZE, batch);
+		
+		// vignette shader
 		ShaderProgram.pedantic = false;
 		vignetteShader = new ShaderProgram(Gdx.files.internal("graphics/vignette.vsh"), Gdx.files.internal("graphics/vignette.fsh"));
 		if(!vignetteShader.isCompiled())
 			System.out.println(vignetteShader.getLog());
 		batch.setShader(vignetteShader);
-		
-		tileMapRenderer = new OrthogonalTiledMapRenderer(world.map, 1f / World.TILE_SIZE, batch);		
 	}
 	
-	private void loadAssets () {
+	private void loadAssets () {				
+		// images & animations
 		loadImage(patient1, "patient1");
 		loadImage(patient2, "patient2");
 	}
