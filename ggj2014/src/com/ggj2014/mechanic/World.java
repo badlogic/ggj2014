@@ -117,24 +117,24 @@ public class World {
 	
 		int sx, sy, ex, ey, ux, uy;
 		if(movement.x > 0) {
-			sx = Math.max((int)Math.floor(bounds.x), 0);
-			ex = Math.min((int)Math.ceil(newbounds.x + bounds.width) + 1, walls.length) ;
+			sx = (int)Math.floor(bounds.x);
+			ex = (int)Math.ceil(newbounds.x + bounds.width) + 1;
 			ux = 1;
 		}
 		else {
-			sx = Math.min((int)Math.ceil(bounds.x + bounds.width), walls.length - 1);
-			ex = Math.max((int)Math.floor(newbounds.x) - 1, -1);
+			sx = (int)Math.ceil(bounds.x + bounds.width);
+			ex = (int)Math.floor(newbounds.x) - 1;
 			ux = -1;
 		}
 		
 		if(movement.y > 0) {
-			sy = Math.max((int)Math.floor(bounds.y), 0);
-			ey = Math.min((int)Math.ceil(newbounds.y + bounds.height) + 1, walls[0].length);
+			sy = (int)Math.floor(bounds.y);
+			ey = (int)Math.ceil(newbounds.y + bounds.height) + 1;
 			uy = 1;
 		}
 		else {
-			sy = Math.min((int)Math.ceil(bounds.y + bounds.height), walls[0].length - 1);
-			ey = Math.max((int)Math.floor(newbounds.y) - 1, -1);
+			sy = (int)Math.ceil(bounds.y + bounds.height);
+			ey = (int)Math.floor(newbounds.y) - 1;
 			uy = -1;
 		}
 		
@@ -146,14 +146,10 @@ public class World {
 			renderer.sr.begin(ShapeType.Line);
 		}
 		
-		if(sx < 0) sx = 0;
-		if(sx >= walls.length) sx = walls.length - 1;
-		if(sy < 0) sy = 0;
-		if(sy >= walls[0].length) sy = walls[0].length - 1;
-		if(ex < 0) ex = 0;
-		if(ex >= walls.length) ex = walls.length - 1;
-		if(ey < 0) ey = 0;
-		if(ey >= walls[0].length) ey = walls[0].length - 1;
+		sx = Math.max(Math.min(sx, walls.length - 1), 0);
+		sy = Math.max(Math.min(sy, walls[0].length - 1), 0);
+		ex = Math.max(Math.min(ex, walls.length), -1);
+		ey = Math.max(Math.min(ey, walls[0].length), -1);
 		
 		for(int x = sx; x != ex; x += ux) {
 			for(int y = sy; y != ey; y += uy) {
