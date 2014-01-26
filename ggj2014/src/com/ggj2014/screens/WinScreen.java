@@ -30,10 +30,10 @@ public class WinScreen extends Screen {
 		
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			Gdx.app.exit();
+			manager.setScreen(new CreditScreen(manager));
 		}
 	     if(Gdx.input.justTouched()) {
-	    	 Gdx.app.exit();
+	    	 manager.setScreen(new CreditScreen(manager));
 	     }
 	}
 
