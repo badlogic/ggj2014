@@ -123,7 +123,7 @@ public class Player extends Entity {
 			if(entity instanceof Pill) {
 				if(world.mode == World.Mode.GHOST && entity.bounds.overlaps(this.bounds)) {
 					((Pill) entity).pickUp(world);
-					world.mode = World.Mode.REAL;
+					world.toggleMode();
 				}
 			} else if(entity instanceof Enemy) {
 				if(world.mode == World.Mode.GHOST && entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
