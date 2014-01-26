@@ -37,8 +37,9 @@ public class Door extends Entity {
 								world.walls[(int) position.x][(int) position.y] = null;
 								world.audio.trigger.play();
 							}
+						} else {
+							world.audio.doorLocked.play();
 						}
-
 					}
 				} else {
 					isOpened = true;
