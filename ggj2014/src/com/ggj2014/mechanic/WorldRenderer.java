@@ -40,6 +40,7 @@ public class WorldRenderer {
 	
 	public Animation[] patient1Idle = new Animation[2];
 	public Animation[] patient2Idle = new Animation[2];
+	public Animation poof;
 	
 	public Texture doorClosed;
 	public Texture doorOpen;
@@ -113,6 +114,14 @@ public class WorldRenderer {
 		patient2Idle[World.GHOST] = loadAnimation("graphics/animations/patient2-ghost-idle", 2, 0.5f);
 		patient2Idle[World.REAL] = loadAnimation("graphics/animations/patient2-real-idle", 2, 0.5f);
 		
+		// poof
+		poof = loadAnimation("graphics/animations/poof-", 2, 0.3f);
+		Array<TextureRegion> regions = new Array<TextureRegion>();
+		for(int i = 0; i < 4; i++) {
+			regions.addAll(poof.getKeyFrames());
+		}
+		poof = new Animation(0.3f, regions);
+		
 		// statics
 		doorOpen = new Texture(Gdx.files.internal("graphics/door-open.png"));
 		doorClosed = new Texture(Gdx.files.internal("graphics/door-closed.png"));
@@ -129,15 +138,7 @@ public class WorldRenderer {
 			regions[i-1] = new TextureRegion(tex);
 		}
 		return new Animation(frameDuration, regions);
-	}
-	
-	private void loadImage(Texture[] images, String path) {
-		images[World.REAL] = new Texture(Gdx.files.internal("graphics/" + path + "-real.png"));
-		images[World.GHOST] = new Texture(Gdx.files.internal("graphics/" + path + "-geist.png"));
-		for(int i = 0; i < images.length; i++) {
-			images[i].setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		}
-	}
+	}	
 
 	public void render(float deltaTime) {
 		// set vignette based on
@@ -232,12 +233,12 @@ public class WorldRenderer {
 		tileMapRenderer.render(new int[] { LAYER_FLOOR_UPPER });
 		
 		// draw entity bounds
-		sr.begin(ShapeType.Line);
-		sr.setColor(0, 1, 0, 1);
-		for(Entity entity: world.entities) {			
-			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);	
-		}
-		sr.end();
+//		sr.begin(ShapeType.Line);
+//		sr.setColor(0, 1, 0, 1);
+//		for(Entity entity: world.entities) {			
+//			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);	
+//		}
+//		sr.end();
 	}
 
 	private void renderEnemy (Enemy entity) {
@@ -280,7 +281,14 @@ public class WorldRenderer {
 				}
 				break;
 			case DEAD:
+				System.out.println(entity.stateTime);
 				if(world.mode == World.REAL) batch.draw(blood, entity.position.x, entity.position.y, 1, 2);
+				else {
+					if(!poof.isAnimationFinished(entity.stateTime)) {
+						frame = poof.getKeyFrame(entity.stateTime, false);
+						batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					}
+				}
 			default:
 		}
 	}

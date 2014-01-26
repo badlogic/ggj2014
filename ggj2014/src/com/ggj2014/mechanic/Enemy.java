@@ -37,6 +37,8 @@ public class Enemy extends Entity {
 
 	@Override
 	public void update(World world, float deltaTime) {
+		stateTime += deltaTime;
+		if(stateTime < 0) stateTime = 0;
 		if(state == State.DEAD) return;
 		
 		Vector2 playerpos = world.player.getCenter();
@@ -136,9 +138,7 @@ public class Enemy extends Entity {
 		velocity = new_velocity;
 		
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
-		heading = velocity.len() > 0.1f && velocity.x < 0? Heading.Right: Heading.Left;
-		stateTime += deltaTime;
-		if(stateTime < 0) stateTime = 0;
+		heading = velocity.len() > 0.1f && velocity.x < 0? Heading.Right: Heading.Left;		
 	}
 	
 	public void setState(State state) {
