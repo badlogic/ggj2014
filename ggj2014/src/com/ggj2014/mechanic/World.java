@@ -285,4 +285,7 @@ public class World {
 		return 1;
 	}
 
+	public void dispose() {
+		player.dispose();
+	}
 }

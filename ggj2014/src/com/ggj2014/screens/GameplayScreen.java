@@ -61,6 +61,6 @@ public class GameplayScreen extends Screen {
 	public void dispose () {
 		renderer.dispose();
 		audio.dispose();
-		ScreenManager.multiplexer.clear();
+		world.dispose();
 	}
 }
