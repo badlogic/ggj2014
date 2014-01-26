@@ -1,8 +1,5 @@
 Dodgeball Hospital
 ==================
-Our team's Global Game Jam 2014 entry. 
-
-## Game
 ![Blargh](http://globalgamejam.org/sites/default/files/styles/game_sidebar__wide_2x/public/game/featured_image/gameover-screen.png?itok=1HL9ubIF)
 
 Dodgeball Hospital is a frantic hack n' slash game. You're trapped in an insance asylum, trying to get out. Your brain is telling you you are surrounded by monsters, thirsting for your blood. 
