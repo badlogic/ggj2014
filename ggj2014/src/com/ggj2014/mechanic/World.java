@@ -158,8 +158,13 @@ public class World {
 		delete.clear();
 		
 		modeTime += deltaTime;
-		if(mode == Mode.REAL && modeTime > REAL_TIME){
-			toggleMode();
+		if(mode == Mode.REAL) {
+			if(modeTime > REAL_TIME - audio.GHOST_FADE_TIME) {
+				audio.setMode(Mode.GHOST);
+			}
+			if(modeTime > REAL_TIME){
+				toggleMode();
+			}
 		}
 	}
 	
