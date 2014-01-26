@@ -37,11 +37,31 @@
     <property name="switch" value="switch2"/>
    </properties>
   </object>
-  <object name="switch1" type="switch" gid="26" x="2496" y="192"/>
-  <object name="switch2" type="switch" gid="26" x="576" y="448"/>
-  <object name="switch3" type="switch" gid="26" x="2625" y="1920"/>
-  <object name="switch4" type="switch" gid="26" x="831" y="1411"/>
-  <object name="switch5" type="switch" gid="26" x="1857" y="2945"/>
+  <object name="switch1" type="switch" gid="26" x="2496" y="192">
+   <properties>
+    <property name="name" value="switch1"/>
+   </properties>
+  </object>
+  <object name="switch2" type="switch" gid="26" x="576" y="448">
+   <properties>
+    <property name="name" value="switch2"/>
+   </properties>
+  </object>
+  <object name="switch3" type="switch" gid="26" x="2625" y="1920">
+   <properties>
+    <property name="name" value="switch3"/>
+   </properties>
+  </object>
+  <object name="switch4" type="switch" gid="26" x="831" y="1411">
+   <properties>
+    <property name="name" value="switch4"/>
+   </properties>
+  </object>
+  <object name="switch5" type="switch" gid="26" x="1857" y="2945">
+   <properties>
+    <property name="name" value="switch5"/>
+   </properties>
+  </object>
   <object name="player" type="player" gid="14" x="1280" y="3074"/>
   <object name="goal" type="goal" gid="14" x="1536" y="254"/>
   <object name="axe" type="axe" gid="15" x="1986" y="2768"/>
