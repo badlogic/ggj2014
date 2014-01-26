@@ -30,10 +30,10 @@ public class CreditScreen extends Screen {
 		
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			Gdx.app.exit();
+			manager.setScreen(new IntroScreenInstruction(manager));
 		}
 	     if(Gdx.input.justTouched()) {
-	    	 Gdx.app.exit();
+	    	 manager.setScreen(new IntroScreenInstruction(manager));
 	     }
 	}
 
