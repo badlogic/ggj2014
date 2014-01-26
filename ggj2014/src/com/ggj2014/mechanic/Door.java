@@ -34,7 +34,6 @@ public class Door extends Entity {
 					{
 						Entity entity = world.entities.get(i);
 						if(entity instanceof Switch) {
-								System.out.println("Door: " + switchname + " Switch " + ((Switch) entity).name);
 								if(((Switch) entity).name.equals(switchname)&&((Switch) entity).isUsed){
 									isOpened = true;
 									world.walls[(int)position.x][(int)position.y] = null;
