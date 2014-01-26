@@ -29,6 +29,7 @@ public class GameplayScreen extends Screen {
 	public void render () {
 		float delta = Gdx.graphics.getDeltaTime();
 		renderer.render(delta);
+		audio.update(delta);
 		world.update(delta);
 		
 		if(world.player.isDead()) {
