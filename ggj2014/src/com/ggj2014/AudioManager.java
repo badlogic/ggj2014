@@ -75,9 +75,8 @@ public class AudioManager {
 		if(mode == World.Mode.REAL) {
 			real.play();
 		} else {
-			ghost.play();			
+			ghost.play();
 		}
-		System.out.println("Mode change: " + mode);
 	}
 	
 	public void update(float deltaTime) {
