@@ -21,7 +21,7 @@ public class Player extends Entity {
 	public boolean actionPressed = false;
 	public World world;
 	public Heading heading = Heading.Right;
-	public int axe_hits = 0;
+	public int axe_hits = 5;
 	
 	public Player(World world_, Vector2 position) {
 		super(position);
@@ -74,7 +74,7 @@ public class Player extends Entity {
 				float angle = (float)Math.acos(heading == Heading.Left ? -enemypos.x : enemypos.x);
 				
 				if((enemypos.y >= 0 && angle <= Math.PI / 2) || (enemypos.y < 0 && angle < attackAngle)) {
-					enemy.state = Enemy.State.DEAD;
+					enemy.setState(Enemy.State.DEAD);
 					hit = true;
 				}
 			}
