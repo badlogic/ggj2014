@@ -3,6 +3,7 @@ package com.ggj2014;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.ggj2014.screens.GameplayScreen;
 import com.ggj2014.screens.IntroScreenInstruction;
 
 public class DodgeBallHospital implements ApplicationListener {	
@@ -13,7 +14,7 @@ public class DodgeBallHospital implements ApplicationListener {
 	public void create () {
 		manager = new ScreenManager();
 		// SET START SCREEN HERE!
-		Screen screen = new IntroScreenInstruction(manager);
+		Screen screen = new GameplayScreen(manager, 1);
 		manager.setScreen(screen);		
 	}
 
