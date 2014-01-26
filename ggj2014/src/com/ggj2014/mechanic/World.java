@@ -43,7 +43,7 @@ public class World {
 	
 	public void setAudio(AudioManager audio) {
 		this.audio = audio;
-		//this.audio.setMode(mode);
+		this.audio.setMode(mode);
 	}
 	
 	private void loadLevel (String level) {
@@ -161,8 +161,7 @@ public class World {
 			modeTimer-=deltaTime;
 			if(modeTimer<=0)
 			{
-				modeTimer = TIME;
-				mode = Mode.GHOST;
+				toggleMode();
 			}
 		}
 	}
@@ -269,7 +268,9 @@ public class World {
 			mode = Mode.REAL;
 		else
 			mode = Mode.GHOST;
-		//audio.setMode(mode);
+		
+		modeTimer = TIME;
+		audio.setMode(mode);
 	}
 	
 	public Mode getMode() {

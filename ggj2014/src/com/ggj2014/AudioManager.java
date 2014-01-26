@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.ggj2014.mechanic.World;
 
 public class AudioManager {
-	private static final float FADE_TIME = 2;
+	private static final float FADE_TIME = 1.5f;
 	Music real;
 	Music ghost;
 	World.Mode mode = World.Mode.GHOST;
@@ -24,18 +24,19 @@ public class AudioManager {
 		if(mode == World.Mode.REAL) {
 			real.play();
 		} else {
-			ghost.play();
+			ghost.play();			
 		}
+		System.out.println("Mode change: " + mode);
 	}
 	
 	public void update(float deltaTime) {
 		if(mode == World.Mode.REAL) {
-			real.setVolume(Math.max(modeTime / FADE_TIME, 1));
-			ghost.setVolume(Math.max(modeTime / FADE_TIME, 1));
+			real.setVolume(Math.min(modeTime / FADE_TIME, 1));
+			ghost.setVolume(Math.max(1 - modeTime / FADE_TIME, 0));
 			if(modeTime > FADE_TIME) ghost.stop();
 		} else {
-			ghost.setVolume(Math.max(modeTime / FADE_TIME, 1));
-			real.setVolume(Math.max(modeTime / FADE_TIME, 1));
+			ghost.setVolume(Math.min(modeTime / FADE_TIME, 1));
+			real.setVolume(Math.max(1 - modeTime / FADE_TIME, 0));
 			if(modeTime > FADE_TIME) real.stop();
 		}
 		modeTime += deltaTime;
