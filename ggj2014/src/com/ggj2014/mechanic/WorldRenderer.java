@@ -115,12 +115,7 @@ public class WorldRenderer {
 		patient2Idle[World.REAL] = loadAnimation("graphics/animations/patient2-real-idle", 2, 0.5f);
 		
 		// poof
-		poof = loadAnimation("graphics/animations/poof-", 2, 0.3f);
-		Array<TextureRegion> regions = new Array<TextureRegion>();
-		for(int i = 0; i < 4; i++) {
-			regions.addAll(poof.getKeyFrames());
-		}
-		poof = new Animation(0.3f, regions);
+		poof = loadAnimation("graphics/animations/poof-", 2, 0.3f);		
 		
 		// statics
 		doorOpen = new Texture(Gdx.files.internal("graphics/door-open.png"));
