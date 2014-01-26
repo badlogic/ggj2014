@@ -11,7 +11,9 @@ public class DodgeBallHospitalDesktop {
 		cfg.width = 1024;
 		cfg.height = 768;
 		
-		//cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
+		if(args.length > 0) {
+			cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
+		}
 		
 		new LwjglApplication(new DodgeBallHospital(), cfg);
 	}
