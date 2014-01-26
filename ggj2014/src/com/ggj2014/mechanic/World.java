@@ -18,7 +18,7 @@ public class World {
 		REAL, GHOST
 	}
 	
-	public static final float TIME = 10;
+	public static final float REAL_TIME = 10;
 	public static int TILE_SIZE = 64;
 	
 	public TiledMap map;
@@ -29,7 +29,7 @@ public class World {
 	public Player player;
 	public Goal goal;
 	public Mode mode = Mode.GHOST;
-	private float modeTimer = TIME;
+	public float modeTime = 0;
 	public WorldRenderer renderer;
 	public AudioManager audio;
 	
@@ -157,13 +157,13 @@ public class World {
 		
 		delete.clear();
 		
-		if(mode == Mode.REAL){
-			modeTimer-=deltaTime;
-			if(modeTimer<=0)
-			{
-				modeTimer = TIME;
-				mode = Mode.GHOST;
-				audio.setMode(mode);
+		modeTime += deltaTime;
+		if(mode == Mode.REAL) {
+			if(modeTime > REAL_TIME - audio.GHOST_FADE_TIME) {
+				audio.setMode(Mode.GHOST);
+			}
+			if(modeTime > REAL_TIME){
+				toggleMode();
 			}
 		}
 	}
@@ -271,7 +271,7 @@ public class World {
 		else
 			mode = Mode.GHOST;
 		
-		modeTimer = TIME;
+		modeTime = 0;
 		audio.setMode(mode);
 	}
 	
