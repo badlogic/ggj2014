@@ -25,6 +25,7 @@ public class AudioManager {
 	public Sound axePickup;
 	public Sound doorClose;
 	public Sound doorOpen;
+	public Sound doorLocked;
 	public Sound enemyEat;
 	public Sound enemyWalk;
 	public Sound playerDie;
@@ -60,6 +61,8 @@ public class AudioManager {
 		allSounds.add(doorClose);
 		doorOpen = Gdx.audio.newSound(Gdx.files.internal("audio/effects/door_open.mp3"));
 		allSounds.add(doorOpen);
+		doorLocked = Gdx.audio.newSound(Gdx.files.internal("audio/effects/door-locked.mp3"));
+		allSounds.add(doorLocked);
 		enemyEat = Gdx.audio.newSound(Gdx.files.internal("audio/effects/enemy_eat.mp3"));
 		allSounds.add(enemyEat);
 		enemyWalk = Gdx.audio.newSound(Gdx.files.internal("audio/effects/enemy_walk.mp3"));
