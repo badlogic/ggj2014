@@ -112,12 +112,12 @@ public class WorldRenderer {
 		mainAttack = loadAnimation("graphics/animations/main-char-axe", 2, Player.ATTACK_TIME / 2);
 		
 		// patient1
-		patient1Idle[World.GHOST] = loadAnimation("graphics/animations/patient1-ghost-idle", 2, 0.5f);
-		patient1Idle[World.REAL] = loadAnimation("graphics/animations/patient1-real-idle", 2, 0.5f);
+		patient1Idle[World.modeToInt(World.Mode.GHOST)] = loadAnimation("graphics/animations/patient1-ghost-idle", 2, 0.5f);
+		patient1Idle[World.modeToInt(World.Mode.REAL)] = loadAnimation("graphics/animations/patient1-real-idle", 2, 0.5f);
 		
 		// patient2
-		patient2Idle[World.GHOST] = loadAnimation("graphics/animations/patient2-ghost-idle", 2, 0.5f);
-		patient2Idle[World.REAL] = loadAnimation("graphics/animations/patient2-real-idle", 2, 0.5f);
+		patient2Idle[World.modeToInt(World.Mode.GHOST)] = loadAnimation("graphics/animations/patient2-ghost-idle", 2, 0.5f);
+		patient2Idle[World.modeToInt(World.Mode.REAL)] = loadAnimation("graphics/animations/patient2-real-idle", 2, 0.5f);
 		
 		// poof
 		poof = loadAnimation("graphics/animations/poof-", 2, 0.3f);		
@@ -146,7 +146,7 @@ public class WorldRenderer {
 		// set vignette based on
 		vignetteShader.begin();
 		vignetteShader.setUniformf("u_resolution", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		if(world.getMode() == World.REAL) {
+		if(world.getMode() == World.Mode.REAL) {
 			vignetteShader.setUniformf("tint", 1, 1, 1, 1);
 			vignetteShader.setUniformf("innerRadius", 0.02f);
 			vignetteShader.setUniformf("outerRadius", 0.9f);
@@ -217,7 +217,7 @@ public class WorldRenderer {
 				renderEnemy((Enemy)entity, false);
 			}
 			else if(entity instanceof Pill) {
-				if(world.mode == World.GHOST) batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
+				if(world.mode == World.Mode.GHOST) batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
 			}
 			else if(entity instanceof DoorVertical) {
 				Door door = (Door)entity;
@@ -238,7 +238,7 @@ public class WorldRenderer {
 				}
 			}
 			else if(entity instanceof Axe) {
-				if(world.mode == World.REAL) batch.draw(axe, entity.position.x, entity.position.y, 1, 1);
+				if(world.mode == World.Mode.REAL) batch.draw(axe, entity.position.x, entity.position.y, 1, 1);
 			}
 			else if(entity instanceof Switch) {
 				Switch trigger = (Switch)entity;
@@ -310,16 +310,19 @@ public class WorldRenderer {
 		Animation[] anims = entity instanceof Enemy2?patient2Idle: patient1Idle;
 		TextureRegion frame;
 		float offset = 0;
+		
+		int mode = World.modeToInt(world.mode);
+		
 		switch(entity.state) {
 			case IDLE:
 				if(entity.heading == Enemy.Heading.Left) {					
-					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					frame = anims[mode].getKeyFrame(entity.stateTime, true);
 					offset = clipOffset(frame, upper);
 					frame = clip(frame, upper);
 					frame.flip(true, false);
 					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
-					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					frame = anims[mode].getKeyFrame(entity.stateTime, true);
 					offset = clipOffset(frame, upper);
 					frame = clip(frame, upper);
 					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
@@ -327,13 +330,13 @@ public class WorldRenderer {
 				break;
 			case WANDERING:
 				if(entity.heading == Enemy.Heading.Left) {					
-					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					frame = anims[mode].getKeyFrame(entity.stateTime, true);
 					offset = clipOffset(frame, upper);
 					frame = clip(frame, upper);
 					frame.flip(true, false);
 					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
-					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					frame = anims[mode].getKeyFrame(entity.stateTime, true);
 					offset = clipOffset(frame, upper);
 					frame = clip(frame, upper);
 					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
@@ -341,20 +344,20 @@ public class WorldRenderer {
 				break;
 			case ATTACKING:
 				if(entity.heading == Enemy.Heading.Left) {					
-					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					frame = anims[mode].getKeyFrame(entity.stateTime, true);
 					offset = clipOffset(frame, upper);
 					frame = clip(frame, upper);
 					frame.flip(true, false);
 					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
-					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					frame = anims[mode].getKeyFrame(entity.stateTime, true);
 					offset = clipOffset(frame, upper);
 					frame = clip(frame, upper);
 					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				}
 				break;
 			case DEAD:
-				if(world.mode == World.REAL) {
+				if(world.mode == World.Mode.REAL) {
 					batch.draw(blood, entity.position.x, entity.position.y, 1, 1);
 				}
 				else {
@@ -382,7 +385,7 @@ public class WorldRenderer {
 	private void renderPlayer (Player entity, boolean upper) {
 		TextureRegion frame;
 		Animation anim = null;
-		if(entity.axe_hits > 0 && world.mode != World.REAL) {
+		if(entity.axe_hits > 0 && world.mode != World.Mode.REAL) {
 			anim = mainAxeIdle;
 		} else {
 			anim = mainIdle;

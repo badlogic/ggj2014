@@ -14,8 +14,10 @@ import com.badlogic.gdx.utils.Array;
 import com.ggj2014.AudioManager;
 
 public class World {
-	public static final int REAL = 0;
-	public static final int GHOST = 1;
+	public enum Mode {
+		REAL, GHOST
+	}
+	
 	public static final float TIME = 10;
 	public static int TILE_SIZE = 64;
 	
@@ -26,7 +28,7 @@ public class World {
 	public Array<Entity> delete = new Array<Entity>();
 	public Player player;
 	public Goal goal;
-	public int mode = GHOST;
+	public Mode mode = Mode.GHOST;
 	private float modeTimer = TIME;
 	public WorldRenderer renderer;
 	public AudioManager audio;
@@ -41,7 +43,7 @@ public class World {
 	
 	public void setAudio(AudioManager audio) {
 		this.audio = audio;
-		this.audio.setMode(mode);
+		//this.audio.setMode(mode);
 	}
 	
 	private void loadLevel (String level) {
@@ -155,12 +157,12 @@ public class World {
 		
 		delete.clear();
 		
-		if(mode == REAL){
+		if(mode == Mode.REAL){
 			modeTimer-=deltaTime;
 			if(modeTimer<=0)
 			{
 				modeTimer = TIME;
-				mode = GHOST;
+				mode = Mode.GHOST;
 			}
 		}
 	}
@@ -263,15 +265,21 @@ public class World {
 	}
 	
 	public void toggleMode() {
-		if(mode == GHOST)
-			mode = REAL;
+		if(mode == Mode.GHOST)
+			mode = Mode.REAL;
 		else
-			mode = GHOST;
-		audio.setMode(mode);
+			mode = Mode.GHOST;
+		//audio.setMode(mode);
 	}
 	
-	public int getMode() {
+	public Mode getMode() {
 		return mode;
+	}
+	
+	public static int modeToInt(Mode mode) {
+		if(mode == Mode.REAL)
+			return 0;
+		return 1;
 	}
 
 }

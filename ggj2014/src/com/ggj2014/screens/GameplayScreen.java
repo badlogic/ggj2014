@@ -3,10 +3,8 @@ package com.ggj2014.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.ggj2014.AudioManager;
-import com.ggj2014.DodgeBallHospital;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
-import com.ggj2014.mechanic.Player;
 import com.ggj2014.mechanic.World;
 import com.ggj2014.mechanic.WorldRenderer;
 
