@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
+import com.ggj2014.mechanic.Player;
 import com.ggj2014.mechanic.World;
 import com.ggj2014.mechanic.WorldRenderer;
 
@@ -24,6 +25,10 @@ public class GameplayScreen extends Screen {
 		float delta = Gdx.graphics.getDeltaTime();
 		renderer.render(delta);
 		world.update(delta);
+		
+		if(world.player.isDead()) {
+			manager.setScreen(new GameOverScreen(manager));
+		}
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			Gdx.app.exit();
