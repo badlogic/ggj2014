@@ -19,9 +19,9 @@ public class GameplayScreen extends Screen {
 		this.lvl = lvl;
 		switch(lvl){
 		case 1: world = new World("levels/map1_v2.tmx");
-				break;
+			break;
 		case 2: world = new World("levels/map2_v1.tmx");
-				break;
+			break;
 		}
 		renderer = new WorldRenderer(world);
 		audio = new AudioManager();
@@ -32,6 +32,10 @@ public class GameplayScreen extends Screen {
 	@Override
 	public void render () {
 		float delta = Gdx.graphics.getDeltaTime();
+		
+		if(delta > 1.0f)
+			delta = 0.0f;
+		
 		renderer.render(delta);
 		audio.update(delta);
 		world.update(delta);
