@@ -2,6 +2,7 @@ package com.ggj2014.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.ggj2014.DodgeBallHospital;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
 import com.ggj2014.mechanic.Player;
@@ -39,5 +40,7 @@ public class GameplayScreen extends Screen {
 
 	@Override
 	public void dispose () {
+		renderer.dispose();
+		ScreenManager.multiplexer.clear();
 	}
 }
