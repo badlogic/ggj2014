@@ -240,6 +240,17 @@ public class WorldRenderer {
 			else if(entity instanceof Axe) {
 				if(world.mode == World.REAL) batch.draw(axe, entity.position.x, entity.position.y, 1, 1);
 			}
+			else if(entity instanceof Switch) {
+				Switch trigger = (Switch)entity;
+				TextureRegion frame = null;
+				if(trigger.isUsed) {
+					frame = new TextureRegion(switchOn);
+				} else {
+					frame = new TextureRegion(switchOff);
+				}
+				frame = clip(frame, false);
+				batch.draw(frame, trigger.position.x, trigger.position.y, 1, 1);
+			}
 		}
 		batch.end();
 		
@@ -271,6 +282,17 @@ public class WorldRenderer {
 					frame = clip(frame, true);
 					batch.draw(frame, entity.position.x, entity.position.y + 1, 1, 1);
 				}
+			}
+			else if(entity instanceof Switch) {
+				Switch trigger = (Switch)entity;
+				TextureRegion frame = null;
+				if(trigger.isUsed) {
+					frame = new TextureRegion(switchOn);
+				} else {
+					frame = new TextureRegion(switchOff);
+				}
+				frame = clip(frame, true);
+				batch.draw(frame, trigger.position.x, trigger.position.y + 1, 1, 1);
 			}
 		}
 		batch.end();
