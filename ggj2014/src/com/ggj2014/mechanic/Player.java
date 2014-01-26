@@ -45,7 +45,7 @@ public class Player extends Entity {
 				case Keys.E:
 					boolean attacked = false;
 					
-					if(world.mode == world.GHOST && axe_hits > 0) {
+					if(world.mode == World.Mode.GHOST && axe_hits > 0) {
 						attacked = attack();
 					}
 					
@@ -121,16 +121,16 @@ public class Player extends Entity {
 			Entity entity = world.entities.get(i);
 		
 			if(entity instanceof Pill) {
-				if(world.mode == world.GHOST && entity.bounds.overlaps(this.bounds)) {
+				if(world.mode == World.Mode.GHOST && entity.bounds.overlaps(this.bounds)) {
 					((Pill) entity).pickUp(world);
-					world.mode = world.REAL;
+					world.mode = World.Mode.REAL;
 				}
 			} else if(entity instanceof Enemy) {
-				if(world.mode == world.GHOST && entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
+				if(world.mode == World.Mode.GHOST && entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
 					setState(State.DEAD);
 				}
 			} else if(entity instanceof Axe) {
-				if(world.mode == world.REAL && entity.bounds.overlaps(this.bounds)) {
+				if(world.mode == World.Mode.REAL && entity.bounds.overlaps(this.bounds)) {
 					((Axe) entity).pickUp(world);
 					axe_hits += AXE_HITS;
 				}
@@ -153,7 +153,7 @@ public class Player extends Entity {
 	}
 	
 	private void processMove (World world, float deltaTime) {
-		boolean sprinting = (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) && !sprinted && world.mode == World.GHOST;
+		boolean sprinting = (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) && !sprinted && world.mode == World.Mode.GHOST;
 		
 		if(sprinting) {
 			sprint_time -= deltaTime;

@@ -8,7 +8,7 @@ public class AudioManager {
 	private static final float FADE_TIME = 2;
 	Music real;
 	Music ghost;
-	int mode = 0;
+	World.Mode mode = World.Mode.GHOST;
 	float modeTime = 0;
 	
 	public AudioManager() {
@@ -18,10 +18,10 @@ public class AudioManager {
 		ghost.setLooping(true);
 	}
 	
-	public void setMode(int mode) {
+	public void setMode(World.Mode mode) {
 		this.mode = mode;
 		modeTime = 0;
-		if(mode == World.REAL) {
+		if(mode == World.Mode.REAL) {
 			real.play();
 		} else {
 			ghost.play();
@@ -29,7 +29,7 @@ public class AudioManager {
 	}
 	
 	public void update(float deltaTime) {
-		if(mode == World.REAL) {
+		if(mode == World.Mode.REAL) {
 			real.setVolume(Math.max(modeTime / FADE_TIME, 1));
 			ghost.setVolume(Math.max(modeTime / FADE_TIME, 1));
 			if(modeTime > FADE_TIME) ghost.stop();

@@ -59,7 +59,7 @@ public class Enemy extends Entity {
 		
 		float length2 = playerpos.sub(pos).len2();
 		
-		if(world.mode == world.GHOST && length2 < sightRange * sightRange && world.player.state != Player.State.DEAD) {
+		if(world.mode == World.Mode.GHOST && length2 < sightRange * sightRange && world.player.state != Player.State.DEAD) {
 			Array<GridPoint2> points = bresenham.line((int)pos.x, (int)pos.y, (int)(playerpos.x + pos.x), (int)(playerpos.y + pos.y));
 
 			boolean in_sight = true;
