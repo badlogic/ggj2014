@@ -2,6 +2,7 @@ package com.ggj2014.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.ggj2014.AudioManager;
 import com.ggj2014.DodgeBallHospital;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
@@ -12,12 +13,14 @@ import com.ggj2014.mechanic.WorldRenderer;
 public class GameplayScreen extends Screen {
 	World world;
 	WorldRenderer renderer;
+	AudioManager audio;
 	
 	public GameplayScreen (ScreenManager manager) {
 		super(manager);
 		
 		world = new World("levels/map1_v2.tmx");
 		renderer = new WorldRenderer(world);
+		audio = new AudioManager();
 		world.setRenderer(renderer);
 	}
 
@@ -41,6 +44,7 @@ public class GameplayScreen extends Screen {
 	@Override
 	public void dispose () {
 		renderer.dispose();
+		audio.dispose();
 		ScreenManager.multiplexer.clear();
 	}
 }
