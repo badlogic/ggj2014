@@ -177,7 +177,7 @@ public class WorldRenderer {
 				renderEnemy((Enemy)entity);
 			}
 			else if(entity instanceof Pill) {
-				batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
+				if(world.mode == World.GHOST) batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
 			}
 			else if(entity instanceof DoorVertical) {
 				Door door = (Door)entity;
@@ -194,7 +194,7 @@ public class WorldRenderer {
 				}
 			}
 			else if(entity instanceof Axe) {
-				batch.draw(axe, entity.position.x, entity.position.y, 1, 1);
+				if(world.mode == World.REAL) batch.draw(axe, entity.position.x, entity.position.y, 1, 1);
 			}
 		}
 		batch.end();
