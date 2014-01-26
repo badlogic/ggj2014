@@ -10,6 +10,7 @@ import com.ggj2014.mechanic.World;
 public class AudioManager {
 	private static final float FADE_TIME = 1.5f;
 	public static final float GHOST_FADE_TIME = 1.0f;
+	private static final float MUSIC_VOLUME = 0.7f;
 	Music real;
 	Music ghost;
 	World.Mode mode = World.Mode.REAL;
@@ -85,12 +86,12 @@ public class AudioManager {
 	
 	public void update(float deltaTime) {
 		if(mode == World.Mode.REAL) {
-			real.setVolume(Math.min(modeTime / FADE_TIME, 1));
-			ghost.setVolume(Math.max(1 - modeTime / FADE_TIME, 0));
+			real.setVolume(MUSIC_VOLUME * Math.min(modeTime / FADE_TIME, 1));
+			ghost.setVolume(MUSIC_VOLUME * Math.max(1 - modeTime / FADE_TIME, 0));
 			if(modeTime > FADE_TIME) ghost.stop();
 		} else {
-			ghost.setVolume(Math.min(modeTime / FADE_TIME, 1));
-			real.setVolume(Math.max(1 - modeTime / FADE_TIME, 0));
+			ghost.setVolume(MUSIC_VOLUME * Math.min(modeTime / FADE_TIME, 1));
+			real.setVolume(MUSIC_VOLUME * Math.max(1 - modeTime / FADE_TIME, 0));
 			if(modeTime > FADE_TIME) real.stop();
 		}
 		modeTime += deltaTime;
