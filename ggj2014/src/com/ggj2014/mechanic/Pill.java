@@ -13,5 +13,6 @@ public class Pill extends Entity {
 
 	public void pickUp(World world) {
 		world.delete.add(this);
+		world.audio.playerSwallow.play();
 	}
 }
