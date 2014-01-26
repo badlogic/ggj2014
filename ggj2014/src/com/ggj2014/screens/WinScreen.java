@@ -32,6 +32,9 @@ public class WinScreen extends Screen {
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			Gdx.app.exit();
 		}
+	     if(Gdx.input.justTouched()) {
+	    	 Gdx.app.exit();
+	     }
 	}
 
 	@Override
