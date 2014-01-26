@@ -3,9 +3,9 @@
  <tileset firstgid="1" name="dodgeball-hospital" tilewidth="64" tileheight="64">
   <image source="dodgeball-hospital.png" trans="ff00ff" width="1024" height="128"/>
  </tileset>
- <layer name="floor" width="50" height="50" opacity="0.77">
+ <layer name="floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmEEOgCAMBHkAX+D/3/RqjCRQaGnLHOak6A6LhlBLKRUAAACuoTnIsCOPNw9J/j885MIjrseK/8o4D/7fe1fGnvKVztHs2rXwmO3Dq4dFH17J0EcmD4n36Qyesf7vZ+lD06O3F5HuUW7oIwtZ+sAD6CO/BwBAVHpnFW3guuRcQ+tcZCRndI9IfbyfL+1r5/u0PLQyaPQwO88e92jW3zke+XkAzwKCmw==
+   eJzlmDuOwzAMRI20VrO1oftfM9giAMElhxyJUpxswUJOROnxbz+O43h8iZwF4uluyXOZ9eGcfRXICIfez6yts1uBeL5twHd6P7O2zq7k0LZqSfud5DrLwfIxNrH+e5FrhgPlg7bzLEdFLNzBH9/CsSrPP53jtT6N/d3ZjyT7P6ZevfR2pV/mLeo/3fgt6tXt+Ns3op6Y6bkj/u2OIAarrkXzCxPDlj8qOV4M1vmI5U4ciCFiqebQIvML5bnF0J19Fou1z6tTI/kh88vLc8TgrTWLdw7iYOIq8q+sd6xIW6DY3cVh/Rb5Q+tAHLr27eRgdYz4g8kP9Ez2utGaI3vkbFyhfp59Zs0NyB6noW91fmSeeUxS9N0z8WzpGukfkS5L0PsWijP0zlaRHxld0j6RWP9j68tIXEWxXiHv4ohs7fWPrM/+kz/kmuHQdRPpZdZaX/YekT/Qe1jmObtmzqqYSzL9zbItY+tKf8xy6Dqd7Xmj91hRrzJSMVvu8EcFxx3iahcHiiv0fR7NfwxHZl6b5UAz3kpBtVnfw3rX2JHXIzLrj7vcG93L6kcRx+i8xdYEhsPqRygOszPEZZzr6UWzzYj9JIf3raInfvfeo5HdZ/Z/Ggc7/0b3bBs5mLqsY1We5703V3J4371n6o3Oc/0d+jL86zFnOS7nvAoOZOffM34MPs08Ozev5sjKO+b/O3JU+KNKVuqO5AmCJ32y
   </data>
  </layer>
  <layer name="collisionmap" width="50" height="50">
