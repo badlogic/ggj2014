@@ -296,7 +296,6 @@ public class WorldRenderer {
 					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				}
 				break;
-			case MOVING:
 			case WANDERING:
 				if(entity.heading == Enemy.Heading.Left) {					
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);

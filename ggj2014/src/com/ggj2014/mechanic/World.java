@@ -111,6 +111,7 @@ public class World {
 			}
 			else if(type.equals("door_h")) {
 				Door door = new Door(object.get("x", Float.class), object.get("y", Float.class));
+				door.switchname = object.get("switch", String.class);
 				door.position.scl(1f / TILE_SIZE);
 				door.position.x = (float)Math.floor(door.position.x + 0.5f);
 				door.position.y = (float)Math.floor(door.position.y + 0.5f);

@@ -4,10 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Bresenham2;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.ggj2014.mechanic.Player.Heading;
-import com.ggj2014.mechanic.Player.State;
  
 public class Enemy extends Entity {
 	private static Bresenham2 bresenham = new Bresenham2();
@@ -16,10 +15,22 @@ public class Enemy extends Entity {
 	public float combatRange = 1;
 	public float sightRange = 5;
 	public float flockRange = 4;
-	public float speed = 2;
+	public float min_speed = 0.25f;
+	public float max_speed = 0.75f;
+	public float attack_speed = 2;
+	public float speed = 0;
 	public float damage = 10;
 	public State state = State.IDLE;
-	public float stateDuration;
+	
+	public float targetSpeed = 0;
+	public float stateDuration = 0;
+	public float minStateDuration = 1.0f;
+	public float maxStateDuration = 5.0f;
+	public float acceleration = 4;
+	public float maxTurnSpeed = (float)Math.PI * 10;
+	public float turnSpeed = 0;
+	public float pauseProbability = 0.3f;
+	
 	
 	public float alignment_angle = (float)Math.PI * 0.5f;
 	public float cohesion_angle = (float)Math.PI * 0.5f;
@@ -27,10 +38,10 @@ public class Enemy extends Entity {
 	public float alignment_factor = 0.1f;
 	public float cohesion_factor = 0.1f;
 	public float separation_factor = 0.6f;
-	public float player_factor = 1.0f;
+	public float player_factor = 0.8f;
 	
 	public Heading heading = Heading.Right;
-	
+
 	public Enemy(float x, float y) {
 		super(x, y);
 	}
@@ -44,7 +55,7 @@ public class Enemy extends Entity {
 		Vector2 playerpos = world.player.getCenter();
 		Vector2 pos = getCenter();
 		
-		Vector2 new_velocity = new Vector2(0, 0);
+		Vector2 new_velocity = velocity.nor();
 		
 		float length2 = playerpos.sub(pos).len2();
 		
@@ -76,13 +87,45 @@ public class Enemy extends Entity {
 			}
 			
 			if(in_sight) {
-				new_velocity = playerpos.scl(player_factor / (float)Math.sqrt(length2));
+				new_velocity = new_velocity.scl(1 - player_factor).add(playerpos.scl(player_factor / (float)Math.sqrt(length2)));
 				setState(State.ATTACKING);
+				targetSpeed = attack_speed;
 			}
 			else
-				setState(State.IDLE);
+				setState(targetSpeed > 0 ? State.WANDERING : State.IDLE);
 		} else {
-			setState(State.IDLE);
+			setState(targetSpeed > 0 ? State.WANDERING : State.IDLE);
+		}
+		
+		if(state == State.WANDERING || state == State.IDLE) {
+			stateDuration -= deltaTime;
+			
+			if(stateDuration < 0) {
+				// TODO: State change
+				if(MathUtils.randomBoolean(pauseProbability)) {
+					setState(State.IDLE);
+					targetSpeed = 0;
+					speed = 0;
+				} else {
+					if(state == State.IDLE) {
+						float angle = MathUtils.random((float)Math.PI * 2);
+						new_velocity = new Vector2((float)Math.cos(angle), (float)Math.sin(angle));
+					}
+					setState(State.WANDERING);
+					targetSpeed = MathUtils.random(min_speed, max_speed);
+					turnSpeed = MathUtils.random(-maxTurnSpeed, maxTurnSpeed);
+				}
+				
+				stateDuration = MathUtils.random(minStateDuration, maxStateDuration);
+			}
+
+			if(state == State.WANDERING) {
+				new_velocity.rotate(turnSpeed * deltaTime);
+			}
+		}
+		
+		if(speed != targetSpeed) {
+			speed += acceleration * deltaTime * Math.signum(targetSpeed - speed);
 		}
 		
 		Vector2 enemypos, relpos, t1;
@@ -137,18 +180,26 @@ public class Enemy extends Entity {
 		position.add(new_velocity);
 		velocity = new_velocity;
 		
+		if(new_velocity.len2() == 0) {
+			setState(State.IDLE);
+		}
+		
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
-		heading = velocity.len() > 0.1f && velocity.x < 0? Heading.Right: Heading.Left;		
+		heading = speed < 0.001f ? heading : (velocity.x < 0? Heading.Right: Heading.Left);
 	}
 	
 	public void setState(State state) {
 		if(this.state == state) return;
+		
+		if(this.state == State.ATTACKING)
+			targetSpeed = MathUtils.random(min_speed, max_speed);
+		
 		this.state = state;
 		this.stateTime = 0;
 	}
 	
 	enum State {
-		IDLE, ATTACKING, MOVING, WANDERING, DEAD
+		IDLE, ATTACKING, WANDERING, DEAD
 	}
 	
 	enum Heading {

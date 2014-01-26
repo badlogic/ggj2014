@@ -118,8 +118,7 @@ public class Player extends Entity {
 				}
 			} else if(entity instanceof Enemy) {
 				if(world.mode == world.GHOST && entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
-					state = State.DEAD;
-					stateTime = 0;
+					setState(State.DEAD);
 				}
 			} else if(entity instanceof Axe) {
 				if(world.mode == world.REAL && entity.bounds.overlaps(this.bounds)) {
@@ -128,8 +127,7 @@ public class Player extends Entity {
 				}
 			} else if(entity instanceof Goal) {
 				if(entity.bounds.overlaps(this.bounds)) {
-					state = State.WIN;
-					stateTime = 0;
+					setState(State.WIN);
 				}
 			}
 		}
