@@ -5,7 +5,7 @@
  </tileset>
  <layer name="floor" width="50" height="50" opacity="0.77">
   <data encoding="base64" compression="zlib">
-   eJztmEEOgCAMBHkAX+D/3/RqjCZQaF3KHOak6A6LhlBLKRUAAACOoQlkWJFHzcOS/w2FXHjs6zHjPzNOwf9578zYv3ytczS6diM8RvtQ9YjoQ5UMfWTysHj/nUGZ6P9+lj48Pb72ItY9ygl9ZCFLH3gAfeT3AADYla+zitZx3XKu4XUu0pMTjziP+/Otnivf5+XhlcGjh9F5VtyjRX8feOTnAinpgqw=
+   eJztmEEOgCAMBHkAX+D/3/RqjCRQaGnLHOak6A6LhlBLKRUAAACuoTnIsCOPNw9J/j885MIjrseK/8o4D/7fe1fGnvKVztHs2rXwmO3Dq4dFH17J0EcmD4n36Qyesf7vZ+lD06O3F5HuUW7oIwtZ+sAD6CO/BwBAVHpnFW3guuRcQ+tcZCRndI9IfbyfL+1r5/u0PLQyaPQwO88e92jW3zke+XkAzwKCmw==
   </data>
  </layer>
  <layer name="collisionmap" width="50" height="50">
@@ -95,7 +95,6 @@
   <object name="pille" type="pille" gid="31" x="896" y="2112"/>
   <object name="pille" type="pille" gid="31" x="126" y="2050"/>
   <object name="door_v" type="door_v" gid="3" x="2432" y="2112"/>
-  <object name="door_h_dark" type="door_h_dark" gid="28" x="511" y="2816"/>
   <object name="enemy1" type="enemy1" gid="30" x="1410" y="1088"/>
   <object name="enemy1" type="enemy1" gid="30" x="1476" y="1026"/>
   <object name="enemy1" type="enemy1" gid="30" x="1602" y="1026"/>
@@ -126,5 +125,6 @@
   <object name="enemy2" type="enemy2" gid="23" x="114" y="434"/>
   <object name="enemy2" type="enemy2" gid="23" x="2648" y="902"/>
   <object name="enemy2" type="enemy2" gid="23" x="136" y="2306"/>
+  <object name="door_v" type="door_v" gid="3" x="513" y="2816"/>
  </objectgroup>
 </map>
