@@ -255,6 +255,7 @@ public class WorldRenderer {
 			}	
 			else if(entity instanceof Door) {				
 				Door door = (Door)entity;
+				if(door instanceof DoorVertical) continue;
 				if(door.isOpened) {
 					TextureRegion frame = new TextureRegion(doorOpen);
 					frame = clip(frame, true);
@@ -325,7 +326,6 @@ public class WorldRenderer {
 				}
 				break;
 			case DEAD:
-				System.out.println(entity.stateTime);
 				if(world.mode == World.REAL) {
 					batch.draw(blood, entity.position.x, entity.position.y, 1, 1);
 				}
