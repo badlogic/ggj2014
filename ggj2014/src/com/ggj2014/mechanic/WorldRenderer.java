@@ -21,6 +21,8 @@ import com.ggj2014.mechanic.Enemy.State;
 import com.ggj2014.mechanic.Player.Heading;
 
 public class WorldRenderer {	
+	private static final float MODE_TRANSITION_TIME = 1.0f;
+	
 	private static final float CAM_DAMP = 4;
 	private static final int CULL_RADIUS = 10;
 	private int LAYER_FLOOR = 0;
@@ -149,17 +151,22 @@ public class WorldRenderer {
 		// set vignette based on
 		vignetteShader.begin();
 		vignetteShader.setUniformf("u_resolution", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		float transition = 0.0f;
+		
 		if(world.getMode() == World.Mode.REAL) {
-			vignetteShader.setUniformf("tint", 1, 1, 1, 1);
-			vignetteShader.setUniformf("innerRadius", 0.02f);
-			vignetteShader.setUniformf("outerRadius", 0.9f);
-			vignetteShader.setUniformf("intensity", 0.99f);
-		} else {
-			vignetteShader.setUniformf("tint", 1, 0.7f, 0.7f, 1);
-			vignetteShader.setUniformf("innerRadius", 0.02f);
-			vignetteShader.setUniformf("outerRadius", 0.3f);
-			vignetteShader.setUniformf("intensity", 0.99f);		
+			if(world.modeTime < MODE_TRANSITION_TIME)
+				transition = world.modeTime / MODE_TRANSITION_TIME;
+			else if(world.modeTime >= World.REAL_TIME - MODE_TRANSITION_TIME)
+				transition = (World.REAL_TIME - world.modeTime) / MODE_TRANSITION_TIME;
+			else
+				transition = 1.0f;
 		}
+		
+		vignetteShader.setUniformf("tint", 1, 0.7f + transition * 0.3f, 0.7f + transition * 0.3f, 1);
+		vignetteShader.setUniformf("innerRadius", 0.02f);
+		vignetteShader.setUniformf("outerRadius", 0.3f + transition * 0.6f);
+		vignetteShader.setUniformf("intensity", 0.99f);
 		vignetteShader.end();
 		
 		cameraFollow(deltaTime);
