@@ -12,11 +12,17 @@ public class GameplayScreen extends Screen {
 	World world;
 	WorldRenderer renderer;
 	AudioManager audio;
+	int lvl;
 	
-	public GameplayScreen (ScreenManager manager) {
+	public GameplayScreen (ScreenManager manager, int lvl) {
 		super(manager);
-		
-		world = new World("levels/map1_v2.tmx");
+		this.lvl = lvl;
+		switch(lvl){
+		case 1: world = new World("levels/map1_v2.tmx");
+				break;
+		case 2: world = new World("levels/map2_v1.tmx");
+				break;
+		}
 		renderer = new WorldRenderer(world);
 		audio = new AudioManager();
 		world.setRenderer(renderer);
@@ -33,7 +39,13 @@ public class GameplayScreen extends Screen {
 		if(world.player.isDead()) {
 			manager.setScreen(new GameOverScreen(manager));
 		} else if(world.player.isWin()) {
-			manager.setScreen(new WinScreen(manager));
+			if(lvl==1)
+			{
+				manager.setScreen(new GameplayScreen(manager,2));
+			}
+			else{
+				manager.setScreen(new WinScreen(manager));
+			}
 		}
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {

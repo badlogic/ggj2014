@@ -29,7 +29,7 @@ public class IntroScreen3 extends Screen {
         batch.end();
 		
         if(Gdx.input.justTouched()) {
-     			manager.setScreen(new GameplayScreen(manager));
+     			manager.setScreen(new GameplayScreen(manager,1));
         }
 	}
 

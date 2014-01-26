@@ -169,7 +169,7 @@
     <property name="name" value="switch5"/>
    </properties>
   </object>
-  <object name="player" type="player" gid="14" x="1879" y="1519"/>
+  <object name="player" type="player" gid="14" x="2169" y="3007"/>
   <object name="goal" type="goal" gid="14" x="1149" y="187"/>
   <object name="axe" type="axe" gid="15" x="2444" y="2932"/>
   <object name="axe" type="axe" gid="15" x="350" y="2876"/>
