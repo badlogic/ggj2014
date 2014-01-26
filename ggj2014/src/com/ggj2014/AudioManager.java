@@ -8,9 +8,10 @@ import com.ggj2014.mechanic.World;
 
 public class AudioManager {
 	private static final float FADE_TIME = 1.5f;
+	public static final float GHOST_FADE_TIME = 1.0f;
 	Music real;
 	Music ghost;
-	World.Mode mode = World.Mode.GHOST;
+	World.Mode mode = World.Mode.REAL;
 	float modeTime = 0;
 	long nextAtmoTime;
 	
@@ -70,6 +71,8 @@ public class AudioManager {
 	}
 	
 	public void setMode(World.Mode mode) {
+		if(this.mode == mode)
+			return;
 		this.mode = mode;
 		modeTime = 0;
 		if(mode == World.Mode.REAL) {
