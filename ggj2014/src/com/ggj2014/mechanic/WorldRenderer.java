@@ -47,6 +47,7 @@ public class WorldRenderer {
 	public Texture doorVertical;
 	public Texture pill;
 	public Texture axe;
+	public Texture blood;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -92,6 +93,7 @@ public class WorldRenderer {
 		doorVertical = new Texture(Gdx.files.internal("graphics/door-vertical.png"));
 		pill = new Texture(Gdx.files.internal("graphics/tablette.png"));
 		axe = new Texture(Gdx.files.internal("graphics/axe.png"));
+		blood = new Texture(Gdx.files.internal("graphics/blood.png"));
 	}
 	
 	private Animation loadAnimation(String path, int frames, float frameDuration) {
@@ -166,7 +168,10 @@ public class WorldRenderer {
 			}
 		});
 		
+		int rendered = 0;
 		for(Entity entity: sortedEntities) {
+			if(entity.position.dst(camera.position.x, camera.position.y) > 9) continue;
+			if(!entity.isVisible) continue;
 			if(entity instanceof Player) {
 				renderPlayer((Player)entity);
 			}
@@ -196,6 +201,7 @@ public class WorldRenderer {
 			else if(entity instanceof Axe) {
 				if(world.mode == World.REAL) batch.draw(axe, entity.position.x, entity.position.y, 1, 1);
 			}
+			rendered++;
 		}
 		batch.end();
 		
