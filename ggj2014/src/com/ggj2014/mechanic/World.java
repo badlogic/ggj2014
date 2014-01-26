@@ -41,6 +41,7 @@ public class World {
 	
 	public void setAudio(AudioManager audio) {
 		this.audio = audio;
+		this.audio.setMode(mode);
 	}
 	
 	private void loadLevel (String level) {
