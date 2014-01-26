@@ -1,5 +1,7 @@
 package com.ggj2014.mechanic;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public class Switch extends Entity {
 
 	public boolean isUsed = false;
@@ -7,16 +9,15 @@ public class Switch extends Entity {
 	
 	public Switch(float x, float y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void update(World world, float deltaTime) {
-		// TODO Auto-generated method stub
-		
 	}
 	
-	public void useSwitch(){
-		this.isUsed = true;
+	public void check(World world) {
+		if (!isUsed && world.player.position.dst(position) < 1.2f) {
+			isUsed = true;
+		}
 	}
 }
