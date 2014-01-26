@@ -161,7 +161,9 @@ public class World {
 			modeTimer-=deltaTime;
 			if(modeTimer<=0)
 			{
-				toggleMode();
+				modeTimer = TIME;
+				mode = Mode.GHOST;
+				audio.setMode(mode);
 			}
 		}
 	}
