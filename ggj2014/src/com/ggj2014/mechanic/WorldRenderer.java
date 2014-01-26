@@ -165,8 +165,10 @@ public class WorldRenderer {
 		
 		vignetteShader.setUniformf("tint", 1, 0.7f + transition * 0.3f, 0.7f + transition * 0.3f, 1);
 		vignetteShader.setUniformf("innerRadius", 0.02f);
-		vignetteShader.setUniformf("outerRadius", 0.3f + transition * 0.6f);
+		vignetteShader.setUniformf("outerRadius", 0.4f + transition * 0.5f);
 		vignetteShader.setUniformf("intensity", 0.99f);
+		vignetteShader.setUniformf("timer", world.modeTime);
+		vignetteShader.setUniformf("noise", 1 - transition);
 		vignetteShader.end();
 		
 		cameraFollow(deltaTime);
