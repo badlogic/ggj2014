@@ -32,7 +32,6 @@ public class WorldRenderer {
 	OrthogonalTiledMapRenderer tileMapRenderer;
 	Array<Entity> sortedEntities = new Array<Entity>();
 	ShaderProgram vignetteShader;
-	
 	ShapeRenderer sr = new ShapeRenderer();
 	
 	public Animation mainIdle;
@@ -73,6 +72,33 @@ public class WorldRenderer {
 		}
 	}
 	
+	public void dispose() {
+		batch.dispose();
+		tileMapRenderer.dispose();
+		vignetteShader.dispose();
+		world.map.dispose();
+		disposeAnim(mainIdle);
+		disposeAnim(mainAxeIdle);
+		disposeAnim(mainAttack);
+		disposeAnim(patient1Idle[0]);
+		disposeAnim(patient1Idle[1]);
+		disposeAnim(patient2Idle[0]);
+		disposeAnim(patient2Idle[1]);
+		doorClosed.dispose();
+		doorOpen.dispose();
+		doorVertical.dispose();
+		pill.dispose();
+		axe.dispose();
+		blood.dispose();
+		sr.dispose();
+	}
+	
+	private void disposeAnim (Animation mainIdle2) {
+		for(TextureRegion region: mainIdle.getKeyFrames()) {
+			region.getTexture().dispose();
+		}
+	}
+
 	private void loadAssets () {
 		// main
 		mainIdle = loadAnimation("graphics/animations/main-normal-idle", 2, 0.5f);
