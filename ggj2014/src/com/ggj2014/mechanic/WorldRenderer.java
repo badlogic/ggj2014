@@ -39,8 +39,8 @@ public class WorldRenderer {
 	public Animation mainAxeIdle;
 	public Animation mainAttack;
 	
-	public Texture[] patient1 = new Texture[2];
-	public Texture[] patient2 = new Texture[2];
+	public Animation[] patient1Idle = new Animation[2];
+	public Animation[] patient2Idle = new Animation[2];
 	
 	public Texture doorClosed;
 	public Texture doorOpen;
@@ -77,10 +77,15 @@ public class WorldRenderer {
 		mainAxeIdle = loadAnimation("graphics/animations/main-axe-idle", 2, 0.5f);
 		mainAttack = loadAnimation("graphics/animations/main-char-axe", 2, Player.ATTACK_TIME / 2);
 		
-		// images & animations
-		loadImage(patient1, "patient1");
-		loadImage(patient2, "patient2");
+		// patient1
+		patient1Idle[World.GHOST] = loadAnimation("graphics/animations/patient1-ghost-idle", 2, 0.5f);
+		patient1Idle[World.REAL] = loadAnimation("graphics/animations/patient1-real-idle", 2, 0.5f);
 		
+		// patient2
+		patient2Idle[World.GHOST] = loadAnimation("graphics/animations/patient2-ghost-idle", 2, 0.5f);
+		patient2Idle[World.REAL] = loadAnimation("graphics/animations/patient2-real-idle", 2, 0.5f);
+		
+		// statics
 		doorOpen = new Texture(Gdx.files.internal("graphics/door-open.png"));
 		doorClosed = new Texture(Gdx.files.internal("graphics/door-closed.png"));
 		doorVertical = new Texture(Gdx.files.internal("graphics/door-vertical.png"));
@@ -164,10 +169,10 @@ public class WorldRenderer {
 				renderPlayer((Player)entity);
 			}
 			else if(entity instanceof Enemy && !(entity instanceof Enemy2)) {
-				batch.draw(patient1[world.getMode()], entity.position.x, entity.position.y, 1, 2);
+				renderPatient1((Enemy)entity);
 			}
 			else if(entity instanceof Enemy2) {
-				batch.draw(patient2[world.getMode()], entity.position.x, entity.position.y, 1, 1);
+				renderPatient2((Enemy)entity);
 			}
 			else if(entity instanceof Pill) {
 				batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
@@ -199,7 +204,52 @@ public class WorldRenderer {
 //		}
 //		sr.end();
 	}
+
+	private void renderPatient1 (Enemy entity) {
+		TextureRegion frame;
+		switch(entity.state) {
+			case IDLE:
+				if(entity.heading == Enemy.Heading.Left) {					
+					frame = patient1Idle[world.mode].getKeyFrame(entity.stateTime, true);
+					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					frame.flip(true, false);
+				} else {
+					frame = patient1Idle[world.mode].getKeyFrame(entity.stateTime, true);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+				}
+				break;
+			case MOVING:
+			case WANDERING:
+				if(entity.heading == Enemy.Heading.Left) {					
+					frame = patient1Idle[world.mode].getKeyFrame(entity.stateTime, true);
+					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					frame.flip(true, false);
+				} else {
+					frame = patient1Idle[world.mode].getKeyFrame(entity.stateTime, true);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+				}
+				break;
+			case ATTACKING:
+				if(entity.heading == Enemy.Heading.Left) {					
+					frame = patient1Idle[world.mode].getKeyFrame(entity.stateTime, true);
+					frame.flip(true, false);
+					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 1, 2);
+					frame.flip(true, false);
+				} else {
+					frame = patient1Idle[world.mode].getKeyFrame(entity.stateTime, true);
+					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 1, 2);
+				}
+				break;
+			default:
+		}
+	}
 	
+	private void renderPatient2 (Enemy entity) {
+		
+	}
+
 	private void renderPlayer (Player entity) {
 //		System.out.println(entity.state + ", " + entity.stateTime);
 		TextureRegion frame;
