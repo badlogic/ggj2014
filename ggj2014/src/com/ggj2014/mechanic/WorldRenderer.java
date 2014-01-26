@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,10 +17,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ggj2014.mechanic.Enemy.State;
 import com.ggj2014.mechanic.Player.Heading;
 
 public class WorldRenderer {	
 	private static final float CAM_DAMP = 4;
+	private static final int CULL_RADIUS = 10;
 	private int LAYER_FLOOR = 0;
 	private int LAYER_FLOOR_UPPER = 1;
 	private int LAYER_INTERIEUR = 3;
@@ -179,28 +180,35 @@ public class WorldRenderer {
 		tileMapRenderer.render(new int[] { LAYER_INTERIEUR });
 		
 		// render objects
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
 		sortedEntities.clear();
 		sortedEntities.addAll(world.entities);
 		sortedEntities.sort(new Comparator<Entity>() {
 			@Override
-			public int compare (Entity o1, Entity o2) {
+			public int compare (Entity o1, Entity o2) {							
 				return (int)Math.signum(o2.position.y - o1.position.y);
 			}
 		});
 		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		// blood at the bottom...
 		for(Entity entity: sortedEntities) {
-			if(entity.position.dst(camera.position.x, camera.position.y) > 9) continue;
+			if(entity.position.dst(camera.position.x, camera.position.y) > CULL_RADIUS) continue;
+			if(!entity.isVisible) continue;
+			if(entity instanceof Enemy && ((Enemy)entity).state == State.DEAD) {
+				renderEnemy((Enemy)entity, false);
+			}
+		}
+		
+		for(Entity entity: sortedEntities) {
+			if(entity.position.dst(camera.position.x, camera.position.y) > CULL_RADIUS) continue;
 			if(!entity.isVisible) continue;
 			if(entity instanceof Player) {
-				renderPlayer((Player)entity);
+				renderPlayer((Player)entity, false);
 			}
-			else if(entity instanceof Enemy && !(entity instanceof Enemy2)) {
-				renderEnemy((Enemy)entity);
-			}
-			else if(entity instanceof Enemy2) {
-				renderEnemy((Enemy)entity);
+			else if(entity instanceof Enemy) {
+				if(((Enemy)entity).state == State.DEAD) continue;
+				renderEnemy((Enemy)entity, false);
 			}
 			else if(entity instanceof Pill) {
 				if(world.mode == World.GHOST) batch.draw(pill, entity.position.x, entity.position.y, 1, 1);
@@ -214,9 +222,13 @@ public class WorldRenderer {
 			else if(entity instanceof Door) {				
 				Door door = (Door)entity;
 				if(door.isOpened) {
-					batch.draw(doorOpen, entity.position.x, entity.position.y, 1, 2);
+					TextureRegion frame = new TextureRegion(doorOpen);
+					frame = clip(frame, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 1);
 				} else {
-					batch.draw(doorClosed, entity.position.x, entity.position.y, 1, 2);
+					TextureRegion frame = new TextureRegion(doorClosed);
+					frame = clip(frame, false);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, 1);
 				}
 			}
 			else if(entity instanceof Axe) {
@@ -227,6 +239,35 @@ public class WorldRenderer {
 		
 		tileMapRenderer.render(new int[] { LAYER_FLOOR_UPPER });
 		
+
+		// upper parts of player, entities and doors
+		batch.begin();
+		for(Entity entity: sortedEntities) {
+			if(entity.position.dst(camera.position.x, camera.position.y) > CULL_RADIUS) continue;
+			if(!entity.isVisible) continue;
+			if(entity instanceof Player) {
+				renderPlayer((Player)entity, true);
+			}
+			else if(entity instanceof Enemy) {
+				if(((Enemy)entity).state != Enemy.State.DEAD) {
+					renderEnemy((Enemy)entity, true);
+				}
+			}	
+			else if(entity instanceof Door) {				
+				Door door = (Door)entity;
+				if(door.isOpened) {
+					TextureRegion frame = new TextureRegion(doorOpen);
+					frame = clip(frame, true);
+					batch.draw(frame, entity.position.x, entity.position.y + 1, 1, 1);
+				} else {
+					TextureRegion frame = new TextureRegion(doorClosed);
+					frame = clip(frame, true);
+					batch.draw(frame, entity.position.x, entity.position.y + 1, 1, 1);
+				}
+			}
+		}
+		batch.end();
+		
 		// draw entity bounds
 //		sr.begin(ShapeType.Line);
 //		sr.setColor(0, 1, 0, 1);
@@ -236,51 +277,62 @@ public class WorldRenderer {
 //		sr.end();
 	}
 
-	private void renderEnemy (Enemy entity) {
+	private void renderEnemy (Enemy entity, boolean upper) {
 		Animation[] anims = entity instanceof Enemy2?patient2Idle: patient1Idle;
-		float height = entity instanceof Enemy2? 1: 2;
 		TextureRegion frame;
+		float offset = 0;
 		switch(entity.state) {
 			case IDLE:
 				if(entity.heading == Enemy.Heading.Left) {					
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
-					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				}
 				break;
 			case MOVING:
 			case WANDERING:
 				if(entity.heading == Enemy.Heading.Left) {					
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
-					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				}
 				break;
 			case ATTACKING:
 				if(entity.heading == Enemy.Heading.Left) {					
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
-					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				}
 				break;
 			case DEAD:
 				System.out.println(entity.stateTime);
-				if(world.mode == World.REAL) batch.draw(blood, entity.position.x, entity.position.y, 1, 2);
+				if(world.mode == World.REAL) {
+					batch.draw(blood, entity.position.x, entity.position.y, 1, 1);
+				}
 				else {
 					if(!poof.isAnimationFinished(entity.stateTime)) {
-						frame = poof.getKeyFrame(entity.stateTime, false);
+						frame = poof.getKeyFrame(entity.stateTime, false);						
 						batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
 					}
 				}
@@ -288,7 +340,19 @@ public class WorldRenderer {
 		}
 	}
 	
-	private void renderPlayer (Player entity) {
+	private TextureRegion clip(TextureRegion region, boolean upper) {
+		if(region.getRegionWidth() == 64 && region.getRegionHeight() == 64) return new TextureRegion(region);
+		if(upper) return new TextureRegion(region.getTexture(), 0, 0, region.getRegionWidth(), 64);
+		else return new TextureRegion(region.getTexture(), 0, 64, region.getRegionWidth(), 64);
+	}
+	
+	private float clipOffset(TextureRegion region, boolean upper) {
+		if(region.getRegionWidth() == 64 && region.getRegionHeight() == 64) return 0;
+		if(upper) return 1;
+		else return 0;
+	}
+	
+	private void renderPlayer (Player entity, boolean upper) {
 		TextureRegion frame;
 		Animation anim = null;
 		if(entity.axe_hits > 0 && world.mode != World.REAL) {
@@ -296,38 +360,48 @@ public class WorldRenderer {
 		} else {
 			anim = mainIdle;
 		}
+		float offset = 0;
 		switch(entity.state) {
 			case IDLE:
 				if(entity.heading == Heading.Left) {					
 					frame = anim.getKeyFrame(entity.stateTime, true);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
-					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
 					frame = anim.getKeyFrame(entity.stateTime, true);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				}
 				break;
 			case MOVING:
 				if(entity.heading == Heading.Left) {					
 					frame = anim.getKeyFrame(entity.stateTime, true);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
-					frame.flip(true, false);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				} else {
 					frame = anim.getKeyFrame(entity.stateTime, true);
-					batch.draw(frame, entity.position.x, entity.position.y, 1, 2);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
+					batch.draw(frame, entity.position.x, entity.position.y + offset, 1, 1);
 				}
 				break;
 			case ATTACK:
 				if(entity.heading == Heading.Left) {					
 					frame = mainAttack.getKeyFrame(entity.stateTime, false);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 2, 2);
-					frame.flip(true, false);
+					batch.draw(frame, entity.position.x - 0.5f, entity.position.y + offset, 2, 1);
 				} else {
 					frame = mainAttack.getKeyFrame(entity.stateTime, false);
-					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 2, 2);
+					offset = clipOffset(frame, upper);
+					frame = clip(frame, upper);
+					batch.draw(frame, entity.position.x - 0.5f, entity.position.y + offset, 2, 1);
 				}
 				break;
 			default:
