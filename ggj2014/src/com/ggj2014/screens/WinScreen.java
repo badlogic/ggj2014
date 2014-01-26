@@ -1,9 +1,7 @@
 package com.ggj2014.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
@@ -21,7 +19,7 @@ public class WinScreen extends Screen {
 	@Override
 	public void render() {
 
-		Gdx.gl20.glClearColor(0.4f, 0.4f, 1, 1);
+		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(Gdx.gl20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
@@ -29,10 +27,7 @@ public class WinScreen extends Screen {
         batch.end();
 		
 		
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			manager.setScreen(new CreditScreen(manager));
-		}
-	     if(Gdx.input.justTouched()) {
+		if (waitForKeypress()) {
 	    	 manager.setScreen(new CreditScreen(manager));
 	     }
 	}

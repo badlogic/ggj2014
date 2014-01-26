@@ -1,10 +1,6 @@
 package com.ggj2014.mechanic;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.ggj2014.mechanic.Player.State;
 
 public class Door extends Entity {
 	public boolean isOpened;
