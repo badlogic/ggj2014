@@ -43,14 +43,21 @@ public class Player extends Entity {
 					
 				case Keys.SPACE:
 				case Keys.E:
-					for(Entity e : world.entities) {
-						if(e instanceof Door)
-							((Door)e).checkDoor(world);
-					}
+					boolean attacked = false;
 					
 					if(world.mode == world.GHOST && axe_hits > 0) {
-						attack();
+						attacked = attack();
 					}
+					
+					if(!attacked) {
+						for(Entity e : world.entities) {
+							if(e instanceof Door)
+								((Door)e).checkDoor(world);
+							else if(e instanceof Switch)
+								((Switch)e).check(world);
+						}
+					}
+					
 					return true;
 
 				default:
@@ -61,7 +68,7 @@ public class Player extends Entity {
 		});
 	}
 	
-	public void attack() {
+	public boolean attack() {
 		Vector2 pos = getCenter();
 		Vector2 enemypos;
 		
@@ -88,6 +95,8 @@ public class Player extends Entity {
 			axe_hits--;
 		
 		setState(State.ATTACK);
+		
+		return hit;
 	}
 	
 	public void setState(State state) {
