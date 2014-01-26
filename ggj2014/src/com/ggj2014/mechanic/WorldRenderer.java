@@ -38,6 +38,7 @@ public class WorldRenderer {
 	public Animation mainIdle;
 	public Animation mainAxeIdle;
 	public Animation mainAttack;
+	public Texture mainDead;
 	
 	public Animation[] patient1Idle = new Animation[2];
 	public Animation[] patient2Idle = new Animation[2];
@@ -84,6 +85,7 @@ public class WorldRenderer {
 		disposeAnim(mainIdle);
 		disposeAnim(mainAxeIdle);
 		disposeAnim(mainAttack);
+		mainDead.dispose();
 		disposeAnim(patient1Idle[0]);
 		disposeAnim(patient1Idle[1]);
 		disposeAnim(patient2Idle[0]);
@@ -110,6 +112,7 @@ public class WorldRenderer {
 		mainIdle = loadAnimation("graphics/animations/main-normal-idle", 2, 0.5f);
 		mainAxeIdle = loadAnimation("graphics/animations/main-axe-idle", 2, 0.5f);
 		mainAttack = loadAnimation("graphics/animations/main-char-axe", 2, Player.ATTACK_TIME / 2);
+		mainDead = new Texture("graphics/animations/main-dead.png");
 		
 		// patient1
 		patient1Idle[World.modeToInt(World.Mode.GHOST)] = loadAnimation("graphics/animations/patient1-ghost-idle", 2, 0.5f);
@@ -433,6 +436,9 @@ public class WorldRenderer {
 					frame = clip(frame, upper);
 					batch.draw(frame, entity.position.x - 0.5f, entity.position.y + offset, 2, 1);
 				}
+				break;
+			case DEAD:
+				if(!upper) batch.draw(mainDead, entity.position.x - 0.5f, entity.position.y + offset, 2, 1);
 				break;
 			default:
 		}
