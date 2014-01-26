@@ -27,6 +27,7 @@ public class Door extends Entity {
 				isOpened = false;
 				world.walls[(int) position.x][(int) position.y] = new Rectangle(
 						position.x, position.y, 1, 1);
+				world.audio.doorClose.play();
 			}
 		} else {
 			if (world.player.position.dst(position) < 1.2f) {
@@ -38,6 +39,7 @@ public class Door extends Entity {
 									&& ((Switch) entity).isUsed) {
 								isOpened = true;
 								world.walls[(int) position.x][(int) position.y] = null;
+								world.audio.trigger.play();
 							}
 						}
 
@@ -45,6 +47,7 @@ public class Door extends Entity {
 				} else {
 					isOpened = true;
 					world.walls[(int) position.x][(int) position.y] = null;
+					world.audio.doorOpen.play();
 				}
 			}
 		}

@@ -91,8 +91,12 @@ public class Player extends Entity {
 			}
 		}
 		
-		if(hit)
+		if(hit) {
 			axe_hits--;
+			world.audio.axeHit.play();
+		} else {
+			world.audio.axeNotHit.play();
+		}
 		
 		setState(State.ATTACK);
 		
@@ -128,6 +132,7 @@ public class Player extends Entity {
 			} else if(entity instanceof Enemy) {
 				if(world.mode == World.Mode.GHOST && entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
 					setState(State.DEAD);
+					world.audio.playerDie.play();
 				}
 			} else if(entity instanceof Axe) {
 				if(world.mode == World.Mode.REAL && entity.bounds.overlaps(this.bounds)) {
