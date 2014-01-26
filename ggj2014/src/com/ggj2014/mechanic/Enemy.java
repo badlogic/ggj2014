@@ -136,7 +136,7 @@ public class Enemy extends Entity {
 		velocity = new_velocity;
 		
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
-		heading = velocity.x < 0? Heading.Right: Heading.Left;
+		heading = velocity.len() > 0.1f && velocity.x < 0? Heading.Right: Heading.Left;
 		stateTime += deltaTime;
 		if(stateTime < 0) stateTime = 0;
 	}
