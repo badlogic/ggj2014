@@ -254,7 +254,6 @@ public class WorldRenderer {
 	}
 	
 	private void renderPlayer (Player entity) {
-//		System.out.println(entity.state + ", " + entity.stateTime);
 		TextureRegion frame;
 		Animation anim = null;
 		if(entity.axe_hits > 0 && world.mode != World.REAL) {
