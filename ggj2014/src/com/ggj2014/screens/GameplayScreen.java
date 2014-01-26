@@ -22,6 +22,7 @@ public class GameplayScreen extends Screen {
 		renderer = new WorldRenderer(world);
 		audio = new AudioManager();
 		world.setRenderer(renderer);
+		world.setAudio(audio);
 	}
 
 	@Override
