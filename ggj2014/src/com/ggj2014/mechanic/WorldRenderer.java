@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ggj2014.mechanic.Enemy.State;
 import com.ggj2014.mechanic.Player.Heading;
+import com.ggj2014.mechanic.World.Mode;
 
 public class WorldRenderer {	
 	private static final float MODE_TRANSITION_TIME = 1.0f;
@@ -54,6 +55,8 @@ public class WorldRenderer {
 	public Texture blood;
 	public Texture switchOn;
 	public Texture switchOff;
+	public Texture patient1RedEyes;
+	public Texture patient2RedEyes;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -100,6 +103,8 @@ public class WorldRenderer {
 		blood.dispose();
 		switchOn.dispose();
 		switchOff.dispose();
+		patient1RedEyes.dispose();
+		patient2RedEyes.dispose();
 		sr.dispose();
 	}
 	
@@ -119,10 +124,12 @@ public class WorldRenderer {
 		// patient1
 		patient1Idle[World.modeToInt(World.Mode.GHOST)] = loadAnimation("graphics/animations/patient1-ghost-idle", 2, 0.5f);
 		patient1Idle[World.modeToInt(World.Mode.REAL)] = loadAnimation("graphics/animations/patient1-real-idle", 2, 0.5f);
+		patient1RedEyes = new Texture(Gdx.files.internal("graphics/animations/patient1-redEyes.png"));
 		
 		// patient2
 		patient2Idle[World.modeToInt(World.Mode.GHOST)] = loadAnimation("graphics/animations/patient2-ghost-idle", 2, 0.5f);
 		patient2Idle[World.modeToInt(World.Mode.REAL)] = loadAnimation("graphics/animations/patient2-real-idle", 2, 0.5f);
+		patient2RedEyes = new Texture(Gdx.files.internal("graphics/animations/patient2-redEyes.png"));
 		
 		// poof
 		poof = loadAnimation("graphics/animations/poof-", 2, 0.3f);		
@@ -306,6 +313,28 @@ public class WorldRenderer {
 				frame = clip(frame, true);
 				batch.draw(frame, trigger.position.x, trigger.position.y + 1, 1, 1);
 			}
+		}
+		
+		if(world.mode == Mode.GHOST) {
+			batch.setShader(null);
+			for(Entity entity: sortedEntities) {
+				if(entity.position.dst(camera.position.x, camera.position.y) > CULL_RADIUS) continue;
+				if(!entity.isVisible) continue;
+				if(entity instanceof Enemy) {
+					Enemy enemy = (Enemy)entity;
+					if(enemy.state != Enemy.State.DEAD) {
+						float height = enemy instanceof Enemy2? 1: 2;
+						if(enemy.heading == Enemy.Heading.Left) {
+							TextureRegion region = new TextureRegion(enemy instanceof Enemy2? patient2RedEyes: patient1RedEyes);
+							region.flip(true, false);
+							batch.draw(region, entity.position.x, entity.position.y, 1, height);
+						} else {
+							batch.draw(enemy instanceof Enemy2? patient2RedEyes: patient1RedEyes, entity.position.x, entity.position.y, 1, height);
+						}
+					}
+				}			
+			}
+			batch.setShader(vignetteShader);
 		}
 		batch.end();
 		
