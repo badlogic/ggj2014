@@ -1,7 +1,5 @@
 package com.ggj2014.mechanic;
 
-import com.badlogic.gdx.math.Rectangle;
-
 public class Switch extends Entity {
 
 	public boolean isUsed = false;

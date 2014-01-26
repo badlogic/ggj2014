@@ -28,11 +28,7 @@ public class CreditScreen extends Screen {
         batch.draw(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
 		
-		
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			manager.setScreen(new IntroScreenInstruction(manager));
-		}
-	     if(Gdx.input.justTouched()) {
+		if (waitForKeypress()) {
 	    	 manager.setScreen(new IntroScreenInstruction(manager));
 	     }
 	}
