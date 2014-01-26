@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ggj2014.AudioManager;
 
 public class World {
 	public static final int REAL = 0;
@@ -28,6 +29,7 @@ public class World {
 	public int mode = GHOST;
 	private float modeTimer = TIME;
 	public WorldRenderer renderer;
+	public AudioManager audio;
 	
 	public World(String level) {
 		loadLevel(level);
@@ -35,6 +37,10 @@ public class World {
 	
 	public void setRenderer(WorldRenderer renderer) {
 		this.renderer = renderer;
+	}
+	
+	public void setAudio(AudioManager audio) {
+		this.audio = audio;
 	}
 	
 	private void loadLevel (String level) {
@@ -260,6 +266,7 @@ public class World {
 			mode = REAL;
 		else
 			mode = GHOST;
+		audio.setMode(mode);
 	}
 	
 	public int getMode() {
