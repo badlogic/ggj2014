@@ -28,6 +28,8 @@ public class GameplayScreen extends Screen {
 		
 		if(world.player.isDead()) {
 			manager.setScreen(new GameOverScreen(manager));
+		} else if(world.player.isWin()) {
+			manager.setScreen(new WinScreen(manager));
 		}
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {

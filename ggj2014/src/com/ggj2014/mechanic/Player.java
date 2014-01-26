@@ -102,35 +102,30 @@ public class Player extends Entity {
 		if(state == State.ATTACK && stateTime > ATTACK_TIME) setState(State.IDLE);
 		if(state == State.IDLE || state == State.MOVING) processMove(world, deltaTime);
 		stateTime += deltaTime;		
-		
-		if(world.mode == world.GHOST)
+
+		for(int i = 0; i <world.entities.size; i++)
 		{
-			for(int i = 0; i <world.entities.size; i++)
-			{
-				Entity entity = world.entities.get(i);
-			
-				if(entity instanceof Pill) {
-					if(entity.bounds.overlaps(this.bounds)) {
-						((Pill) entity).pickUp(world);
-						world.mode = world.REAL;
-					}
-				} else if(entity instanceof Enemy) {
-					if(entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
-						state = State.DEAD;
-						stateTime = 0;
-					}
+			Entity entity = world.entities.get(i);
+		
+			if(entity instanceof Pill) {
+				if(world.mode == world.GHOST && entity.bounds.overlaps(this.bounds)) {
+					((Pill) entity).pickUp(world);
+					world.mode = world.REAL;
 				}
-			}
-		} else {
-			for(int i = 0; i <world.entities.size; i++)
-			{
-				Entity entity = world.entities.get(i);
-			
-				if(entity instanceof Axe) {
-					if(entity.bounds.overlaps(this.bounds)) {
-						((Axe) entity).pickUp(world);
-						axe_hits += AXE_HITS;
-					}
+			} else if(entity instanceof Enemy) {
+				if(world.mode == world.GHOST && entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
+					state = State.DEAD;
+					stateTime = 0;
+				}
+			} else if(entity instanceof Axe) {
+				if(world.mode == world.REAL && entity.bounds.overlaps(this.bounds)) {
+					((Axe) entity).pickUp(world);
+					axe_hits += AXE_HITS;
+				}
+			} else if(entity instanceof Goal) {
+				if(entity.bounds.overlaps(this.bounds)) {
+					state = State.WIN;
+					stateTime = 0;
 				}
 			}
 		}
@@ -183,7 +178,7 @@ public class Player extends Entity {
 	}
 	
 	enum State{
-		IDLE, MOVING, ATTACK, DEAD
+		IDLE, MOVING, ATTACK, DEAD, WIN
 	}
 	
 	enum Heading {
@@ -192,5 +187,9 @@ public class Player extends Entity {
 
 	public boolean isDead() {
 		return state == State.DEAD && stateTime > DEAD_TIME;
+	}
+	
+	public boolean isWin() {
+		return state == State.WIN;
 	}
 }

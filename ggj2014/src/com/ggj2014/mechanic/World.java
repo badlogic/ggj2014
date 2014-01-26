@@ -51,8 +51,8 @@ public class World {
 		player = new Player(this, new Vector2(playerProps.get("x", Float.class), playerProps.get("y", Float.class)));
 		player.position.scl(1f / TILE_SIZE);		
 		entities.add(player);
-		goal = new Goal(new Vector2(goalProps.get("x", Float.class), goalProps.get("y", Float.class)));
-		goal.position.scl(1f / TILE_SIZE);
+		goal = new Goal(new Vector2(goalProps.get("x", Float.class) / TILE_SIZE, goalProps.get("y", Float.class)  / TILE_SIZE));
+		entities.add(goal);
 		
 		// load collision map
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("collisionmap");
