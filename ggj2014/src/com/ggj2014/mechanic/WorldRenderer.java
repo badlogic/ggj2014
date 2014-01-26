@@ -49,6 +49,8 @@ public class WorldRenderer {
 	public Texture pill;
 	public Texture axe;
 	public Texture blood;
+	public Texture switchOn;
+	public Texture switchOff;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -92,6 +94,8 @@ public class WorldRenderer {
 		pill.dispose();
 		axe.dispose();
 		blood.dispose();
+		switchOn.dispose();
+		switchOff.dispose();
 		sr.dispose();
 	}
 	
@@ -125,6 +129,8 @@ public class WorldRenderer {
 		pill = new Texture(Gdx.files.internal("graphics/tablette.png"));
 		axe = new Texture(Gdx.files.internal("graphics/axe.png"));
 		blood = new Texture(Gdx.files.internal("graphics/blood.png"));
+		switchOn = new Texture(Gdx.files.internal("graphics/switch-on.png"));
+		switchOff = new Texture(Gdx.files.internal("graphics/switch-off.png"));
 	}
 	
 	private Animation loadAnimation(String path, int frames, float frameDuration) {
@@ -249,7 +255,7 @@ public class WorldRenderer {
 				renderPlayer((Player)entity, true);
 			}
 			else if(entity instanceof Enemy) {
-				if(((Enemy)entity).state != Enemy.State.DEAD) {
+				if(((Enemy)entity).state != Enemy.State.DEAD && !(entity instanceof Enemy2)) {
 					renderEnemy((Enemy)entity, true);
 				}
 			}	
