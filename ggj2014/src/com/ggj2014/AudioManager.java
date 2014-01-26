@@ -102,7 +102,6 @@ public class AudioManager {
 				atmoSoundsGhost.get(MathUtils.random(0, atmoSoundsGhost.size-1)).play(1, 1, MathUtils.random(-1, 1));
 			}
 			nextAtmoTime = System.nanoTime() + (long)(MathUtils.random() * 5000000000l);
-			System.out.println("playing atmo");
 		}
 	}
 	

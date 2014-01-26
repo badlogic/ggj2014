@@ -2,9 +2,7 @@ package com.ggj2014;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
-import com.ggj2014.screens.GameplayScreen;
 import com.ggj2014.screens.IntroScreenInstruction;
 
 public class DodgeBallHospital implements ApplicationListener {	
