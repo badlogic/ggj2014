@@ -168,7 +168,6 @@ public class WorldRenderer {
 			}
 		});
 		
-		int rendered = 0;
 		for(Entity entity: sortedEntities) {
 			if(entity.position.dst(camera.position.x, camera.position.y) > 9) continue;
 			if(!entity.isVisible) continue;
@@ -201,7 +200,6 @@ public class WorldRenderer {
 			else if(entity instanceof Axe) {
 				if(world.mode == World.REAL) batch.draw(axe, entity.position.x, entity.position.y, 1, 1);
 			}
-			rendered++;
 		}
 		batch.end();
 		
@@ -255,6 +253,8 @@ public class WorldRenderer {
 					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
 				}
 				break;
+			case DEAD:
+				if(world.mode == World.REAL) batch.draw(blood, entity.position.x, entity.position.y, 1, 2);
 			default:
 		}
 	}
