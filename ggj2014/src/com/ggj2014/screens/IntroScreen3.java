@@ -1,34 +1,21 @@
 package com.ggj2014.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ggj2014.Screen;
 import com.ggj2014.ScreenManager;
 
 public class IntroScreen3 extends Screen {
 
-	Texture texture = new Texture(Gdx.files.internal("graphics/intro-panel-1.png"));
+	Texture texture = new Texture(Gdx.files.internal("graphics/intro-panel-3.png"));
 	SpriteBatch batch;
 	InputAdapter input;
 	
 	public IntroScreen3(final ScreenManager manager) {
 		super(manager);
-		batch = new SpriteBatch();
-		input = new InputAdapter(){
-
-			@Override
-			public boolean keyDown(int keycode) {
-				// TODO Auto-generated method stub
-				manager.setScreen(new GameplayScreen(manager));
-				return super.keyDown(keycode);
-			}
-			
-		};
-		manager.multiplexer.addProcessor(input);
+		batch = new SpriteBatch();		
 	}
 
 	@Override
@@ -41,13 +28,14 @@ public class IntroScreen3 extends Screen {
         batch.draw(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
 		
+        if(Gdx.input.justTouched()) {
+     			manager.setScreen(new GameplayScreen(manager));
+        }
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
 		texture.dispose();
-		manager.multiplexer.removeProcessor(input);
 	}
-
 }

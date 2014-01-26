@@ -17,18 +17,7 @@ public class IntroScreen1 extends Screen {
 	
 	public IntroScreen1(final ScreenManager manager) {
 		super(manager);
-		batch = new SpriteBatch();
-		input = new InputAdapter(){
-
-			@Override
-			public boolean keyDown(int keycode) {
-				// TODO Auto-generated method stub
-				manager.setScreen(new IntroScreen2(manager));
-				return super.keyDown(keycode);
-			}
-			
-		};
-		manager.multiplexer.addProcessor(input);
+		batch = new SpriteBatch();		
 	}
 
 	@Override
@@ -41,13 +30,15 @@ public class IntroScreen1 extends Screen {
         batch.draw(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
 		
+     if(Gdx.input.justTouched()) {
+			manager.setScreen(new IntroScreen2(manager));
+     }
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
 		texture.dispose();
-		manager.multiplexer.removeProcessor(input);
 	}
 
 }

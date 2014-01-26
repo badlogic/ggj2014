@@ -11,24 +11,13 @@ import com.ggj2014.ScreenManager;
 
 public class IntroScreen2 extends Screen {
 
-	Texture texture = new Texture(Gdx.files.internal("graphics/intro-panel-1.png"));
+	Texture texture = new Texture(Gdx.files.internal("graphics/intro-panel-2.png"));
 	SpriteBatch batch;
 	InputAdapter input;
 	
 	public IntroScreen2(final ScreenManager manager) {
 		super(manager);
-		batch = new SpriteBatch();
-		input = new InputAdapter(){
-
-			@Override
-			public boolean keyDown(int keycode) {
-				// TODO Auto-generated method stub
-				manager.setScreen(new IntroScreen3(manager));
-				return super.keyDown(keycode);
-			}
-			
-		};
-		manager.multiplexer.addProcessor(input);
+		batch = new SpriteBatch();		
 	}
 
 	@Override
@@ -41,13 +30,15 @@ public class IntroScreen2 extends Screen {
         batch.draw(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
 		
+        if(Gdx.input.justTouched()) {
+				manager.setScreen(new IntroScreen3(manager));
+        }
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
 		texture.dispose();
-		manager.multiplexer.removeProcessor(input);
 	}
 
 }
