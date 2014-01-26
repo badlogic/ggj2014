@@ -8,6 +8,7 @@ import com.ggj2014.screens.GameplayScreen;
 
 public class DodgeBallHospital implements ApplicationListener {	
 	ScreenManager manager;
+	AudioManager audio;
 	
 	@Override
 	public void create () {

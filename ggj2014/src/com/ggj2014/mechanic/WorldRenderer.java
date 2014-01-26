@@ -242,11 +242,11 @@ public class WorldRenderer {
 				if(entity.heading == Enemy.Heading.Left) {					
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
 					frame.flip(true, false);
-					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 1, height);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
 					frame.flip(true, false);
 				} else {
 					frame = anims[world.mode].getKeyFrame(entity.stateTime, true);
-					batch.draw(frame, entity.position.x - 0.5f, entity.position.y, 1, height);
+					batch.draw(frame, entity.position.x, entity.position.y, 1, height);
 				}
 				break;
 			default:
