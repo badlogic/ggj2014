@@ -96,6 +96,13 @@ public class World {
 				pill.bounds.y /= TILE_SIZE;
 				entities.add(pill);
 			}
+			else if(type.equals("axe")) {
+				Axe axe = new Axe(object.get("x", Float.class), object.get("y", Float.class));
+				axe.position.scl(1f / TILE_SIZE);
+				axe.bounds.x /= TILE_SIZE;
+				axe.bounds.y /= TILE_SIZE;
+				entities.add(axe);
+			}
 			else if(type.equals("switch")) {
 				Switch doorswitch =  new Switch(object.get("x", Float.class), object.get("y", Float.class));
 				doorswitch.position.scl(1f / TILE_SIZE);
