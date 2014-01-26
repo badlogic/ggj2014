@@ -26,46 +26,11 @@ public class Player extends Entity {
 	public int axe_hits = 5;
 	public float sprint_time = 0;
 	public boolean sprinted = false;
+	public boolean registered = false;
 	
 	public Player(World world_, Vector2 position) {
 		super(position);
 		world = world_;
-		ScreenManager.multiplexer.addProcessor(new InputAdapter() {
-			@Override
-			public boolean keyDown (int keycode) {
-				if(state == State.DEAD)
-					return false;
-				
-				switch (keycode) {
-				case Keys.TAB:
-					world.toggleMode();
-					return true;
-					
-				case Keys.SPACE:
-				case Keys.E:
-					boolean attacked = false;
-					
-					if(world.mode == World.Mode.GHOST && axe_hits > 0) {
-						attacked = attack();
-					}
-					
-					if(!attacked) {
-						for(Entity e : world.entities) {
-							if(e instanceof Door)
-								((Door)e).checkDoor(world);
-							else if(e instanceof Switch)
-								((Switch)e).check(world);
-						}
-					}
-					
-					return true;
-
-				default:
-					break;
-				}
-				return false;
-			}
-		});
 	}
 	
 	public boolean attack() {
@@ -110,7 +75,48 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void update(World world, float deltaTime) {
+	public void update(final World world, float deltaTime) {
+		if(!registered) {
+			ScreenManager.multiplexer.addProcessor(new InputAdapter() {
+				@Override
+				public boolean keyDown (int keycode) {
+					if(state == State.DEAD)
+						return false;
+					
+					switch (keycode) {
+					case Keys.TAB:
+						world.toggleMode();
+						return true;
+						
+					case Keys.SPACE:
+					case Keys.E:
+						boolean attacked = false;
+						
+						if(world.mode == World.Mode.GHOST && axe_hits > 0) {
+							attacked = attack();
+						}
+						
+						if(!attacked) {
+							for(Entity e : world.entities) {
+								if(e instanceof Door)
+									((Door)e).checkDoor(world);
+								else if(e instanceof Switch)
+									((Switch)e).check(world);
+							}
+						}
+						
+						return true;
+
+					default:
+						break;
+					}
+					return false;
+				}
+			});
+			
+			registered = true;
+		}
+		
 		if(state == State.DEAD) {
 			stateTime += deltaTime;
 			return;
