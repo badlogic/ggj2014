@@ -14,7 +14,8 @@ public class DodgeBallHospital implements ApplicationListener {
 	public void create () {
 		manager = new ScreenManager();
 		// SET START SCREEN HERE!
-		Screen screen = new GameplayScreen(manager, 1);
+		//Screen screen = new GameplayScreen(manager, 1);
+		Screen screen = new IntroScreenInstruction(manager);
 		manager.setScreen(screen);		
 	}
 
