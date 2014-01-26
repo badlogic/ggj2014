@@ -10,6 +10,7 @@ import com.ggj2014.ScreenManager;
 	
 public class Player extends Entity {
 	public static final float ATTACK_TIME = 0.2f;
+	public static final int AXE_HITS = 5;
 	public float sightRange = 50;
 	public float attackRange = 1.2f;
 	public float attackAngle = (float)Math.PI / 4;
@@ -19,6 +20,7 @@ public class Player extends Entity {
 	public boolean actionPressed = false;
 	public World world;
 	public Heading heading = Heading.Right;
+	public int axe_hits = 0;
 	
 	public Player(World world_, Vector2 position) {
 		super(position);
@@ -38,7 +40,7 @@ public class Player extends Entity {
 							((Door)e).checkDoor(world);
 					}
 					
-					if(world.mode == world.GHOST) {
+					if(world.mode == world.GHOST && axe_hits > 0) {
 						attack();
 					}
 					return true;
@@ -55,6 +57,8 @@ public class Player extends Entity {
 		Vector2 pos = getCenter();
 		Vector2 enemypos;
 		
+		boolean hit = false;
+		
 		for(Enemy enemy : world.enemies) {
 			if(enemy.state == Enemy.State.DEAD)
 				continue;
@@ -67,9 +71,14 @@ public class Player extends Entity {
 				
 				if((enemypos.y >= 0 && angle <= Math.PI / 2) || (enemypos.y < 0 && angle < attackAngle)) {
 					enemy.state = Enemy.State.DEAD;
+					hit = true;
 				}
 			}
 		}
+		
+		if(hit)
+			axe_hits--;
+		
 		setState(State.ATTACK);
 	}
 	
@@ -85,14 +94,29 @@ public class Player extends Entity {
 		if(state == State.IDLE || state == State.MOVING) processMove(world, deltaTime);
 		stateTime += deltaTime;		
 		
-		for(int i = 0; i <world.entities.size; i++)
+		if(world.mode == world.GHOST)
 		{
-			Entity entity = world.entities.get(i);
-		
-			if(entity instanceof Pill) {
-				if(entity.bounds.overlaps(this.bounds)) {
-					((Pill) entity).pickUp();
-					world.mode = world.REAL;
+			for(int i = 0; i <world.entities.size; i++)
+			{
+				Entity entity = world.entities.get(i);
+			
+				if(entity instanceof Pill) {
+					if(entity.bounds.overlaps(this.bounds)) {
+						((Pill) entity).pickUp(world);
+						world.mode = world.REAL;
+					}
+				}
+			}
+		} else {
+			for(int i = 0; i <world.entities.size; i++)
+			{
+				Entity entity = world.entities.get(i);
+			
+				if(entity instanceof Axe) {
+					if(entity.bounds.overlaps(this.bounds)) {
+						((Axe) entity).pickUp(world);
+						axe_hits += AXE_HITS;
+					}
 				}
 			}
 		}
