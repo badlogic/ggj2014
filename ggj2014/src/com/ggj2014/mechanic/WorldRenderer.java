@@ -257,7 +257,7 @@ public class WorldRenderer {
 //		System.out.println(entity.state + ", " + entity.stateTime);
 		TextureRegion frame;
 		Animation anim = null;
-		if(entity.axe_hits > 0) {
+		if(entity.axe_hits > 0 && world.mode != World.REAL) {
 			anim = mainAxeIdle;
 		} else {
 			anim = mainIdle;

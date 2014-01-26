@@ -20,7 +20,7 @@ public class Player extends Entity {
 	public boolean actionPressed = false;
 	public World world;
 	public Heading heading = Heading.Right;
-	public int axe_hits = 4;
+	public int axe_hits = 0;
 	
 	public Player(World world_, Vector2 position) {
 		super(position);
