@@ -28,8 +28,11 @@ public class GameOverScreen extends Screen {
         batch.end();
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			Gdx.app.exit();
+			
 		}
+	     if(Gdx.input.justTouched()) {
+	    	 Gdx.app.exit();
+	     }
 	}
 
 	@Override
