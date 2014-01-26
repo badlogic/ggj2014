@@ -7,21 +7,25 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.ggj2014.ScreenManager;
-	
+
 public class Player extends Entity {
 	public static final float ATTACK_TIME = 0.2f;
 	public static final float DEAD_TIME = 1.0f;
 	public static final int AXE_HITS = 5;
+	public static final float MAX_SPRINT = 3.0f;
 	public float sightRange = 50;
 	public float attackRange = 1.2f;
 	public float attackAngle = (float)Math.PI / 4;
 	public float speed = 3;
+	public float sprint_speed = 5;
 	public State state = State.IDLE;
 	public double health = 100;
 	public boolean actionPressed = false;
 	public World world;
 	public Heading heading = Heading.Right;
 	public int axe_hits = 0;
+	public float sprint_time = 0;
+	public boolean sprinted = false;
 	
 	public Player(World world_, Vector2 position) {
 		super(position);
@@ -142,6 +146,18 @@ public class Player extends Entity {
 	}
 	
 	private void processMove (World world, float deltaTime) {
+		boolean sprinting = (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) && !sprinted && world.mode == World.GHOST;
+		
+		if(sprinting) {
+			sprint_time -= deltaTime;
+			if(sprint_time <= 0)
+				sprinted = true;
+		} else {
+			sprint_time = Math.min((sprint_time + deltaTime), MAX_SPRINT);
+			if(sprint_time == MAX_SPRINT)
+				sprinted = false;
+		}
+		
 		Vector2 movement = new Vector2();
 		if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))
 		{
@@ -163,7 +179,7 @@ public class Player extends Entity {
 			movement.y += 1;
 			setState(State.MOVING);
 		}
-		movement.nor().scl(speed * deltaTime);
+		movement.nor().scl(deltaTime * (sprinting ? sprint_speed : speed));
 		world.clipCollision(bounds, movement);
 		position.add(movement);
 		bounds.set(position.x + 0.2f, position.y, 0.6f, 0.4f);
