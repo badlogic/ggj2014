@@ -10,6 +10,7 @@ import com.ggj2014.ScreenManager;
 	
 public class Player extends Entity {
 	public static final float ATTACK_TIME = 0.2f;
+	public static final float DEAD_TIME = 1.0f;
 	public static final int AXE_HITS = 5;
 	public float sightRange = 50;
 	public float attackRange = 1.2f;
@@ -28,6 +29,9 @@ public class Player extends Entity {
 		ScreenManager.multiplexer.addProcessor(new InputAdapter() {
 			@Override
 			public boolean keyDown (int keycode) {
+				if(state == State.DEAD)
+					return false;
+				
 				switch (keycode) {
 				case Keys.TAB:
 					world.toggleMode();
@@ -90,6 +94,11 @@ public class Player extends Entity {
 
 	@Override
 	public void update(World world, float deltaTime) {
+		if(state == State.DEAD) {
+			stateTime += deltaTime;
+			return;
+		}
+		
 		if(state == State.ATTACK && stateTime > ATTACK_TIME) setState(State.IDLE);
 		if(state == State.IDLE || state == State.MOVING) processMove(world, deltaTime);
 		stateTime += deltaTime;		
@@ -104,6 +113,11 @@ public class Player extends Entity {
 					if(entity.bounds.overlaps(this.bounds)) {
 						((Pill) entity).pickUp(world);
 						world.mode = world.REAL;
+					}
+				} else if(entity instanceof Enemy) {
+					if(entity.bounds.overlaps(this.bounds) && ((Enemy)entity).state != Enemy.State.DEAD) {
+						state = State.DEAD;
+						stateTime = 0;
 					}
 				}
 			}
@@ -157,7 +171,7 @@ public class Player extends Entity {
 		movement.nor().scl(speed * deltaTime);
 		world.clipCollision(bounds, movement);
 		position.add(movement);
-		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
+		bounds.set(position.x + 0.2f, position.y, 0.6f, 0.4f);
 		
 		if(movement.x != 0)
 			heading = movement.x < 0 ? Heading.Left : Heading.Right;
@@ -174,5 +188,9 @@ public class Player extends Entity {
 	
 	enum Heading {
 		Left, Right
+	}
+
+	public boolean isDead() {
+		return state == State.DEAD && stateTime > DEAD_TIME;
 	}
 }

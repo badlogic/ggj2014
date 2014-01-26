@@ -202,12 +202,12 @@ public class WorldRenderer {
 		tileMapRenderer.render(new int[] { LAYER_FLOOR_UPPER });
 		
 		// draw entity bounds
-//		sr.begin(ShapeType.Line);
-//		sr.setColor(0, 1, 0, 1);
-//		for(Entity entity: world.entities) {			
-//			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);	
-//		}
-//		sr.end();
+		sr.begin(ShapeType.Line);
+		sr.setColor(0, 1, 0, 1);
+		for(Entity entity: world.entities) {			
+			sr.rect(entity.bounds.x, entity.bounds.y, entity.bounds.width, entity.bounds.height);	
+		}
+		sr.end();
 	}
 
 	private void renderEnemy (Enemy entity) {
