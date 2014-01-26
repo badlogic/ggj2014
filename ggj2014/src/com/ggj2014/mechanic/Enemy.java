@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Bresenham2;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ggj2014.mechanic.Player.Heading;
+import com.ggj2014.mechanic.Player.State;
  
 public class Enemy extends Entity {
 	private static Bresenham2 bresenham = new Bresenham2();
@@ -27,14 +29,15 @@ public class Enemy extends Entity {
 	public float separation_factor = 0.6f;
 	public float player_factor = 1.0f;
 	
+	public Heading heading = Heading.Right;
+	
 	public Enemy(float x, float y) {
 		super(x, y);
 	}
 
 	@Override
 	public void update(World world, float deltaTime) {
-		if(state == State.DEAD)
-			return;
+		if(state == State.DEAD) return;
 		
 		Vector2 playerpos = world.player.getCenter();
 		Vector2 pos = getCenter();
@@ -72,12 +75,12 @@ public class Enemy extends Entity {
 			
 			if(in_sight) {
 				new_velocity = playerpos.scl(player_factor / (float)Math.sqrt(length2));
-				state = State.ATTACKING;
+				setState(State.ATTACKING);
 			}
 			else
-				state = State.IDLE;
+				setState(State.IDLE);
 		} else {
-			state = State.IDLE;
+			setState(State.IDLE);
 		}
 		
 		Vector2 enemypos, relpos, t1;
@@ -133,9 +136,22 @@ public class Enemy extends Entity {
 		velocity = new_velocity;
 		
 		bounds.set(position.x + 0.15f, position.y, 0.7f, 0.8f);
+		heading = velocity.x < 0? Heading.Right: Heading.Left;
+		stateTime += deltaTime;
+		if(stateTime < 0) stateTime = 0;
+	}
+	
+	public void setState(State state) {
+		if(this.state == state) return;
+		this.state = state;
+		this.stateTime = 0;
 	}
 	
 	enum State {
-		IDLE, MOVING_LEFT, MOVING_RIGHT, ATTACKING, WANDERING, DEAD
+		IDLE, ATTACKING, MOVING, WANDERING, DEAD
+	}
+	
+	enum Heading {
+		Left, Right
 	}
 }
