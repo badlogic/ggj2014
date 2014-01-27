@@ -15,3 +15,6 @@ The game was made within 48h without any considerations for mobile platforms. We
 ![Team Awesome](http://www.badlogicgames.com/wordpress/wp-content/uploads/2014/01/teamawesome.jpg)
 
 From left to right: Jörg (coding), Markus (design), Stefan (audio), Andreas (design), Veit (level design, coding), Gabe (visuals), Mario (lazy bum).
+
+## License
+All code is licensed as [Creative Commons Attribution-NonCommercial-ShareAlike 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/)
