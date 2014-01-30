@@ -1,9 +1,9 @@
 package com.ggj2014.client;
 
-import com.ggj2014.Game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import com.ggj2014.DodgeBallHospital;
 
 public class GwtLauncher extends GwtApplication {
 	@Override
@@ -14,6 +14,6 @@ public class GwtLauncher extends GwtApplication {
 
 	@Override
 	public ApplicationListener getApplicationListener () {
-		return new Game();
+		return new DodgeBallHospital();
 	}
 }
