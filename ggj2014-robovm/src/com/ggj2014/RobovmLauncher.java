@@ -12,7 +12,7 @@ public class RobovmLauncher extends IOSApplication.Delegate {
 		IOSApplicationConfiguration config = new IOSApplicationConfiguration();
 		config.orientationLandscape = true;
 		config.orientationPortrait = false;
-		return new IOSApplication(new Game(), config);
+		return new IOSApplication(new DodgeBallHospital(), config);
 	}
 
 	public static void main(String[] argv) {

@@ -8,7 +8,7 @@ import com.ggj2014.DodgeBallHospital;
 public class GwtLauncher extends GwtApplication {
 	@Override
 	public GwtApplicationConfiguration getConfig () {
-		GwtApplicationConfiguration cfg = new GwtApplicationConfiguration(480, 320);
+		GwtApplicationConfiguration cfg = new GwtApplicationConfiguration(1024, 768);
 		return cfg;
 	}
 

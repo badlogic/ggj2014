@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.ggj2014.mechanic.World;
 
 public class AudioManager {
@@ -99,13 +100,13 @@ public class AudioManager {
 		}
 		modeTime += deltaTime;
 		
-		if(System.nanoTime() > nextAtmoTime) {
+		if(TimeUtils.nanoTime() > nextAtmoTime) {
 			if(mode == World.Mode.REAL) {
 				atmoSounds.get(MathUtils.random(0, atmoSounds.size-1)).play(1, 1, MathUtils.random(-1, 1));
 			} else {
 				atmoSoundsGhost.get(MathUtils.random(0, atmoSoundsGhost.size-1)).play(1, 1, MathUtils.random(-1, 1));
 			}
-			nextAtmoTime = System.nanoTime() + (long)(MathUtils.random() * 5000000000l);
+			nextAtmoTime = TimeUtils.nanoTime() + (long)(MathUtils.random() * 5000000000l);
 		}
 	}
 	
